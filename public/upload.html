@@ -1,0 +1,1212 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رفع محتوى - منصة الطلاب التونسيين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* CSS REMAINS EXACTLY THE SAME */
+
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#e0a3ff;--accent:#ff69b4;--accent2:#9370db;
+  --cyan:#00e5ff;--green:#00ff87;
+  --text:rgba(224,163,255,0.9);--text-muted:rgba(224,163,255,0.5);
+  --glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);
+  --radius:22px;--tr:all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0a0a0a}
+::-webkit-scrollbar-thumb{background:linear-gradient(#e0a3ff,#ff69b4);border-radius:3px}
+body{font-family:'Cairo',sans-serif;background:#000;color:var(--primary);overflow-x:hidden;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* BG */
+.neural-bg{position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(circle at 15% 85%,rgba(75,0,130,.7) 0%,transparent 50%),
+  radial-gradient(circle at 85% 15%,rgba(139,37,99,.8) 0%,transparent 50%),
+  radial-gradient(circle at 45% 60%,rgba(128,0,128,.6) 0%,transparent 50%),
+  radial-gradient(circle at 70% 40%,rgba(34,139,34,.4) 0%,transparent 50%),
+  linear-gradient(135deg,#0a0a0a 0%,#2d1b3d 50%,#000 100%);
+  animation:bgPulse 14s ease-in-out infinite}
+@keyframes bgPulse{0%,100%{filter:brightness(.9) saturate(1.4) hue-rotate(0deg)}33%{filter:brightness(1.1) saturate(1.7) hue-rotate(15deg)}66%{filter:brightness(1) saturate(1.5) hue-rotate(-10deg)}}
+.geo{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.geo div{position:absolute;border:1px solid rgba(0,255,255,.3);animation:floatS 20s linear infinite}
+.geo div:nth-child(1){width:100px;height:100px;right:10%;animation-delay:0s;border-color:rgba(255,105,180,.3)}
+.geo div:nth-child(2){width:60px;height:60px;right:70%;animation-delay:-5s;border-radius:50%;border-color:rgba(147,112,219,.3)}
+.geo div:nth-child(3){width:80px;height:80px;right:30%;animation-delay:-10s;transform:rotate(45deg);border-color:rgba(224,163,255,.3)}
+.geo div:nth-child(4){width:120px;height:120px;right:50%;animation-delay:-15s;background:linear-gradient(45deg,rgba(255,105,180,.1),transparent)}
+@keyframes floatS{from{transform:translateY(100vh) rotate(0deg);opacity:0}10%,90%{opacity:1}to{transform:translateY(-100px) rotate(360deg);opacity:0}}
+
+/* HEADER */
+header{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:1000;width:96%;max-width:1400px;
+  padding:15px 30px;background:rgba(224,163,255,.08);backdrop-filter:blur(25px);
+  border:1px solid rgba(224,163,255,.15);border-radius:25px;
+  box-shadow:0 8px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);transition:var(--tr)}
+header.scrolled{background:rgba(224,163,255,.12);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+nav{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;
+  background:linear-gradient(45deg,#e0a3ff,#ff69b4);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;text-decoration:none;white-space:nowrap}
+.logo-icon{font-size:30px;filter:drop-shadow(0 0 8px #e0a3ff)}
+.nav-links{display:flex;gap:8px;list-style:none}
+.nav-links a{color:rgba(224,163,255,.8);text-decoration:none;padding:8px 16px;border-radius:12px;font-size:14px;font-weight:600;transition:var(--tr)}
+.nav-links a:hover,.nav-links a.active{background:rgba(224,163,255,.15);color:#fff;box-shadow:0 0 15px rgba(224,163,255,.2)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn-nav{padding:9px 20px;border:none;border-radius:12px;font-weight:700;font-size:13px;
+  font-family:'Cairo',sans-serif;cursor:pointer;transition:var(--tr);white-space:nowrap}
+.btn-primary{background:linear-gradient(45deg,#e0a3ff,#ff69b4);color:#000;box-shadow:0 4px 15px rgba(224,163,255,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(224,163,255,.5)}
+.btn-ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.7)}
+.btn-ghost:hover{background:rgba(224,163,255,.1);border-color:rgba(224,163,255,.3);color:var(--primary)}
+
+/* MAIN */
+.main{padding-top:110px;min-height:100vh}
+
+/* HERO */
+.page-hero{text-align:center;padding:50px 20px 36px}
+.page-hero h1{font-size:clamp(32px,6vw,60px);font-weight:900;line-height:1.1;
+  background:linear-gradient(135deg,#fff 0%,#e0a3ff 40%,#ff69b4 80%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
+.page-hero p{color:var(--text-muted);font-size:16px;max-width:500px;margin:0 auto}
+
+/* STEPS BAR */
+.steps-bar{display:flex;justify-content:center;align-items:center;gap:0;margin:0 auto 40px;max-width:600px;padding:0 20px}
+.step{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;position:relative}
+.step:not(:last-child)::after{content:'';position:absolute;top:18px;left:50%;width:100%;height:2px;
+  background:rgba(255,255,255,.08);z-index:0;transition:background .5s}
+.step.done:not(:last-child)::after{background:linear-gradient(90deg,var(--accent2),var(--accent))}
+.step-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:800;border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.3);transition:var(--tr);position:relative;z-index:1}
+.step.active .step-circle{background:linear-gradient(135deg,var(--accent2),var(--accent));border-color:transparent;color:#fff;box-shadow:0 0 20px rgba(147,112,219,.5)}
+.step.done .step-circle{background:linear-gradient(135deg,var(--green),var(--cyan));border-color:transparent;color:#000;box-shadow:0 0 15px rgba(0,255,135,.3)}
+.step-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.3);white-space:nowrap;transition:color .3s}
+.step.active .step-label{color:var(--primary)}
+.step.done .step-label{color:var(--green)}
+
+/* LAYOUT */
+.upload-layout{max-width:900px;margin:0 auto;padding:0 20px 60px}
+
+/* FORM CARD */
+.form-card{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:36px;margin-bottom:22px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);animation:cardIn .6s ease both}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+.card-title{font-size:17px;font-weight:800;color:#fff;margin-bottom:24px;display:flex;align-items:center;gap:10px;
+  padding-bottom:16px;border-bottom:1px solid var(--glass-border)}
+.card-title span{font-size:22px}
+
+/* FORM GROUPS */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-row.three{grid-template-columns:1fr 1fr 1fr}
+.form-row.single{grid-template-columns:1fr}
+.form-group{display:flex;flex-direction:column;gap:8px}
+.form-label{font-size:12px;font-weight:700;color:rgba(224,163,255,.7);text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:6px}
+.required-dot{width:5px;height:5px;background:var(--accent);border-radius:50%;flex-shrink:0}
+
+.form-input,.form-select,.form-textarea{
+  width:100%;padding:12px 16px;background:rgba(255,255,255,.05);
+  border:1px solid var(--glass-border);border-radius:14px;color:#fff;
+  font-family:'Cairo',sans-serif;font-size:14px;font-weight:500;outline:none;transition:var(--tr)}
+.form-input::placeholder,.form-textarea::placeholder{color:rgba(255,255,255,.25)}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  border-color:rgba(224,163,255,.45);background:rgba(224,163,255,.06);
+  box-shadow:0 0 20px rgba(224,163,255,.1)}
+.form-input.error,.form-select.error{border-color:rgba(255,68,68,.5);box-shadow:0 0 15px rgba(255,68,68,.1)}
+.form-select{appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e0a3ff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:left 14px center;padding-left:38px}
+.form-select option{background:#1a0a2e;color:#fff}
+.form-textarea{resize:vertical;min-height:100px;line-height:1.7}
+.char-count{font-size:11px;color:var(--text-muted);text-align:left;margin-top:4px}
+
+/* ERROR MSG */
+.err-msg{font-size:11px;color:#ff6b6b;font-weight:600;display:none;align-items:center;gap:4px}
+.err-msg.show{display:flex}
+
+/* UPLOAD ZONES */
+.upload-zone{border:2px dashed rgba(255,255,255,.12);border-radius:16px;padding:32px 20px;
+  text-align:center;cursor:pointer;transition:var(--tr);position:relative;background:rgba(255,255,255,.02)}
+.upload-zone:hover,.upload-zone.drag-over{
+  border-color:rgba(224,163,255,.4);background:rgba(224,163,255,.05);
+  box-shadow:0 0 30px rgba(224,163,255,.08)}
+.upload-zone.has-file{border-color:rgba(0,255,135,.3);background:rgba(0,255,135,.03)}
+.upload-icon{font-size:44px;margin-bottom:12px;display:block;transition:transform .3s}
+.upload-zone:hover .upload-icon{transform:translateY(-4px) scale(1.08)}
+.upload-zone h4{font-size:15px;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:6px}
+.upload-zone p{font-size:12px;color:var(--text-muted)}
+.upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+
+/* FILE PREVIEW */
+.file-preview{display:none;align-items:center;gap:12px;padding:14px 16px;
+  background:rgba(0,255,135,.06);border:1px solid rgba(0,255,135,.2);border-radius:12px;margin-top:12px}
+.file-preview.show{display:flex}
+.file-icon{font-size:28px}
+.file-info{flex:1;min-width:0}
+.file-name{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-size{font-size:11px;color:var(--text-muted);margin-top:2px}
+.file-remove{width:28px;height:28px;border-radius:50%;background:rgba(255,68,68,.15);
+  border:1px solid rgba(255,68,68,.3);color:#ff6b6b;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:14px;transition:var(--tr)}
+.file-remove:hover{background:rgba(255,68,68,.3);transform:scale(1.1)}
+
+/* IMAGE GALLERY PREVIEW */
+.img-gallery-preview{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.img-prev-item{position:relative;width:80px;height:80px;border-radius:12px;overflow:hidden;
+  border:1px solid var(--glass-border);animation:cardIn .3s ease}
+.img-prev-item img{width:100%;height:100%;object-fit:cover}
+.img-prev-num{position:absolute;bottom:4px;right:5px;font-size:10px;font-weight:800;
+  color:#fff;background:rgba(0,0,0,.65);border-radius:4px;padding:1px 5px}
+.img-prev-remove{position:absolute;top:-4px;left:-4px;width:20px;height:20px;
+  background:linear-gradient(45deg,#ff4444,#ff69b4);border:none;border-radius:50%;
+  color:#fff;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:var(--tr);box-shadow:0 2px 8px rgba(255,68,68,.4)}
+.img-prev-remove:hover{transform:scale(1.15)}
+.img-count-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;
+  background:rgba(224,163,255,.1);border:1px solid rgba(224,163,255,.2);border-radius:50px;
+  font-size:12px;font-weight:700;color:var(--primary);margin-top:8px}
+
+/* YOUTUBE SECTION */
+.yt-preview{display:none;margin-top:12px}
+.yt-preview.show{display:block}
+.yt-thumb{position:relative;border-radius:12px;overflow:hidden;background:#000;
+  border:1px solid rgba(255,0,0,.3)}
+.yt-thumb img{width:100%;display:block}
+.yt-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.3)}
+.yt-play-btn{width:56px;height:40px;background:#ff0000;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.yt-info{padding:10px 12px;background:rgba(255,0,0,.06);border:1px solid rgba(255,0,0,.2);
+  border-radius:0 0 12px 12px;border-top:none;font-size:12px;color:rgba(255,150,150,.8)}
+
+/* PROGRESS */
+.progress-section{display:none;margin-top:20px}
+.progress-section.show{display:block;animation:cardIn .4s ease}
+.progress-label{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:8px}
+.progress-track{height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent),var(--cyan));
+  border-radius:4px;width:0%;transition:width .3s ease;position:relative}
+.progress-fill::after{content:'';position:absolute;top:0;right:0;height:100%;width:30px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4));animation:shimmerBar 1s ease infinite}
+@keyframes shimmerBar{0%{opacity:.5}50%{opacity:1}100%{opacity:.5}}
+.progress-steps{display:flex;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:8px}
+.progress-step{font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px;font-weight:600}
+.progress-step.active{color:var(--primary)}
+.progress-step.done{color:var(--green)}
+
+/* TIPS BOX */
+.tips-box{background:linear-gradient(135deg,rgba(147,112,219,.08),rgba(255,105,180,.08));
+  border:1px solid rgba(147,112,219,.2);border-radius:16px;padding:20px;margin-bottom:22px;
+  animation:cardIn .6s .1s ease both}
+.tips-title{font-size:13px;font-weight:800;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.tip-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:rgba(255,255,255,.55);
+  margin-bottom:8px;line-height:1.6;font-weight:500}
+.tip-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+
+/* SUBMIT BUTTON */
+.submit-wrap{text-align:center;padding-top:8px}
+.submit-btn{padding:16px 48px;background:linear-gradient(45deg,var(--accent2),var(--accent));
+  border:none;border-radius:16px;color:#fff;font-family:'Cairo',sans-serif;
+  font-size:16px;font-weight:800;cursor:pointer;transition:var(--tr);
+  box-shadow:0 8px 30px rgba(147,112,219,.4);display:inline-flex;align-items:center;gap:10px}
+.submit-btn:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 14px 40px rgba(147,112,219,.6)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.submit-note{font-size:12px;color:var(--text-muted);margin-top:12px}
+
+/* SUCCESS SCREEN */
+.success-screen{display:none;text-align:center;padding:60px 20px;animation:cardIn .6s ease}
+.success-screen.show{display:block}
+.success-icon{font-size:80px;display:block;margin-bottom:20px;animation:successBounce .8s cubic-bezier(.34,1.56,.64,1)}
+@keyframes successBounce{from{transform:scale(0) rotate(-180deg)}to{transform:scale(1) rotate(0deg)}}
+.success-title{font-size:28px;font-weight:900;color:#fff;margin-bottom:10px}
+.success-sub{font-size:15px;color:var(--text-muted);margin-bottom:28px}
+.success-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.success-btn{padding:12px 28px;border-radius:14px;font-family:'Cairo',sans-serif;font-size:14px;
+  font-weight:700;cursor:pointer;transition:var(--tr);border:none;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px}
+.success-btn-primary{background:linear-gradient(45deg,var(--accent2),var(--accent));color:#fff;
+  box-shadow:0 6px 20px rgba(147,112,219,.4)}
+.success-btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(147,112,219,.6)}
+.success-btn-secondary{background:rgba(255,255,255,.06);border:1px solid var(--glass-border);color:rgba(255,255,255,.7)}
+.success-btn-secondary:hover{background:rgba(224,163,255,.1);border-color:rgba(224,163,255,.3);color:var(--primary)}
+
+/* XPGAIN */
+.xp-gain{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;
+  background:linear-gradient(135deg,rgba(0,255,135,.1),rgba(0,229,255,.1));
+  border:1px solid rgba(0,255,135,.25);border-radius:50px;
+  font-size:14px;font-weight:800;color:#00ff87;margin-bottom:20px;
+  animation:xpPop .6s .3s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes xpPop{from{transform:scale(0)}to{transform:scale(1)}}
+
+/* NOT LOGGED IN */
+.auth-wall{text-align:center;padding:60px 20px;animation:cardIn .6s ease}
+.auth-wall .aw-icon{font-size:70px;display:block;margin-bottom:16px;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.auth-wall h2{font-size:24px;font-weight:900;color:rgba(255,255,255,.6);margin-bottom:8px}
+.auth-wall p{color:var(--text-muted);font-size:14px;margin-bottom:24px}
+
+/* SCROLL TOP */
+.scroll-top{position:fixed;bottom:30px;left:30px;width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(45deg,var(--accent2),var(--accent));border:none;color:#fff;
+  font-size:18px;cursor:pointer;box-shadow:0 8px 25px rgba(147,112,219,.4);
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);opacity:0;pointer-events:none;z-index:100;
+  display:flex;align-items:center;justify-content:center}
+.scroll-top.visible{opacity:1;pointer-events:all}
+.scroll-top:hover{transform:scale(1.15) translateY(-3px)}
+
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(30px);
+  background:rgba(20,10,35,.95);border:1px solid rgba(224,163,255,.2);border-radius:14px;
+  padding:12px 24px;font-size:14px;font-weight:600;color:#fff;z-index:9999;opacity:0;
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;backdrop-filter:blur(20px);
+  box-shadow:0 10px 30px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:rgba(0,255,135,.3)}
+.toast.error{border-color:rgba(255,68,68,.3)}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .form-row,.form-row.three{grid-template-columns:1fr}
+  nav .nav-links{display:none}
+  header{padding:12px 18px}
+  .form-card{padding:22px 18px}
+  .page-hero{padding:30px 16px 24px}
+  .steps-bar{gap:0}
+  .step-label{display:none}
+}
+/* ── User Nav ──────────────────────────── */
+.user-nav-wrapper { position: relative; }
+
+.user-avatar-btn {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-avatar-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(224, 163, 255, 0.5);
+    box-shadow: 0 0 0 3px rgba(224, 163, 255, 0.15);
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.user-avatar-default {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e0a3ff, #ff69b4);
+    border: 2px solid rgba(224, 163, 255, 0.5);
+    box-shadow: 0 0 0 3px rgba(224, 163, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 800;
+    color: #000;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.user-avatar-circle:hover,
+.user-avatar-default:hover {
+    box-shadow: 0 0 0 4px rgba(224, 163, 255, 0.3), 0 0 22px rgba(224, 163, 255, 0.45);
+    transform: scale(1.08);
+}
+
+.login-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    background: linear-gradient(135deg, rgba(224,163,255,0.12), rgba(255,105,180,0.12));
+    border: 1px solid rgba(224, 163, 255, 0.35);
+    border-radius: 12px;
+    color: #e0a3ff;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.login-nav-btn:hover {
+    background: linear-gradient(135deg, rgba(224,163,255,0.25), rgba(255,105,180,0.25));
+    border-color: rgba(224, 163, 255, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 18px rgba(224, 163, 255, 0.3);
+}
+
+.user-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    min-width: 200px;
+    background: rgba(12, 8, 20, 0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(224, 163, 255, 0.22);
+    border-radius: 16px;
+    padding: 8px;
+    box-shadow: 0 16px 50px rgba(0,0,0,0.6), 0 1px 0 rgba(224,163,255,0.08) inset;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.96);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    z-index: 3000;
+}
+
+.user-nav-wrapper.open .user-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.dropdown-user-info {
+    padding: 12px 14px 10px;
+    border-bottom: 1px solid rgba(224, 163, 255, 0.1);
+    margin-bottom: 6px;
+}
+
+.dropdown-user-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #e0a3ff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-user-role {
+    font-size: 11px;
+    color: rgba(224, 163, 255, 0.45);
+    margin-top: 3px;
+    font-weight: 500;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: rgba(224, 163, 255, 0.82);
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    text-align: right;
+}
+
+.dropdown-item:hover {
+    background: rgba(224, 163, 255, 0.1);
+    color: #e0a3ff;
+    transform: translateX(-3px);
+}
+
+.dropdown-item.danger { color: rgba(255, 107, 129, 0.85); }
+
+.dropdown-item.danger:hover {
+    background: rgba(255, 69, 96, 0.15);
+    color: #ff6b81;
+    transform: translateX(-3px);
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: rgba(224, 163, 255, 0.1);
+    margin: 5px 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="neural-bg"></div>
+<div class="geo"><div></div><div></div><div></div><div></div></div>
+
+<!-- HEADER -->
+<header id="mainHeader">
+  <nav>
+    <a href="/index.html" class="logo">
+      <span class="logo-icon">🎓</span>
+      <span>منصة الطلاب</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/index.html">الرئيسية</a></li>
+      <li><a href="/browse.html">تصفح</a></li>
+      <li><a href="/requests.html">الطلبات</a></li>
+      <li><a href="/calculator.html">الحاسبة</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="theme-toggle-btn" class="btn-nav theme-toggle-btn">🎨 الثيم</button>
+      <div id="userNavArea"></div>
+      <button class="btn-nav btn-ghost" onclick="history.back()">← رجوع</button>
+    </div>
+  </nav>
+</header>
+
+<div class="main">
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <h1>رفع محتوى تعليمي</h1>
+    <p>شارك معرفتك مع الطلاب واكسب نقاط XP 🚀</p>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps-bar" id="stepsBar">
+    <div class="step active" id="step1el">
+      <div class="step-circle">1</div>
+      <span class="step-label">البيانات</span>
+    </div>
+    <div class="step" id="step2el">
+      <div class="step-circle">2</div>
+      <span class="step-label">الملفات</span>
+    </div>
+    <div class="step" id="step3el">
+      <div class="step-circle">3</div>
+      <span class="step-label">المراجعة</span>
+    </div>
+    <div class="step" id="step4el">
+      <div class="step-circle">✓</div>
+      <span class="step-label">تم</span>
+    </div>
+  </div>
+
+  <div class="upload-layout">
+
+    <!-- AUTH WALL (shown if not logged in) -->
+    <div class="auth-wall" id="authWall" style="display:none">
+      <div class="form-card">
+        <span class="aw-icon">🔐</span>
+        <h2>يجب تسجيل الدخول أولاً</h2>
+        <p>لرفع محتوى تعليمي يجب أن تكون عضواً في المنصة</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a href="/login.html" class="submit-btn" style="text-decoration:none">🔑 تسجيل الدخول</a>
+          <a href="/login.html?register=true" class="submit-btn" style="background:rgba(255,255,255,.06);border:1px solid var(--glass-border);color:rgba(255,255,255,.7);box-shadow:none;text-decoration:none">✨ إنشاء حساب</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN FORM -->
+    <div id="formSection">
+
+      <!-- TIPS -->
+      <div class="tips-box">
+        <div class="tips-title">💡 نصائح لرفع محتوى جيد</div>
+        <div class="tip-item"><span class="tip-icon">✅</span>اكتب عنواناً واضحاً ومحدداً يصف المحتوى</div>
+        <div class="tip-item"><span class="tip-icon">📸</span>أضف صوراً تغطية جذابة لزيادة المشاهدات</div>
+        <div class="tip-item"><span class="tip-icon">📝</span>اكتب وصفاً تفصيلياً ليجد الطلاب محتواك بسهولة</div>
+        <div class="tip-item"><span class="tip-icon">⏳</span>المنشور سيتم مراجعته من الإدارة قبل النشر (+50 XP عند الموافقة)</div>
+      </div>
+
+      <form id="uploadForm" novalidate>
+
+        <!-- STEP 1: BASIC INFO -->
+        <div class="form-card" id="cardStep1" style="animation-delay:0s">
+          <div class="card-title"><span>📋</span> معلومات المنشور</div>
+
+          <div class="form-row single">
+            <div class="form-group">
+              <label class="form-label"><span class="required-dot"></span>العنوان</label>
+              <input type="text" class="form-input" id="title" placeholder="مثال: ملخص رياضيات باك 2025 - الفصل الثالث" maxlength="120">
+              <div class="char-count"><span id="titleCount">0</span>/120</div>
+              <div class="err-msg" id="titleErr">⚠ العنوان مطلوب (3 أحرف على الأقل)</div>
+            </div>
+          </div>
+
+          <div class="form-row single">
+            <div class="form-group">
+              <label class="form-label">الوصف</label>
+              <textarea class="form-textarea" id="description" placeholder="اشرح محتوى الملف، المواضيع التي يغطيها، لمن هو مفيد..." maxlength="500"></textarea>
+              <div class="char-count"><span id="descCount">0</span>/500</div>
+            </div>
+          </div>
+
+          <div class="form-row three">
+            <div class="form-group">
+              <label class="form-label"><span class="required-dot"></span>الشعبة</label>
+              <select class="form-select" id="branch">
+                <option value="">اختر الشعبة</option>
+                <option value="آداب">📚 آداب</option>
+                <option value="علوم">🔬 علوم</option>
+                <option value="رياضيات">📐 رياضيات</option>
+                <option value="تقنية">⚙️ تقنية</option>
+                <option value="اقتصاد">💰 اقتصاد</option>
+                <option value="معلوماتية">💻 معلوماتية</option>
+                <option value="رياضة">⚽ رياضة وتربية</option>
+                <option value="عام">🌍 عام</option>
+              </select>
+              <div class="err-msg" id="branchErr">⚠ الشعبة مطلوبة</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label"><span class="required-dot"></span>السنة الدراسية</label>
+              <select class="form-select" id="year">
+                <option value="">اختر السنة</option>
+                <optgroup label="إعدادي">
+                  <option value="7">السابعة</option>
+                  <option value="8">الثامنة</option>
+                  <option value="9">التاسعة</option>
+                </optgroup>
+                <optgroup label="ثانوي">
+                  <option value="1ثانوي">أولى ثانوي</option>
+                  <option value="2ثانوي">ثانية ثانوي</option>
+                  <option value="3ثانوي">ثالثة ثانوي</option>
+                  <option value="4ثانوي">رابعة ثانوي (باك)</option>
+                </optgroup>
+                <optgroup label="أخرى">
+                  <option value="جامعي">جامعي</option>
+                </optgroup>
+              </select>
+              <div class="err-msg" id="yearErr">⚠ السنة مطلوبة</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label"><span class="required-dot"></span>المادة</label>
+              <select class="form-select" id="subject">
+                <option value="">اختر المادة</option>
+                <option value="رياضيات">📐 رياضيات</option>
+                <option value="فيزياء">⚡ فيزياء</option>
+                <option value="كيمياء">🧪 كيمياء</option>
+                <option value="علوم طبيعية">🌿 علوم طبيعية</option>
+                <option value="عربي">📖 عربي</option>
+                <option value="فرنسية">🇫🇷 فرنسية</option>
+                <option value="إنجليزية">🇬🇧 إنجليزية</option>
+                <option value="تاريخ وجغرافيا">🗺️ تاريخ وجغرافيا</option>
+                <option value="فلسفة">🤔 فلسفة</option>
+                <option value="معلوماتية">💻 معلوماتية</option>
+                <option value="اقتصاد">💼 اقتصاد</option>
+                <option value="تربية إسلامية">☪️ تربية إسلامية</option>
+                <option value="تربية مدنية">🏛️ تربية مدنية</option>
+                <option value="تربية تشكيلية">🎨 تربية تشكيلية</option>
+              </select>
+              <div class="err-msg" id="subjectErr">⚠ المادة مطلوبة</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label"><span class="required-dot"></span>نوع المحتوى</label>
+              <select class="form-select" id="type">
+                <option value="">اختر النوع</option>
+                <option value="ملخص">📝 ملخص</option>
+                <option value="امتحان">📋 امتحان</option>
+                <option value="فيديو">🎥 فيديو</option>
+                <option value="تمارين">📐 تمارين</option>
+                <option value="كتاب">📚 كتاب</option>
+                <option value="شرح">✏️ شرح</option>
+                <option value="حل">✅ حل</option>
+              </select>
+              <div class="err-msg" id="typeErr">⚠ النوع مطلوب</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">اسم الأستاذ (اختياري)</label>
+              <input type="text" class="form-input" id="teacherName" placeholder="مثال: أستاذ محمد الشابي">
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: FILES -->
+        <div class="form-card" id="cardStep2" style="animation-delay:.08s">
+          <div class="card-title"><span>📎</span> الملفات والمحتوى</div>
+
+          <div class="form-group" style="margin-bottom:20px">
+            <label class="form-label">📄 الملف الرئيسي (PDF, Word, PowerPoint...)</label>
+            <div class="upload-zone" id="fileZone">
+              <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.zip,.rar">
+              <span class="upload-icon">📁</span>
+              <h4>اسحب الملف هنا أو انقر للاختيار</h4>
+              <p>PDF, Word, PowerPoint, Excel, ZIP · الحد الأقصى 50 MB</p>
+            </div>
+            <div class="file-preview" id="filePreview">
+              <span class="file-icon" id="fileIcon">📄</span>
+              <div class="file-info">
+                <div class="file-name" id="fileName">—</div>
+                <div class="file-size" id="fileSize">—</div>
+              </div>
+              <button type="button" class="file-remove" onclick="removeFile()">✕</button>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:20px">
+            <label class="form-label">🖼️ صور الغلاف والمحتوى (حتى 10 صور)</label>
+            <div class="upload-zone" id="imgZone">
+              <input type="file" id="imageInput" accept="image/*" multiple>
+              <span class="upload-icon">🖼️</span>
+              <h4>اسحب الصور هنا أو انقر للاختيار</h4>
+              <p>JPG, PNG, WebP · الحد الأقصى 5 MB للصورة · أول صورة ستظهر كغلاف</p>
+            </div>
+            <div class="img-gallery-preview" id="imgGalleryPreview"></div>
+            <div id="imgCountBadge" style="display:none" class="img-count-badge">🖼️ <span id="imgCount">0</span> صورة مختارة</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">▶️ رابط يوتيوب (اختياري)</label>
+            <input type="url" class="form-input" id="youtubeLink" placeholder="https://www.youtube.com/watch?v=...">
+            <div class="yt-preview" id="ytPreview">
+              <div class="yt-thumb">
+                <img id="ytThumb" src="" alt="YouTube Thumbnail">
+                <div class="yt-play-overlay"><div class="yt-play-btn">▶</div></div>
+              </div>
+              <div class="yt-info" id="ytInfo">✅ رابط يوتيوب صالح - سيظهر الفيديو للطلاب</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: REVIEW + SUBMIT -->
+        <div class="form-card" id="cardStep3" style="animation-delay:.16s">
+          <div class="card-title"><span>🔍</span> مراجعة وإرسال</div>
+
+          <div id="reviewSummary" style="background:rgba(255,255,255,.02);border:1px solid var(--glass-border);border-radius:16px;padding:20px;margin-bottom:24px">
+            <div style="font-size:13px;color:var(--text-muted);font-weight:600;margin-bottom:14px">ملخص المنشور:</div>
+            <div id="reviewContent" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <div style="font-size:13px;color:rgba(255,255,255,.45)">أكمل الحقول المطلوبة لرؤية الملخص</div>
+            </div>
+          </div>
+
+          <div class="progress-section" id="progressSection">
+            <div class="progress-label">
+              <span id="progressLabel">جاري الرفع...</span>
+              <span id="progressPct">0%</span>
+            </div>
+            <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="progress-steps">
+              <div class="progress-step" id="pstep1">📤 رفع الملفات</div>
+              <div class="progress-step" id="pstep2">🔍 معالجة البيانات</div>
+              <div class="progress-step" id="pstep3">✅ الانتهاء</div>
+            </div>
+          </div>
+
+          <div class="submit-wrap">
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <span>🚀</span><span>رفع المنشور الآن</span>
+            </button>
+            <div class="submit-note">سيتم مراجعة منشورك من قِبل الإدارة قبل النشر · +50 نقطة XP عند الموافقة</div>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- SUCCESS SCREEN -->
+      <div class="form-card success-screen" id="successScreen">
+        <span class="success-icon">🎉</span>
+        <div class="xp-gain">+50 XP 🌟 شكراً على مشاركتك!</div>
+        <div class="success-title">تم رفع منشورك بنجاح!</div>
+        <div class="success-sub">منشورك قيد المراجعة الآن وسيُنشر خلال فترة قصيرة</div>
+        <div class="success-actions">
+          <a href="/browse.html" class="success-btn success-btn-primary">🔍 تصفح المنشورات</a>
+          <button onclick="resetForm()" class="success-btn success-btn-secondary">➕ رفع منشور جديد</button>
+          <a href="/index.html" class="success-btn success-btn-secondary">🏠 الرئيسية</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SCROLL TOP -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// AUTH HELPERS
+// ═══════════════════════════════════════════
+function getToken() { return localStorage.getItem('token') || null; }
+function authHeader() {
+    const t = getToken();
+    return t ? { 'Authorization': `Bearer ${t}` } : {};
+}
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let currentUser = null;
+let selectedFile = null;
+let selectedImages = [];
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  // Auth check — require both token and user object
+  try { currentUser = JSON.parse(localStorage.getItem('user')); } catch(e){}
+  const token = getToken();
+
+  if (!currentUser || !token) {
+    document.getElementById('authWall').style.display = 'block';
+    document.getElementById('formSection').style.display = 'none';
+  }
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
+    document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 400);
+  });
+
+  document.getElementById('title').addEventListener('input', function() {
+    document.getElementById('titleCount').textContent = this.value.length;
+    updateReview();
+  });
+  document.getElementById('description').addEventListener('input', function() {
+    document.getElementById('descCount').textContent = this.value.length;
+    updateReview();
+  });
+
+  ['branch','year','subject','type','teacherName'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('change', updateReview);
+  });
+
+  initFileZone();
+  initImgZone();
+  initYoutube();
+
+  document.getElementById('uploadForm').addEventListener('submit', handleSubmit);
+});
+
+// ═══════════════════════════════════════════
+// FILE ZONE
+// ═══════════════════════════════════════════
+function initFileZone() {
+  const zone  = document.getElementById('fileZone');
+  const input = document.getElementById('fileInput');
+
+  input.addEventListener('change', e => { if(e.target.files[0]) pickFile(e.target.files[0]); });
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    if(e.dataTransfer.files[0]) pickFile(e.dataTransfer.files[0]);
+  });
+}
+
+function pickFile(file) {
+  if(file.size > 50*1024*1024) { showToast('حجم الملف يتجاوز 50 MB','error'); return; }
+  selectedFile = file;
+  document.getElementById('fileIcon').textContent = getFileIcon(file.name);
+  document.getElementById('fileName').textContent = file.name;
+  document.getElementById('fileSize').textContent = fmtSize(file.size);
+  document.getElementById('filePreview').classList.add('show');
+  document.getElementById('fileZone').classList.add('has-file');
+  showToast('تم اختيار الملف ✅','success');
+  updateReview();
+}
+
+function removeFile() {
+  selectedFile = null;
+  document.getElementById('fileInput').value = '';
+  document.getElementById('filePreview').classList.remove('show');
+  document.getElementById('fileZone').classList.remove('has-file');
+  updateReview();
+}
+
+function getFileIcon(name) {
+  const ext = name.split('.').pop().toLowerCase();
+  const map = {pdf:'📄',doc:'📝',docx:'📝',ppt:'📊',pptx:'📊',xls:'📈',xlsx:'📈',zip:'🗜️',rar:'🗜️',txt:'📃'};
+  return map[ext] || '📁';
+}
+
+// ═══════════════════════════════════════════
+// IMAGE ZONE
+// ═══════════════════════════════════════════
+function initImgZone() {
+  const zone  = document.getElementById('imgZone');
+  const input = document.getElementById('imageInput');
+
+  input.addEventListener('change', e => { if(e.target.files.length) pickImages(Array.from(e.target.files)); input.value = ''; });
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    pickImages(Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')));
+  });
+}
+
+function pickImages(files) {
+  if(selectedImages.length + files.length > 10) { showToast('الحد الأقصى 10 صور','error'); return; }
+  const oversized = files.filter(f => f.size > 5*1024*1024);
+  if(oversized.length) { showToast('بعض الصور تتجاوز 5 MB','error'); return; }
+  selectedImages.push(...files.filter(f => f.type.startsWith('image/')));
+  renderImgPreviews();
+  showToast(`تم إضافة ${files.length} صورة 🖼️`,'success');
+  updateReview();
+}
+
+function renderImgPreviews() {
+  const wrap    = document.getElementById('imgGalleryPreview');
+  const badge   = document.getElementById('imgCountBadge');
+  const countEl = document.getElementById('imgCount');
+  if(selectedImages.length === 0) { wrap.innerHTML=''; badge.style.display='none'; return; }
+  badge.style.display = 'inline-flex';
+  countEl.textContent = selectedImages.length;
+  wrap.innerHTML = '';
+  selectedImages.forEach((f,i) => {
+    const url = URL.createObjectURL(f);
+    const div = document.createElement('div');
+    div.className = 'img-prev-item';
+    div.innerHTML = `<img src="${url}" loading="lazy"><span class="img-prev-num">${i===0?'🏠':i+1}</span><button type="button" class="img-prev-remove" onclick="removeImage(${i})">✕</button>`;
+    wrap.appendChild(div);
+  });
+}
+
+function removeImage(i) {
+  selectedImages.splice(i,1);
+  renderImgPreviews();
+  updateReview();
+}
+
+// ═══════════════════════════════════════════
+// YOUTUBE
+// ═══════════════════════════════════════════
+function initYoutube() {
+  let ytTimer;
+  document.getElementById('youtubeLink').addEventListener('input', function() {
+    clearTimeout(ytTimer);
+    const val = this.value.trim();
+    if(!val) { document.getElementById('ytPreview').classList.remove('show'); updateReview(); return; }
+    ytTimer = setTimeout(() => checkYt(val), 600);
+  });
+}
+
+function checkYt(url) {
+  const id      = getYtId(url);
+  const preview = document.getElementById('ytPreview');
+  if(id) {
+    document.getElementById('ytThumb').src = `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+    document.getElementById('ytInfo').textContent = '✅ رابط يوتيوب صالح - سيظهر الفيديو للطلاب';
+    preview.classList.add('show');
+    showToast('رابط يوتيوب صالح ✅','success');
+    updateReview();
+  } else {
+    document.getElementById('ytInfo').textContent = '⚠️ رابط غير صالح، تأكد من صحة الرابط';
+    preview.classList.add('show');
+  }
+}
+
+function getYtId(url) {
+  const m = url.match(/(?:youtu\.be\/|v=|embed\/)([^#&?]{11})/);
+  return m ? m[1] : '';
+}
+
+// ═══════════════════════════════════════════
+// LIVE REVIEW SUMMARY
+// ═══════════════════════════════════════════
+function updateReview() {
+  const fields = {
+    title:   document.getElementById('title').value,
+    branch:  document.getElementById('branch').value,
+    year:    document.getElementById('year').value,
+    subject: document.getElementById('subject').value,
+    type:    document.getElementById('type').value,
+    teacher: document.getElementById('teacherName').value,
+    yt:      document.getElementById('youtubeLink').value
+  };
+
+  const items = [
+    { label:'العنوان', val: fields.title || '—', icon:'📋' },
+    { label:'الشعبة',  val: fields.branch || '—', icon:'🏫' },
+    { label:'السنة',   val: fields.year || '—', icon:'📅' },
+    { label:'المادة',  val: fields.subject || '—', icon:'📖' },
+    { label:'النوع',   val: fields.type || '—', icon:'🗂️' },
+    { label:'الأستاذ', val: fields.teacher || 'غير محدد', icon:'🎓' },
+    { label:'الملف',   val: selectedFile ? selectedFile.name.substring(0,25)+'…' : 'لا يوجد', icon:'📎' },
+    { label:'الصور',   val: selectedImages.length > 0 ? `${selectedImages.length} صورة` : 'لا توجد', icon:'🖼️' },
+    { label:'يوتيوب',  val: fields.yt && getYtId(fields.yt) ? 'مُضاف ✅' : 'لا يوجد', icon:'▶️' },
+  ];
+
+  document.getElementById('reviewContent').innerHTML = items.map(item => `
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:10px;border:1px solid var(--glass-border)">
+      <span style="font-size:16px">${item.icon}</span>
+      <div>
+        <div style="font-size:10px;color:var(--text-muted);font-weight:600">${item.label}</div>
+        <div style="font-size:12px;color:#fff;font-weight:700">${item.val || '—'}</div>
+      </div>
+    </div>`).join('');
+
+  const hasBasic   = fields.title && fields.branch && fields.year && fields.subject && fields.type;
+  const hasContent = selectedFile || selectedImages.length > 0 || (fields.yt && getYtId(fields.yt));
+  updateSteps(hasBasic, hasContent);
+}
+
+function updateSteps(hasBasic, hasContent) {
+  const s1 = document.getElementById('step1el');
+  const s2 = document.getElementById('step2el');
+  const s3 = document.getElementById('step3el');
+  s1.className = hasBasic ? 'step done' : 'step active';
+  s1.querySelector('.step-circle').textContent = hasBasic ? '✓' : '1';
+  s2.className = hasBasic ? (hasContent ? 'step done' : 'step active') : 'step';
+  s2.querySelector('.step-circle').textContent = hasContent ? '✓' : '2';
+  s3.className = (hasBasic && hasContent) ? 'step active' : 'step';
+}
+
+// ═══════════════════════════════════════════
+// VALIDATION
+// ═══════════════════════════════════════════
+function validate() {
+  let ok = true;
+  const required = [
+    {id:'title',   errId:'titleErr',   min:3},
+    {id:'branch',  errId:'branchErr'},
+    {id:'year',    errId:'yearErr'},
+    {id:'subject', errId:'subjectErr'},
+    {id:'type',    errId:'typeErr'},
+  ];
+
+  required.forEach(({id,errId,min}) => {
+    const el   = document.getElementById(id);
+    const err  = document.getElementById(errId);
+    const val  = el.value.trim();
+    const invalid = !val || (min && val.length < min);
+    el.classList.toggle('error', invalid);
+    err.classList.toggle('show', invalid);
+    if(invalid) ok = false;
+  });
+
+  const ytVal = document.getElementById('youtubeLink').value.trim();
+  if(!selectedFile && selectedImages.length===0 && !ytVal) {
+    showToast('يجب إضافة ملف أو صور أو رابط يوتيوب على الأقل','error');
+    ok = false;
+  }
+  return ok;
+}
+
+// ═══════════════════════════════════════════
+// SUBMIT  —  includes Authorization header
+// ═══════════════════════════════════════════
+async function handleSubmit(e) {
+  e.preventDefault();
+  if(!validate()) { window.scrollTo({top:0,behavior:'smooth'}); return; }
+
+  const btn         = document.getElementById('submitBtn');
+  const progSection = document.getElementById('progressSection');
+  const fill        = document.getElementById('progressFill');
+  const pct         = document.getElementById('progressPct');
+  const lbl         = document.getElementById('progressLabel');
+
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span><span>جاري الرفع...</span>';
+  progSection.classList.add('show');
+
+  let p = 0;
+  const tick = setInterval(() => {
+    p += Math.random() * 12;
+    if(p > 85) p = 85;
+    fill.style.width = p + '%';
+    pct.textContent  = Math.round(p) + '%';
+    if(p > 30) { document.getElementById('pstep1').className='progress-step done'; document.getElementById('pstep2').className='progress-step active'; }
+    if(p > 70) { document.getElementById('pstep2').className='progress-step done'; document.getElementById('pstep3').className='progress-step active'; }
+  }, 180);
+
+  const fd = new FormData();
+  if(selectedFile) fd.append('file', selectedFile);
+  selectedImages.forEach(img => fd.append('images', img));
+  fd.append('title',       document.getElementById('title').value.trim());
+  fd.append('description', document.getElementById('description').value.trim());
+  fd.append('branch',      document.getElementById('branch').value);
+  fd.append('year',        document.getElementById('year').value);
+  fd.append('subject',     document.getElementById('subject').value);
+  fd.append('type',        document.getElementById('type').value);
+  fd.append('teacherName', document.getElementById('teacherName').value.trim());
+  fd.append('youtubeLink', document.getElementById('youtubeLink').value.trim());
+  // userName sent for display; real user identity validated server-side via JWT
+  fd.append('userName', currentUser.name);
+
+  try {
+    // ✅ Send JWT in Authorization header
+    const res  = await fetch('/api/upload', {
+      method:  'POST',
+      headers: authHeader(),   // Authorization: Bearer <token>
+      body:    fd
+    });
+    const data = await res.json();
+
+    clearInterval(tick);
+    fill.style.width = '100%';
+    pct.textContent  = '100%';
+    lbl.textContent  = 'تم الرفع!';
+    document.getElementById('pstep3').className = 'progress-step done';
+    document.getElementById('step4el').className = 'step done';
+
+    if(data.success) {
+      setTimeout(() => {
+        progSection.classList.remove('show');
+        document.getElementById('uploadForm').style.display = 'none';
+        document.querySelector('.tips-box').style.display = 'none';
+        document.getElementById('successScreen').classList.add('show');
+        window.scrollTo({top:0,behavior:'smooth'});
+      }, 600);
+    } else {
+      // Handle expired token
+      if(res.status === 401 || res.status === 403) {
+        showToast('انتهت جلستك، يرجى تسجيل الدخول مجدداً', 'error');
+        setTimeout(() => { window.location.href = '/login.html'; }, 1500);
+      } else {
+        throw new Error(data.error || 'failed');
+      }
+    }
+  } catch(err) {
+    clearInterval(tick);
+    progSection.classList.remove('show');
+    fill.style.width = '0%';
+    btn.disabled = false;
+    btn.innerHTML = '<span>🚀</span><span>رفع المنشور الآن</span>';
+    showToast('خطأ في الرفع، يرجى المحاولة مجدداً','error');
+  }
+}
+
+// ═══════════════════════════════════════════
+// RESET
+// ═══════════════════════════════════════════
+function resetForm() {
+  selectedFile = null;
+  selectedImages = [];
+  document.getElementById('uploadForm').reset();
+  document.getElementById('uploadForm').style.display = 'block';
+  document.querySelector('.tips-box').style.display = 'block';
+  document.getElementById('successScreen').classList.remove('show');
+  document.getElementById('filePreview').classList.remove('show');
+  document.getElementById('fileZone').classList.remove('has-file');
+  document.getElementById('imgGalleryPreview').innerHTML = '';
+  document.getElementById('imgCountBadge').style.display = 'none';
+  document.getElementById('ytPreview').classList.remove('show');
+  document.getElementById('titleCount').textContent = '0';
+  document.getElementById('descCount').textContent  = '0';
+  document.querySelectorAll('.err-msg').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('.form-input,.form-select').forEach(e => e.classList.remove('error'));
+  updateReview();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════
+function fmtSize(b) {
+  if(b < 1024)    return b+' B';
+  if(b < 1048576) return (b/1024).toFixed(1)+' KB';
+  return (b/1048576).toFixed(1)+' MB';
+}
+
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.innerHTML = `${type==='success'?'✅':'❌'} ${msg}`;
+  t.className = `toast ${type} show`;
+  clearTimeout(t._t);
+  t._t = setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+// ═══════════════════════════════════════════
+// THEME
+// ═══════════════════════════════════════════
+let themeLink = document.createElement('link');
+themeLink.rel = 'stylesheet';
+themeLink.id  = 'theme-stylesheet';
+document.head.appendChild(themeLink);
+
+const themes = {
+    'default':    '',
+    'ultra-dark': 'upload-theme-ultra-dark.css',
+    'light':      'upload-theme-light.css'
+};
+
+let currentTheme = localStorage.getItem('selectedTheme') || 'default';
+
+function applyTheme(themeName) {
+    themeLink.href = themes[themeName] || '';
+    currentTheme   = themeName;
+    localStorage.setItem('selectedTheme', themeName);
+    updateThemeButtonText();
+}
+
+function switchTheme() {
+    const order = ['default', 'ultra-dark', 'light'];
+    applyTheme(order[(order.indexOf(currentTheme) + 1) % order.length]);
+}
+
+function updateThemeButtonText() {
+    const btn = document.getElementById('theme-toggle-btn');
+    if (!btn) return;
+    btn.textContent = { 'default': '🎨 الثيم الافتراضي', 'ultra-dark': '⚫ الثيم الداكن', 'light': '☀️ الثيم الفاتح' }[currentTheme] || '🎨 الثيم';
+}
+
+applyTheme(currentTheme);
+
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('theme-toggle-btn');
+    if (btn) btn.addEventListener('click', switchTheme);
+});
+
+// ═══════════════════════════════════════════
+// USER NAV
+// ═══════════════════════════════════════════
+function renderUserNav() {
+    const area = document.getElementById('userNavArea');
+    if (!area) return;
+
+    const raw = localStorage.getItem('user');
+    if (!raw) {
+        area.innerHTML = `<a href="/login.html" class="login-nav-btn"><span>🔑</span><span>تسجيل الدخول</span></a>`;
+        return;
+    }
+
+    let user;
+    try { user = JSON.parse(raw); } catch { localStorage.removeItem('user'); renderUserNav(); return; }
+
+    const name        = user.name || 'مستخدم';
+    const role        = user.role === 'admin' ? 'مسؤول النظام' : 'طالب';
+    const firstLetter = name.trim().charAt(0).toUpperCase();
+    const avatar      = user.avatar || user.profileImage || null;
+
+    const avatarHtml = avatar
+        ? `<img src="${avatar}" class="user-avatar-circle" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="user-avatar-default" style="display:none;">${firstLetter}</div>`
+        : `<div class="user-avatar-default">${firstLetter}</div>`;
+
+    area.innerHTML = `
+        <div class="user-nav-wrapper" id="userNavWrapper">
+            <div class="user-avatar-btn" id="userAvatarToggle" title="${name}">${avatarHtml}</div>
+            <div class="user-dropdown-menu">
+                <div class="dropdown-user-info">
+                    <div class="dropdown-user-name">${name}</div>
+                    <div class="dropdown-user-role">${role}</div>
+                </div>
+                <a href="/profile.html" class="dropdown-item"><span>👤</span><span>بيانات الحساب</span></a>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item danger" onclick="logoutUser()"><span>🚪</span><span>تسجيل الخروج</span></button>
+            </div>
+        </div>`;
+
+    const wrapper = document.getElementById('userNavWrapper');
+    document.getElementById('userAvatarToggle').addEventListener('click', e => { e.stopPropagation(); wrapper.classList.toggle('open'); });
+    document.addEventListener('click', e => { if(wrapper && !wrapper.contains(e.target)) wrapper.classList.remove('open'); });
+    document.addEventListener('keydown', e => { if(e.key === 'Escape' && wrapper) wrapper.classList.remove('open'); });
+}
+
+function logoutUser() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    sessionStorage.clear();
+    window.location.href = '/login.html';
+}
+
+renderUserNav();
+</script>
+</body>
+</html>

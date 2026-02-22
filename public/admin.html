@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم — منصة الطلاب التونسيين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+
+/* ════════════════════════════════════════
+   CSS VARIABLES — LIGHT & DARK THEMES
+   ════════════════════════════════════════ */
+:root {
+  /* Light Theme */
+  --bg-base:        #e8edf5;
+  --bg-layer:       rgba(255,255,255,0.55);
+  --bg-layer-hover: rgba(255,255,255,0.75);
+  --bg-deep:        rgba(255,255,255,0.35);
+  --glass-border:   rgba(255,255,255,0.70);
+  --glass-border-2: rgba(255,255,255,0.40);
+  --glass-shadow:   0 8px 32px rgba(99,122,180,0.18), 0 1.5px 0 rgba(255,255,255,0.9) inset;
+  --glass-shadow-hover: 0 16px 48px rgba(99,122,180,0.28), 0 1.5px 0 rgba(255,255,255,0.9) inset;
+  --text-primary:   #1a2340;
+  --text-secondary: #4a5980;
+  --text-muted:     #8896b3;
+  --accent:         #4f7ef5;
+  --accent-2:       #a78bfa;
+  --accent-grad:    linear-gradient(135deg, #4f7ef5, #a78bfa);
+  --green:          #10b981;
+  --red:            #ef4444;
+  --orange:         #f59e0b;
+  --noise-opacity:  0.03;
+  --shimmer:        rgba(255,255,255,0.6);
+  --divider:        rgba(99,122,180,0.15);
+  --badge-bg:       rgba(79,126,245,0.12);
+  --badge-green:    rgba(16,185,129,0.12);
+  --scrollbar-thumb: rgba(99,122,180,0.3);
+}
+
+[data-theme="dark"] {
+  --bg-base:        #0d1117;
+  --bg-layer:       rgba(255,255,255,0.05);
+  --bg-layer-hover: rgba(255,255,255,0.09);
+  --bg-deep:        rgba(255,255,255,0.03);
+  --glass-border:   rgba(255,255,255,0.12);
+  --glass-border-2: rgba(255,255,255,0.07);
+  --glass-shadow:   0 8px 32px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.07) inset;
+  --glass-shadow-hover: 0 16px 48px rgba(0,0,0,0.7), 0 1px 0 rgba(255,255,255,0.1) inset;
+  --text-primary:   #e8edf8;
+  --text-secondary: #8896b3;
+  --text-muted:     #4a5980;
+  --accent:         #6b9bff;
+  --accent-2:       #c4b5fd;
+  --accent-grad:    linear-gradient(135deg, #6b9bff, #c4b5fd);
+  --green:          #34d399;
+  --red:            #f87171;
+  --orange:         #fbbf24;
+  --noise-opacity:  0.06;
+  --shimmer:        rgba(255,255,255,0.04);
+  --divider:        rgba(255,255,255,0.08);
+  --badge-bg:       rgba(107,155,255,0.15);
+  --badge-green:    rgba(52,211,153,0.15);
+  --scrollbar-thumb: rgba(107,155,255,0.25);
+}
+
+/* ════════════════════════════════════════
+   RESET & BASE
+   ════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.4s ease, color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ════════════════════════════════════════
+   BACKGROUND MESH
+   ════════════════════════════════════════ */
+.bg-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-mesh::before {
+  content: '';
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  top: -10%;
+  left: -10%;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(79,126,245,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 15%, rgba(167,139,250,0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 40% at 50% 90%, rgba(16,185,129,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 85% 70%, rgba(245,158,11,0.08) 0%, transparent 50%);
+  animation: meshDrift 20s ease-in-out infinite alternate;
+}
+
+[data-theme="dark"] .bg-mesh::before {
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(107,155,255,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 15%, rgba(196,181,253,0.09) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 40% at 50% 90%, rgba(52,211,153,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 85% 70%, rgba(251,191,36,0.06) 0%, transparent 50%);
+}
+
+.bg-mesh::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg,   transparent, transparent 39px, var(--divider) 40px),
+    repeating-linear-gradient(90deg,  transparent, transparent 39px, var(--divider) 40px);
+  opacity: 0.5;
+}
+
+@keyframes meshDrift {
+  0%   { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.05) rotate(1.5deg); }
+}
+
+/* ════════════════════════════════════════
+   SCROLLBAR
+   ════════════════════════════════════════ */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 10px; }
+
+/* ════════════════════════════════════════
+   GLASS MIXIN (reusable card style)
+   ════════════════════════════════════════ */
+.glass {
+  background: var(--bg-layer);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--shimmer) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass > * { position: relative; z-index: 1; }
+
+.glass:hover {
+  background: var(--bg-layer-hover);
+  box-shadow: var(--glass-shadow-hover);
+}
+
+/* ════════════════════════════════════════
+   HEADER / NAV
+   ════════════════════════════════════════ */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 12px 0;
+  background: var(--bg-layer);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  transition: background 0.4s;
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-orb {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--accent-grad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 18px rgba(79,126,245,0.4);
+  flex-shrink: 0;
+  animation: orbPulse 4s ease-in-out infinite;
+}
+
+@keyframes orbPulse {
+  0%, 100% { box-shadow: 0 4px 18px rgba(79,126,245,0.4); }
+  50%       { box-shadow: 0 4px 28px rgba(79,126,245,0.65); }
+}
+
+.logo-text-wrap { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-title { font-size: 16px; font-weight: 800; color: var(--text-primary); }
+.logo-sub   { font-size: 11px; font-weight: 500; color: var(--text-muted); }
+
+/* Nav actions */
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border-2);
+  background: var(--bg-layer);
+  backdrop-filter: blur(12px);
+  color: var(--text-secondary);
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  background: var(--bg-layer-hover);
+  color: var(--text-primary);
+  border-color: var(--glass-border);
+  transform: translateY(-2px);
+}
+
+.nav-btn.logout {
+  background: rgba(239,68,68,0.12);
+  border-color: rgba(239,68,68,0.25);
+  color: var(--red);
+}
+.nav-btn.logout:hover {
+  background: rgba(239,68,68,0.22);
+  transform: translateY(-2px);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-layer);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.35s cubic-bezier(.34,1.56,.64,1);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent-grad);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.theme-toggle:hover {
+  transform: rotate(20deg) scale(1.1);
+  box-shadow: 0 0 20px rgba(79,126,245,0.35);
+}
+.theme-toggle:hover::after { opacity: 0.1; }
+
+.toggle-icon { transition: transform 0.4s ease; display: block; }
+
+/* Admin Badge */
+.admin-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: var(--badge-bg);
+  border: 1px solid rgba(79,126,245,0.25);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* ════════════════════════════════════════
+   MAIN CONTAINER
+   ════════════════════════════════════════ */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 110px 32px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ════════════════════════════════════════
+   PAGE HEADER
+   ════════════════════════════════════════ */
+.page-header {
+  margin-bottom: 40px;
+  animation: slideUp 0.6s ease both;
+}
+
+.page-header-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.page-title-group {}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 2px;
+  background: var(--accent-grad);
+  border-radius: 2px;
+}
+
+.page-title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 900;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.page-subtitle {
+  font-size: 15px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-layer);
+  backdrop-filter: blur(12px);
+  color: var(--text-secondary);
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.refresh-btn:hover {
+  background: var(--bg-layer-hover);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+.refresh-btn:hover .refresh-icon { transform: rotate(180deg); }
+.refresh-icon { transition: transform 0.5s ease; display: inline-block; }
+
+/* ════════════════════════════════════════
+   STATS GRID
+   ════════════════════════════════════════ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  padding: 28px 24px;
+  border-radius: 20px;
+  animation: slideUp 0.6s ease both;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.05s; }
+.stat-card:nth-child(2) { animation-delay: 0.10s; }
+.stat-card:nth-child(3) { animation-delay: 0.15s; }
+.stat-card:nth-child(4) { animation-delay: 0.20s; }
+
+.stat-card:hover { transform: translateY(-6px); }
+
+.stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.stat-icon-wrap {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.stat-icon-wrap.blue   { background: rgba(79,126,245,0.15);  border: 1px solid rgba(79,126,245,0.25); }
+.stat-icon-wrap.purple { background: rgba(167,139,250,0.15); border: 1px solid rgba(167,139,250,0.25); }
+.stat-icon-wrap.green  { background: rgba(16,185,129,0.15);  border: 1px solid rgba(16,185,129,0.25); }
+.stat-icon-wrap.orange { background: rgba(245,158,11,0.15);  border: 1px solid rgba(245,158,11,0.25); }
+
+.stat-trend {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 8px;
+}
+.stat-trend.up   { background: rgba(16,185,129,0.12);  color: var(--green); }
+.stat-trend.down { background: rgba(239,68,68,0.12);   color: var(--red); }
+.stat-trend.neu  { background: var(--badge-bg); color: var(--accent); }
+
+.stat-value {
+  font-size: 38px;
+  font-weight: 900;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 4px;
+  counter-reset: counter;
+}
+
+.stat-label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+
+/* ════════════════════════════════════════
+   SECTION PANELS
+   ════════════════════════════════════════ */
+.panel {
+  padding: 32px;
+  border-radius: 24px;
+  margin-bottom: 28px;
+  animation: slideUp 0.7s ease both;
+}
+
+.panel:nth-child(1) { animation-delay: 0.25s; }
+.panel:nth-child(2) { animation-delay: 0.35s; }
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.panel-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.panel-title-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.panel-title-icon.pending  { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.25); }
+.panel-title-icon.approved { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.25); }
+
+.panel-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.panel-count.pending-count  { background: rgba(245,158,11,0.15); color: var(--orange); }
+.panel-count.approved-count { background: rgba(16,185,129,0.15); color: var(--green); }
+
+/* ════════════════════════════════════════
+   POST CARDS
+   ════════════════════════════════════════ */
+.posts-grid { display: grid; gap: 16px; }
+
+.post-card {
+  background: var(--bg-deep);
+  border: 1px solid var(--glass-border-2);
+  border-radius: 18px;
+  padding: 22px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.post-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 0 18px 18px 0;
+  background: var(--accent-grad);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.post-card:hover {
+  background: var(--bg-layer);
+  border-color: rgba(79,126,245,0.25);
+  transform: translateX(-4px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+}
+
+.post-card:hover::before { opacity: 1; }
+
+.post-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.post-title-wrap { flex: 1; min-width: 0; }
+
+.post-pin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--orange);
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.25);
+  padding: 3px 9px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+}
+
+.post-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.post-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.badge-blue   { background: var(--badge-bg); color: var(--accent); border: 1px solid rgba(79,126,245,0.2); }
+.badge-green  { background: var(--badge-green); color: var(--green); border: 1px solid rgba(16,185,129,0.2); }
+.badge-orange { background: rgba(245,158,11,0.12); color: var(--orange); border: 1px solid rgba(245,158,11,0.2); }
+
+/* Meta row */
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-bottom: 14px;
+}
+
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.meta-chip .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/* Description */
+.post-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Image previews */
+.post-images {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.post-img-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid var(--glass-border-2);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.post-img-thumb:hover { transform: scale(1.05); }
+
+.post-img-more {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  background: var(--bg-layer);
+  border: 1px solid var(--glass-border-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Action row */
+.post-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--divider);
+}
+
+/* ════════════════════════════════════════
+   BUTTONS
+   ════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border: none;
+  border-radius: 11px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(.34,1.56,.64,1);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.btn:hover::after { opacity: 1; }
+
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(0.97); }
+
+.btn-approve {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(16,185,129,0.35);
+}
+.btn-approve:hover { box-shadow: 0 6px 22px rgba(16,185,129,0.55); }
+
+.btn-reject {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(239,68,68,0.35);
+}
+.btn-reject:hover { box-shadow: 0 6px 22px rgba(239,68,68,0.55); }
+
+.btn-delete {
+  background: rgba(239,68,68,0.12);
+  color: var(--red);
+  border: 1px solid rgba(239,68,68,0.25);
+}
+.btn-delete:hover {
+  background: rgba(239,68,68,0.22);
+  box-shadow: 0 4px 14px rgba(239,68,68,0.2);
+}
+
+.btn-pin {
+  background: rgba(245,158,11,0.12);
+  color: var(--orange);
+  border: 1px solid rgba(245,158,11,0.25);
+}
+.btn-pin:hover {
+  background: rgba(245,158,11,0.22);
+  box-shadow: 0 4px 14px rgba(245,158,11,0.2);
+}
+
+.btn-view {
+  background: var(--badge-bg);
+  color: var(--accent);
+  border: 1px solid rgba(79,126,245,0.25);
+}
+.btn-view:hover {
+  background: rgba(79,126,245,0.22);
+  box-shadow: 0 4px 14px rgba(79,126,245,0.2);
+}
+
+/* ════════════════════════════════════════
+   EMPTY STATE
+   ════════════════════════════════════════ */
+.empty-state {
+  text-align: center;
+  padding: 64px 24px;
+}
+
+.empty-orb {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--bg-layer);
+  border: 1px solid var(--glass-border-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin: 0 auto 20px;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 15px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ════════════════════════════════════════
+   TOAST NOTIFICATIONS
+   ════════════════════════════════════════ */
+.toast-container {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: 14px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Cairo', sans-serif;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  pointer-events: all;
+  animation: toastIn 0.4s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+.toast.success { background: rgba(16,185,129,0.18); border: 1px solid rgba(16,185,129,0.35); color: var(--green); }
+.toast.error   { background: rgba(239,68,68,0.18);  border: 1px solid rgba(239,68,68,0.35);  color: var(--red); }
+.toast.info    { background: var(--badge-bg); border: 1px solid rgba(79,126,245,0.3); color: var(--accent); }
+
+@keyframes toastIn  { from { opacity:0; transform: translateY(-16px) scale(0.9); } }
+@keyframes toastOut { to   { opacity:0; transform: translateY(-16px) scale(0.9); } }
+
+/* ════════════════════════════════════════
+   CONFIRM DIALOG
+   ════════════════════════════════════════ */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+  z-index: 8000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.dialog-overlay.hidden { display: none; }
+
+.dialog-box {
+  max-width: 420px;
+  width: 100%;
+  padding: 36px;
+  border-radius: 24px;
+  text-align: center;
+  animation: slideUp 0.35s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+.dialog-icon {
+  font-size: 52px;
+  margin-bottom: 16px;
+}
+
+.dialog-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.dialog-msg {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.dialog-btns { display: flex; gap: 10px; justify-content: center; }
+
+.dialog-btns .btn { min-width: 120px; justify-content: center; }
+
+/* ════════════════════════════════════════
+   ANIMATIONS
+   ════════════════════════════════════════ */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Loading skeleton */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-layer) 25%, var(--bg-layer-hover) 50%, var(--bg-layer) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 10px;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .nav-container { padding: 0 18px; }
+  .container { padding: 95px 18px 50px; }
+  .logo-text-wrap { display: none; }
+  .admin-badge { display: none; }
+  .post-card-top { flex-direction: column; }
+  .panel { padding: 20px; }
+  .post-actions { flex-direction: column; }
+  .post-actions .btn { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stat-card  { padding: 20px 16px; }
+  .stat-value { font-size: 28px; }
+}
+
+/* ════════════════════════════════════════
+   REPORTS PANEL
+   ════════════════════════════════════════ */
+.report-card {
+  background: var(--bg-layer);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 18px;
+  padding: 20px 22px;
+  margin-bottom: 14px;
+  transition: all 0.25s ease;
+}
+.report-card:hover {
+  background: var(--bg-layer-hover);
+  border-color: rgba(239,68,68,0.35);
+  box-shadow: 0 6px 22px rgba(239,68,68,0.1);
+}
+.report-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.report-type-badge {
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.report-type-post    { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.25); }
+.report-type-comment { background: rgba(245,158,11,0.15); color: var(--orange); border: 1px solid rgba(245,158,11,0.25); }
+.report-by { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+.report-time { font-size: 11px; color: var(--text-muted); margin-right: auto; }
+.report-reason-label { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+.report-reason-text  { font-size: 13px; color: var(--text-primary); font-weight: 600; line-height: 1.5; margin-bottom: 12px; }
+.report-content-box  { background: var(--bg-deep); border: 1px solid var(--glass-border-2); border-radius: 12px; padding: 12px 16px; margin-bottom: 14px; }
+.report-content-label { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
+.report-content-text  { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+.report-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-report-delete  { background: rgba(239,68,68,0.12); color: var(--red); border: 1px solid rgba(239,68,68,0.25); }
+.btn-report-delete:hover  { background: rgba(239,68,68,0.22); box-shadow: 0 4px 14px rgba(239,68,68,0.2); }
+.btn-report-ignore  { background: var(--bg-deep); color: var(--text-muted); border: 1px solid var(--glass-border-2); }
+.btn-report-ignore:hover  { background: var(--bg-layer-hover); color: var(--text-secondary); }
+.btn-report-view    { background: var(--badge-bg); color: var(--accent); border: 1px solid rgba(79,126,245,0.25); }
+.btn-report-view:hover    { background: rgba(79,126,245,0.22); }
+.panel-title-icon.reports { background: rgba(239,68,68,0.12); color: var(--red); }
+
+</style>
+
+<!-- ── Background Mesh ─────────────────── -->
+<div class="bg-mesh"></div>
+
+<!-- ── Confirm Dialog ─────────────────── -->
+<div class="dialog-overlay hidden" id="confirmDialog">
+  <div class="dialog-box glass">
+    <div class="dialog-icon" id="dialogIcon">⚠️</div>
+    <div class="dialog-title" id="dialogTitle">تأكيد الإجراء</div>
+    <div class="dialog-msg" id="dialogMsg">هل أنت متأكد؟</div>
+    <div class="dialog-btns">
+      <button class="btn btn-view" id="dialogCancel">إلغاء</button>
+      <button class="btn btn-approve" id="dialogConfirm">تأكيد</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast Container ─────────────────── -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ══════════════════════════════════════
+     HEADER
+     ══════════════════════════════════════ -->
+<header class="header">
+  <div class="nav-container">
+    <a href="/" class="logo">
+      <div class="logo-orb">📚</div>
+      <div class="logo-text-wrap">
+        <span class="logo-title">منصة الطلاب</span>
+        <span class="logo-sub">لوحة التحكم</span>
+      </div>
+    </a>
+
+    <div class="nav-actions">
+      <span class="admin-badge">⚙️ ADMIN</span>
+      <a href="/" class="nav-btn">🏠 الرئيسية</a>
+      <button class="nav-btn logout" onclick="logout()">🚪 خروج</button>
+      <button class="theme-toggle" id="themeToggle" title="تبديل الثيم" aria-label="تبديل الثيم">
+        <span class="toggle-icon" id="toggleIcon">🌙</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     MAIN CONTENT
+     ══════════════════════════════════════ -->
+<main class="container">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="page-title-group">
+        <div class="eyebrow">لوحة الإدارة</div>
+        <h1 class="page-title">مرحباً بك، مسؤول 👋</h1>
+        <p class="page-subtitle">إدارة المنشورات والمحتوى لمنصة الطلاب التونسيين</p>
+      </div>
+      <button class="refresh-btn glass" onclick="refreshAll()">
+        <span class="refresh-icon">🔄</span>
+        تحديث البيانات
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid" id="statsGrid">
+    <!-- skeleton -->
+    <div class="stat-card glass">
+      <div class="skeleton" style="width:50px;height:50px;border-radius:15px;margin-bottom:18px;"></div>
+      <div class="skeleton" style="width:70px;height:38px;margin-bottom:8px;"></div>
+      <div class="skeleton" style="width:100px;height:14px;"></div>
+    </div>
+    <div class="stat-card glass">
+      <div class="skeleton" style="width:50px;height:50px;border-radius:15px;margin-bottom:18px;"></div>
+      <div class="skeleton" style="width:60px;height:38px;margin-bottom:8px;"></div>
+      <div class="skeleton" style="width:90px;height:14px;"></div>
+    </div>
+    <div class="stat-card glass">
+      <div class="skeleton" style="width:50px;height:50px;border-radius:15px;margin-bottom:18px;"></div>
+      <div class="skeleton" style="width:80px;height:38px;margin-bottom:8px;"></div>
+      <div class="skeleton" style="width:80px;height:14px;"></div>
+    </div>
+    <div class="stat-card glass">
+      <div class="skeleton" style="width:50px;height:50px;border-radius:15px;margin-bottom:18px;"></div>
+      <div class="skeleton" style="width:55px;height:38px;margin-bottom:8px;"></div>
+      <div class="skeleton" style="width:110px;height:14px;"></div>
+    </div>
+  </div>
+
+  <!-- Pending Posts Panel -->
+  <section class="panel glass">
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <div class="panel-title-icon pending">⏳</div>
+        المنشورات المعلقة
+        <span class="panel-count pending-count" id="pendingCount">…</span>
+      </h2>
+    </div>
+    <div class="posts-grid" id="pendingPosts">
+      <div class="empty-state">
+        <div class="empty-orb">⏳</div>
+        <p class="empty-text">جاري التحميل…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approved Posts Panel -->
+  <section class="panel glass">
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <div class="panel-title-icon approved">✅</div>
+        المنشورات المعتمدة
+        <span class="panel-count approved-count" id="approvedCount">…</span>
+      </h2>
+    </div>
+    <div class="posts-grid" id="approvedPosts">
+      <div class="empty-state">
+        <div class="empty-orb">⏳</div>
+        <p class="empty-text">جاري التحميل…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reports Panel -->
+  <section class="panel glass">
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <div class="panel-title-icon reports">🚩</div>
+        الإبلاغات
+        <span class="panel-count" id="reportsCount" style="background:rgba(239,68,68,0.12);color:var(--red);border-color:rgba(239,68,68,0.25)">…</span>
+      </h2>
+    </div>
+    <div id="reportsList">
+      <div class="empty-state">
+        <div class="empty-orb">⏳</div>
+        <p class="empty-text">جاري التحميل…</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+     ══════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ─── THEME ─────────────────────────── */
+(function initTheme() {
+  const saved = localStorage.getItem('adminTheme') || 'light';
+  applyTheme(saved, false);
+})();
+
+function applyTheme(mode, animate = true) {
+  const html = document.documentElement;
+  const icon = document.getElementById('toggleIcon');
+  if (animate) {
+    html.style.transition = 'none';
+    document.body.style.transition = 'background 0.45s ease, color 0.45s ease';
+  }
+  if (mode === 'dark') {
+    html.setAttribute('data-theme', 'dark');
+    if (icon) icon.textContent = '☀️';
+  } else {
+    html.removeAttribute('data-theme');
+    if (icon) icon.textContent = '🌙';
+  }
+  localStorage.setItem('adminTheme', mode);
+}
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  applyTheme(isDark ? 'light' : 'dark');
+});
+
+
+/* ─── TOAST ──────────────────────────── */
+function toast(msg, type = 'info', duration = 3200) {
+  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<span>${icons[type]}</span><span>${msg}</span>`;
+  const container = document.getElementById('toastContainer');
+  container.appendChild(el);
+  setTimeout(() => {
+    el.style.animation = 'toastOut 0.35s ease forwards';
+    setTimeout(() => el.remove(), 380);
+  }, duration);
+}
+
+/* ─── CONFIRM DIALOG ─────────────────── */
+let _confirmResolve = null;
+
+function confirm(msg, title = 'تأكيد الإجراء', icon = '⚠️') {
+  return new Promise(resolve => {
+    _confirmResolve = resolve;
+    document.getElementById('dialogIcon').textContent  = icon;
+    document.getElementById('dialogTitle').textContent = title;
+    document.getElementById('dialogMsg').textContent   = msg;
+    document.getElementById('confirmDialog').classList.remove('hidden');
+  });
+}
+
+document.getElementById('dialogCancel').addEventListener('click', () => {
+  document.getElementById('confirmDialog').classList.add('hidden');
+  if (_confirmResolve) _confirmResolve(false);
+});
+document.getElementById('dialogConfirm').addEventListener('click', () => {
+  document.getElementById('confirmDialog').classList.add('hidden');
+  if (_confirmResolve) _confirmResolve(true);
+});
+document.getElementById('confirmDialog').addEventListener('click', e => {
+  if (e.target === document.getElementById('confirmDialog')) {
+    document.getElementById('confirmDialog').classList.add('hidden');
+    if (_confirmResolve) _confirmResolve(false);
+  }
+});
+
+
+/* ─── AUTH ───────────────────────────── */
+let currentUser = null;
+
+function getToken() { return localStorage.getItem('token'); }
+function authHeader() {
+  const t = getToken();
+  return t ? { 'Content-Type': 'application/json', 'Authorization': `Bearer ${t}` } : { 'Content-Type': 'application/json' };
+}
+
+function checkAuth() {
+  const raw   = localStorage.getItem('user');
+  const token = getToken();
+  if (!raw || !token) { window.location.href = '/login.html'; return; }
+  try { currentUser = JSON.parse(raw); } catch { window.location.href = '/login.html'; return; }
+  if (currentUser.role !== 'admin') {
+    toast('ليس لديك صلاحيات الوصول', 'error');
+    setTimeout(() => window.location.href = '/', 1500);
+  }
+}
+
+function logout() {
+  confirm('هل تريد تسجيل الخروج من لوحة التحكم؟', 'تسجيل الخروج', '🚪')
+    .then(ok => {
+      if (!ok) return;
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      sessionStorage.clear();
+      window.location.href = '/login.html';
+    });
+}
+
+
+/* ─── API HELPERS ────────────────────── */
+async function apiFetch(url, options = {}) {
+  const res = await fetch(url, {
+    headers: authHeader(),
+    ...options,
+    // merge headers so caller options don't override auth
+    headers: { ...authHeader(), ...(options.headers || {}) }
+  });
+  if (res.status === 401 || res.status === 403) {
+    toast('انتهت جلستك، يرجى تسجيل الدخول مجدداً', 'error');
+    setTimeout(() => { localStorage.removeItem('user'); localStorage.removeItem('token'); window.location.href = '/login.html'; }, 1500);
+    throw new Error('Unauthorized');
+  }
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+
+/* ─── STATS ──────────────────────────── */
+async function loadStats() {
+  try {
+    const stats = await apiFetch('/api/stats');
+    const items = [
+      { icon: '📚', label: 'منشور معتمد',        val: stats.totalPosts    || 0, color: 'blue',   trend: 'up' },
+      { icon: '👥', label: 'مستخدم مسجل',         val: stats.totalUsers   || 0, color: 'purple', trend: 'up' },
+      { icon: '⬇️', label: 'إجمالي التحميلات',    val: stats.totalDownloads||0, color: 'green',  trend: 'up' },
+      { icon: '⏳', label: 'بانتظار الموافقة',    val: stats.pendingPosts || 0, color: 'orange', trend: stats.pendingPosts > 0 ? 'down' : 'neu' },
+    ];
+    document.getElementById('statsGrid').innerHTML = items.map((s, i) => `
+      <div class="stat-card glass" style="animation-delay:${i*0.07}s">
+        <div class="stat-top">
+          <div class="stat-icon-wrap ${s.color}">${s.icon}</div>
+          <span class="stat-trend ${s.trend}">${s.trend==='up'?'↑ نمو':s.trend==='down'?'↓ معلق':'— ثابت'}</span>
+        </div>
+        <div class="stat-value">${s.val.toLocaleString('ar')}</div>
+        <div class="stat-label">${s.label}</div>
+      </div>
+    `).join('');
+  } catch {
+    document.getElementById('statsGrid').innerHTML = `
+      <div class="stat-card glass" style="grid-column:1/-1">
+        <div class="empty-state"><div class="empty-orb">❌</div><p class="empty-text">فشل تحميل الإحصائيات</p></div>
+      </div>`;
+  }
+}
+
+
+/* ─── POST CARD RENDERER ─────────────── */
+function renderPostCard(post, type) {
+  const date = new Date(post.createdAt).toLocaleDateString('ar-TN', { year:'numeric', month:'long', day:'numeric' });
+  const hasFile    = post.fileUrl?.trim();
+  const hasImages  = post.imageUrls?.length > 0;
+  const hasVideo   = post.youtubeLink?.trim();
+  const hasTeacher = post.teacherName?.trim();
+  const hasDesc    = post.description?.trim();
+  const isPinned   = post.isPinned || false;
+
+  /* content badges */
+  const badgesHtml = [
+    hasFile   && `<span class="badge badge-blue">📄 ملف</span>`,
+    hasImages && `<span class="badge badge-blue">🖼️ ${post.imageUrls.length} صور</span>`,
+    hasVideo  && `<span class="badge badge-blue">🎥 فيديو</span>`,
+  ].filter(Boolean).join('');
+
+  /* images */
+  const imagesHtml = hasImages ? `
+    <div class="post-images">
+      ${post.imageUrls.slice(0,5).map(u => `<img src="${u}" class="post-img-thumb" alt="صورة" loading="lazy">`).join('')}
+      ${post.imageUrls.length > 5 ? `<div class="post-img-more">+${post.imageUrls.length-5}</div>` : ''}
+    </div>` : '';
+
+  /* meta chips */
+  const meta = [
+    { icon:'📚', val: post.subject },
+    { icon:'🎓', val: post.year },
+    { icon:'📖', val: post.branch || 'عام' },
+    { icon:'📝', val: post.type },
+    { icon:'👤', val: post.uploadedByName },
+    { icon:'📅', val: date },
+    ...(type==='approved' ? [
+      { icon:'👁️', val: `${post.views||0} مشاهدة` },
+      { icon:'⬇️', val: `${post.downloads||0} تحميل` },
+      { icon:'💬', val: `${(post.comments||[]).length} تعليق` },
+    ] : []),
+    ...(hasTeacher ? [{ icon:'👨‍🏫', val: post.teacherName }] : []),
+  ];
+
+  const metaHtml = meta.map(m => `
+    <span class="meta-chip"><span>${m.icon}</span><span class="dot"></span><span>${m.val}</span></span>
+  `).join('');
+
+  /* actions */
+  let actionsHtml;
+  if (type === 'pending') {
+    actionsHtml = `
+      <button class="btn btn-approve" onclick="approvePost('${post.id}')">✓ موافقة</button>
+      <button class="btn btn-reject"  onclick="rejectPost('${post.id}')">✗ رفض</button>
+      <button class="btn btn-view"    onclick="viewPost('${post.id}')">👁️ معاينة</button>
+    `;
+  } else {
+    actionsHtml = `
+      <button class="btn btn-pin"    onclick="togglePin('${post.id}')">
+        ${isPinned ? '📌 إلغاء التثبيت' : '📍 تثبيت'}
+      </button>
+      <button class="btn btn-delete" onclick="deletePost('${post.id}')">🗑️ حذف</button>
+      <button class="btn btn-view"   onclick="viewPost('${post.id}')">👁️ عرض</button>
+    `;
+  }
+
+  return `
+    <div class="post-card" data-id="${post.id}">
+      <div class="post-card-top">
+        <div class="post-title-wrap">
+          ${isPinned ? '<div class="post-pin-badge">📌 مثبت</div>' : ''}
+          <div class="post-title">${post.title}</div>
+          <div class="post-badges">${badgesHtml}</div>
+        </div>
+      </div>
+      <div class="post-meta">${metaHtml}</div>
+      ${hasDesc ? `<div class="post-desc">${post.description}</div>` : ''}
+      ${imagesHtml}
+      <div class="post-actions">${actionsHtml}</div>
+    </div>
+  `;
+}
+
+
+/* ─── LOAD POSTS ─────────────────────── */
+async function loadPendingPosts() {
+  const container = document.getElementById('pendingPosts');
+  try {
+    const data  = await apiFetch('/api/admin/pending');
+    const posts = data.posts || [];
+    document.getElementById('pendingCount').textContent = posts.length;
+    container.innerHTML = posts.length
+      ? posts.map(p => renderPostCard(p, 'pending')).join('')
+      : `<div class="empty-state"><div class="empty-orb">✅</div><p class="empty-text">لا توجد منشورات معلقة — رائع!</p></div>`;
+  } catch {
+    container.innerHTML = `<div class="empty-state"><div class="empty-orb">❌</div><p class="empty-text">فشل تحميل المنشورات المعلقة</p></div>`;
+    document.getElementById('pendingCount').textContent = '—';
+    toast('فشل تحميل المنشورات المعلقة', 'error');
+  }
+}
+
+async function loadApprovedPosts() {
+  const container = document.getElementById('approvedPosts');
+  try {
+    const data  = await apiFetch('/api/posts?status=approved');
+    const posts = data.posts || [];
+    document.getElementById('approvedCount').textContent = posts.length;
+    container.innerHTML = posts.length
+      ? posts.map(p => renderPostCard(p, 'approved')).join('')
+      : `<div class="empty-state"><div class="empty-orb">📭</div><p class="empty-text">لا توجد منشورات معتمدة بعد</p></div>`;
+  } catch {
+    container.innerHTML = `<div class="empty-state"><div class="empty-orb">❌</div><p class="empty-text">فشل تحميل المنشورات المعتمدة</p></div>`;
+    document.getElementById('approvedCount').textContent = '—';
+    toast('فشل تحميل المنشورات المعتمدة', 'error');
+  }
+}
+
+
+/* ─── ACTIONS ────────────────────────── */
+async function approvePost(postId) {
+  const ok = await confirm('سيتم نشر هذا المنشور وإتاحته للطلاب. هل تريد المتابعة؟', 'موافقة على المنشور', '✅');
+  if (!ok) return;
+  try {
+    const data = await apiFetch(`/api/admin/approve/${postId}`, { method: 'POST' });
+    if (data.success) {
+      toast('تمت الموافقة على المنشور بنجاح!', 'success');
+      animateRemove(postId);
+      setTimeout(() => { loadStats(); loadPendingPosts(); loadApprovedPosts(); }, 400);
+    } else {
+      toast('فشلت الموافقة: ' + (data.error || 'خطأ غير معروف'), 'error');
+    }
+  } catch {
+    toast('حدث خطأ في الاتصال بالخادم', 'error');
+  }
+}
+
+async function rejectPost(postId) {
+  const ok = await confirm('سيتم رفض هذا المنشور وحذفه. هل تريد المتابعة؟', 'رفض المنشور', '❌');
+  if (!ok) return;
+  try {
+    const data = await apiFetch(`/api/admin/delete/${postId}`, { method: 'DELETE' });
+    if (data.success) {
+      toast('تم رفض المنشور وحذفه', 'info');
+      animateRemove(postId);
+      setTimeout(() => { loadStats(); loadPendingPosts(); }, 400);
+    } else {
+      toast('فشل الرفض: ' + (data.error || 'خطأ غير معروف'), 'error');
+    }
+  } catch {
+    toast('حدث خطأ في الاتصال بالخادم', 'error');
+  }
+}
+
+async function deletePost(postId) {
+  const ok = await confirm('سيتم حذف المنشور نهائياً ولا يمكن التراجع عن هذا الإجراء.', 'حذف المنشور', '🗑️');
+  if (!ok) return;
+  try {
+    const data = await apiFetch(`/api/admin/delete/${postId}`, { method: 'DELETE' });
+    if (data.success) {
+      toast('تم حذف المنشور بنجاح', 'success');
+      animateRemove(postId);
+      setTimeout(() => { loadStats(); loadApprovedPosts(); }, 400);
+    } else {
+      toast('فشل الحذف: ' + (data.error || 'خطأ غير معروف'), 'error');
+    }
+  } catch {
+    toast('حدث خطأ في الاتصال بالخادم', 'error');
+  }
+}
+
+async function togglePin(postId) {
+  try {
+    const data = await apiFetch(`/api/admin/pin/${postId}`, { method: 'POST' });
+    if (data.success) {
+      toast(data.isPinned ? 'تم تثبيت المنشور 📌' : 'تم إلغاء تثبيت المنشور', 'success');
+      loadApprovedPosts();
+    } else {
+      toast('فشل التثبيت: ' + (data.error || 'خطأ غير معروف'), 'error');
+    }
+  } catch {
+    toast('حدث خطأ في الاتصال بالخادم', 'error');
+  }
+}
+
+function viewPost(postId) {
+  window.open(`/post.html?id=${postId}`, '_blank');
+}
+
+function animateRemove(postId) {
+  const card = document.querySelector(`.post-card[data-id="${postId}"]`);
+  if (!card) return;
+  card.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+  card.style.opacity    = '0';
+  card.style.transform  = 'scale(0.95) translateY(-8px)';
+  setTimeout(() => card.remove(), 380);
+}
+
+
+/* ─── REPORTS ────────────────────────── */
+function fmtReportDate(d) {
+  if (!d) return '—';
+  try {
+    const diff = Math.floor((Date.now() - new Date(d).getTime()) / 1000);
+    if (diff < 60) return 'الآن';
+    if (diff < 3600) return `منذ ${Math.floor(diff/60)} دقيقة`;
+    if (diff < 86400) return `منذ ${Math.floor(diff/3600)} ساعة`;
+    return new Date(d).toLocaleDateString('ar-TN', { year:'numeric', month:'short', day:'numeric' });
+  } catch(e) { return d; }
+}
+
+async function loadReports() {
+  const container = document.getElementById('reportsList');
+  try {
+    const data    = await apiFetch('/api/admin/reports');
+    const reports = data.reports || [];
+    document.getElementById('reportsCount').textContent = reports.length;
+    if (reports.length === 0) {
+      container.innerHTML = `<div class="empty-state"><div class="empty-orb">✅</div><p class="empty-text">لا توجد إبلاغات معلقة</p></div>`;
+      return;
+    }
+    container.innerHTML = reports.map(r => {
+      const typeBadge = r.targetType === 'post'
+        ? `<span class="report-type-badge report-type-post">📄 منشور</span>`
+        : `<span class="report-type-badge report-type-comment">💬 تعليق</span>`;
+      const contentBox = r.targetType === 'post'
+        ? `<div class="report-content-box"><div class="report-content-label">المنشور المُبلَّغ عنه</div><div class="report-content-text">📄 ${r.postTitle || '—'}</div></div>`
+        : `<div class="report-content-box"><div class="report-content-label">التعليق المُبلَّغ عنه</div><div class="report-content-text">💬 ${r.commentText || '—'}</div></div>`;
+      return `
+      <div class="report-card" id="report-${r.id}">
+        <div class="report-card-header">
+          ${typeBadge}
+          <span class="report-by">🙋 ${r.reportedByName || 'مجهول'}</span>
+          <span class="report-time">${fmtReportDate(r.createdAt)}</span>
+        </div>
+        <div class="report-reason-label">سبب الإبلاغ</div>
+        <div class="report-reason-text">${r.reason || '—'}</div>
+        ${contentBox}
+        <div class="report-actions">
+          <button class="btn btn-report-delete" onclick="deleteReportContent('${r.id}', '${r.targetType}')">🗑️ حذف ${r.targetType === 'post' ? 'المنشور' : 'التعليق'}</button>
+          <button class="btn btn-report-ignore" onclick="ignoreReport('${r.id}')">👋 تجاهل</button>
+          <button class="btn btn-report-view"   onclick="viewPost('${r.postId}')">👁️ عرض المنشور</button>
+        </div>
+      </div>`;
+    }).join('');
+  } catch {
+    container.innerHTML = `<div class="empty-state"><div class="empty-orb">❌</div><p class="empty-text">فشل تحميل الإبلاغات</p></div>`;
+    document.getElementById('reportsCount').textContent = '—';
+    toast('فشل تحميل الإبلاغات', 'error');
+  }
+}
+
+async function deleteReportContent(reportId, targetType) {
+  const label = targetType === 'post' ? 'المنشور' : 'التعليق';
+  const ok = await confirm(`سيتم حذف ${label} المُبلَّغ عنه نهائياً. هل تريد المتابعة؟`, `حذف ${label}`, '🗑️');
+  if (!ok) return;
+  try {
+    const data = await apiFetch(`/api/admin/reports/${reportId}/delete-content`, { method: 'DELETE' });
+    if (data.success) {
+      toast(`تم حذف ${label} بنجاح`, 'success');
+      animateRemoveReport(reportId);
+      setTimeout(() => { loadStats(); loadReports(); }, 400);
+    } else {
+      toast('فشل الحذف: ' + (data.error || 'خطأ'), 'error');
+    }
+  } catch {
+    toast('حدث خطأ في الاتصال بالخادم', 'error');
+  }
+}
+
+async function ignoreReport(reportId) {
+  const ok = await confirm('سيتم تجاهل هذا الإبلاغ دون حذف أي محتوى.', 'تجاهل الإبلاغ', '👋');
+  if (!ok) return;
+  try {
+    const data = await apiFetch(`/api/admin/reports/${reportId}/ignore`, { method: 'POST' });
+    if (data.success) {
+      toast('تم تجاهل الإبلاغ', 'info');
+      animateRemoveReport(reportId);
+      setTimeout(() => loadReports(), 400);
+    } else {
+      toast('فشل التجاهل: ' + (data.error || 'خطأ'), 'error');
+    }
+  } catch {
+    toast('حدث خطأ في الاتصال بالخادم', 'error');
+  }
+}
+
+function animateRemoveReport(reportId) {
+  const card = document.getElementById(`report-${reportId}`);
+  if (!card) return;
+  card.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+  card.style.opacity    = '0';
+  card.style.transform  = 'scale(0.95) translateY(-8px)';
+  setTimeout(() => card.remove(), 380);
+}
+
+
+/* ─── REFRESH ────────────────────────── */
+function refreshAll() {
+  loadStats();
+  loadPendingPosts();
+  loadApprovedPosts();
+  loadReports();
+  toast('جاري تحديث البيانات…', 'info', 2000);
+}
+
+
+/* ─── INIT ───────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  checkAuth();
+  loadStats();
+  loadPendingPosts();
+  loadApprovedPosts();
+  loadReports();
+
+  /* Header scroll shadow */
+  const header = document.querySelector('.header');
+  window.addEventListener('scroll', () => {
+    header.style.boxShadow = window.scrollY > 30
+      ? '0 8px 32px rgba(0,0,0,0.14)'
+      : '0 4px 24px rgba(0,0,0,0.07)';
+  }, { passive: true });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الملف الشخصي - منصة الطلاب التونسيين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#e0a3ff;--accent:#ff69b4;--accent2:#9370db;
+  --cyan:#00e5ff;--green:#00ff87;
+  --text:rgba(224,163,255,0.9);--text-muted:rgba(224,163,255,0.5);
+  --glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);
+  --radius:22px;--tr:all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0a0a0a}
+::-webkit-scrollbar-thumb{background:linear-gradient(#e0a3ff,#ff69b4);border-radius:3px}
+body{font-family:'Cairo',sans-serif;background:#000;color:var(--primary);overflow-x:hidden;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* BG */
+.neural-bg{position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(circle at 15% 85%,rgba(75,0,130,.7) 0%,transparent 50%),
+  radial-gradient(circle at 85% 15%,rgba(139,37,99,.8) 0%,transparent 50%),
+  radial-gradient(circle at 45% 60%,rgba(128,0,128,.6) 0%,transparent 50%),
+  radial-gradient(circle at 70% 40%,rgba(34,139,34,.4) 0%,transparent 50%),
+  linear-gradient(135deg,#0a0a0a 0%,#2d1b3d 50%,#000 100%);
+  animation:bgPulse 14s ease-in-out infinite}
+@keyframes bgPulse{0%,100%{filter:brightness(.9) saturate(1.4) hue-rotate(0deg)}33%{filter:brightness(1.1) saturate(1.7) hue-rotate(15deg)}66%{filter:brightness(1) saturate(1.5) hue-rotate(-10deg)}}
+.geo{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.geo div{position:absolute;border:1px solid rgba(0,255,255,.3);animation:floatS 20s linear infinite}
+.geo div:nth-child(1){width:100px;height:100px;right:10%;animation-delay:0s;border-color:rgba(255,105,180,.3)}
+.geo div:nth-child(2){width:60px;height:60px;right:70%;animation-delay:-5s;border-radius:50%;border-color:rgba(147,112,219,.3)}
+.geo div:nth-child(3){width:80px;height:80px;right:30%;animation-delay:-10s;transform:rotate(45deg);border-color:rgba(224,163,255,.3)}
+.geo div:nth-child(4){width:120px;height:120px;right:50%;animation-delay:-15s;background:linear-gradient(45deg,rgba(255,105,180,.1),transparent)}
+@keyframes floatS{from{transform:translateY(100vh) rotate(0deg);opacity:0}10%,90%{opacity:1}to{transform:translateY(-100px) rotate(360deg);opacity:0}}
+
+/* HEADER */
+header{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:1000;width:96%;max-width:1400px;
+  padding:15px 30px;background:rgba(224,163,255,.08);backdrop-filter:blur(25px);
+  border:1px solid rgba(224,163,255,.15);border-radius:25px;
+  box-shadow:0 8px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);transition:var(--tr)}
+header.scrolled{background:rgba(224,163,255,.12);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+nav{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;
+  background:linear-gradient(45deg,#e0a3ff,#ff69b4);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;text-decoration:none;white-space:nowrap}
+.logo-icon{font-size:30px;filter:drop-shadow(0 0 8px #e0a3ff)}
+.nav-links{display:flex;gap:8px;list-style:none}
+.nav-links a{color:rgba(224,163,255,.8);text-decoration:none;padding:8px 16px;border-radius:12px;font-size:14px;font-weight:600;transition:var(--tr)}
+.nav-links a:hover,.nav-links a.active{background:rgba(224,163,255,.15);color:#fff;box-shadow:0 0 15px rgba(224,163,255,.2)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn-nav{padding:9px 20px;border:none;border-radius:12px;font-weight:700;font-size:13px;
+  font-family:'Cairo',sans-serif;cursor:pointer;transition:var(--tr);white-space:nowrap}
+.btn-primary{background:linear-gradient(45deg,#e0a3ff,#ff69b4);color:#000;box-shadow:0 4px 15px rgba(224,163,255,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(224,163,255,.5)}
+.btn-ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.7)}
+.btn-ghost:hover{background:rgba(224,163,255,.1);border-color:rgba(224,163,255,.3);color:var(--primary)}
+
+/* User Nav (copied from upload.html) */
+.user-nav-wrapper{position:relative}
+.user-avatar-btn{display:flex;align-items:center;cursor:pointer}
+.user-avatar-circle{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid rgba(224,163,255,.5);box-shadow:0 0 0 3px rgba(224,163,255,.15);transition:all .3s ease;display:block}
+.user-avatar-default{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#e0a3ff,#ff69b4);border:2px solid rgba(224,163,255,.5);box-shadow:0 0 0 3px rgba(224,163,255,.15);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#000;transition:all .3s ease;cursor:pointer;flex-shrink:0}
+.user-avatar-circle:hover,.user-avatar-default:hover{box-shadow:0 0 0 4px rgba(224,163,255,.3),0 0 22px rgba(224,163,255,.45);transform:scale(1.08)}
+.login-nav-btn{display:flex;align-items:center;gap:8px;padding:9px 18px;background:linear-gradient(135deg,rgba(224,163,255,.12),rgba(255,105,180,.12));border:1px solid rgba(224,163,255,.35);border-radius:12px;color:#e0a3ff;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .3s ease;white-space:nowrap}
+.login-nav-btn:hover{background:linear-gradient(135deg,rgba(224,163,255,.25),rgba(255,105,180,.25));border-color:rgba(224,163,255,.6);transform:translateY(-2px);box-shadow:0 4px 18px rgba(224,163,255,.3)}
+.user-dropdown-menu{position:absolute;top:calc(100% + 12px);left:0;min-width:200px;background:rgba(12,8,20,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(224,163,255,.22);border-radius:16px;padding:8px;box-shadow:0 16px 50px rgba(0,0,0,.6),0 1px 0 rgba(224,163,255,.08) inset;opacity:0;visibility:hidden;transform:translateY(-10px) scale(.96);transition:opacity .25s ease,transform .25s ease,visibility .25s;z-index:3000}
+.user-nav-wrapper.open .user-dropdown-menu{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+.dropdown-user-info{padding:12px 14px 10px;border-bottom:1px solid rgba(224,163,255,.1);margin-bottom:6px}
+.dropdown-user-name{font-size:14px;font-weight:700;color:#e0a3ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dropdown-user-role{font-size:11px;color:rgba(224,163,255,.45);margin-top:3px;font-weight:500}
+.dropdown-item{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;border-radius:10px;border:none;background:transparent;color:rgba(224,163,255,.82);font-family:'Cairo',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s,color .2s,transform .2s;text-align:right}
+.dropdown-item:hover{background:rgba(224,163,255,.1);color:#e0a3ff;transform:translateX(-3px)}
+.dropdown-item.danger{color:rgba(255,107,129,.85)}
+.dropdown-item.danger:hover{background:rgba(255,69,96,.15);color:#ff6b81;transform:translateX(-3px)}
+.dropdown-divider{height:1px;background:rgba(224,163,255,.1);margin:5px 8px}
+
+/* MAIN */
+.main{padding-top:110px;min-height:100vh}
+
+/* HERO */
+.page-hero{text-align:center;padding:50px 20px 36px}
+.page-hero h1{font-size:clamp(32px,6vw,60px);font-weight:900;line-height:1.1;
+  background:linear-gradient(135deg,#fff 0%,#e0a3ff 40%,#ff69b4 80%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
+.page-hero p{color:var(--text-muted);font-size:16px;max-width:500px;margin:0 auto}
+
+/* LAYOUT */
+.profile-layout{max-width:960px;margin:0 auto;padding:0 20px 80px}
+
+/* FORM CARD */
+.form-card{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:36px;margin-bottom:22px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);animation:cardIn .6s ease both}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.card-title{font-size:17px;font-weight:800;color:#fff;margin-bottom:24px;display:flex;align-items:center;gap:10px;
+  padding-bottom:16px;border-bottom:1px solid var(--glass-border)}
+.card-title span{font-size:22px}
+
+/* AVATAR SECTION */
+.avatar-section{display:flex;flex-direction:column;align-items:center;gap:20px;margin-bottom:30px}
+.avatar-big-wrap{position:relative;display:inline-block}
+.avatar-big{width:120px;height:120px;border-radius:50%;object-fit:cover;
+  border:3px solid rgba(224,163,255,.5);
+  box-shadow:0 0 0 6px rgba(224,163,255,.12),0 0 40px rgba(224,163,255,.3);
+  display:block;background:linear-gradient(135deg,#e0a3ff,#ff69b4)}
+.avatar-big-default{width:120px;height:120px;border-radius:50%;
+  background:linear-gradient(135deg,#e0a3ff,#ff69b4);
+  border:3px solid rgba(224,163,255,.5);
+  box-shadow:0 0 0 6px rgba(224,163,255,.12),0 0 40px rgba(224,163,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:48px;font-weight:900;color:#000}
+.avatar-edit-btn{position:absolute;bottom:4px;left:4px;width:34px;height:34px;
+  border-radius:50%;background:linear-gradient(45deg,#e0a3ff,#ff69b4);
+  border:2px solid #000;color:#000;font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--tr);box-shadow:0 4px 12px rgba(224,163,255,.4)}
+.avatar-edit-btn:hover{transform:scale(1.15);box-shadow:0 6px 18px rgba(224,163,255,.6)}
+.avatar-input{display:none}
+.avatar-name{font-size:22px;font-weight:800;color:#fff}
+.avatar-role{font-size:13px;color:var(--text-muted);margin-top:3px}
+.avatar-join{font-size:12px;color:rgba(224,163,255,.4);margin-top:2px}
+
+/* XP BAR */
+.xp-section{background:linear-gradient(135deg,rgba(0,255,135,.06),rgba(0,229,255,.06));
+  border:1px solid rgba(0,255,135,.2);border-radius:16px;padding:18px 22px;margin-bottom:24px}
+.xp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.xp-label{font-size:13px;font-weight:700;color:#00ff87;display:flex;align-items:center;gap:7px}
+.xp-val{font-size:13px;font-weight:800;color:#00ff87}
+.xp-track{height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.xp-fill{height:100%;background:linear-gradient(90deg,#00ff87,#00e5ff);border-radius:4px;
+  width:0%;transition:width 1.2s cubic-bezier(.4,0,.2,1);position:relative}
+.xp-fill::after{content:'';position:absolute;top:0;right:0;height:100%;width:30px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4));animation:shimmerBar 1s ease infinite}
+@keyframes shimmerBar{0%{opacity:.5}50%{opacity:1}100%{opacity:.5}}
+.xp-level{font-size:11px;color:rgba(0,255,135,.6);margin-top:6px;text-align:left}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.stat-box{background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;
+  padding:18px 14px;text-align:center;transition:var(--tr)}
+.stat-box:hover{background:rgba(224,163,255,.07);border-color:rgba(224,163,255,.2);transform:translateY(-3px)}
+.stat-box-val{font-size:26px;font-weight:900;
+  background:linear-gradient(135deg,#e0a3ff,#ff69b4);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.stat-box-lbl{font-size:11px;color:var(--text-muted);font-weight:600;margin-top:4px}
+
+/* FORM GROUPS */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-row.single{grid-template-columns:1fr}
+.form-group{display:flex;flex-direction:column;gap:8px}
+.form-label{font-size:12px;font-weight:700;color:rgba(224,163,255,.7);text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:6px}
+.form-input,.form-select,.form-textarea{width:100%;padding:12px 16px;background:rgba(255,255,255,.05);
+  border:1px solid var(--glass-border);border-radius:14px;color:#fff;
+  font-family:'Cairo',sans-serif;font-size:14px;font-weight:500;outline:none;transition:var(--tr)}
+.form-input::placeholder,.form-textarea::placeholder{color:rgba(255,255,255,.25)}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:rgba(224,163,255,.45);background:rgba(224,163,255,.06);box-shadow:0 0 20px rgba(224,163,255,.1)}
+.form-input.error{border-color:rgba(255,68,68,.5);box-shadow:0 0 15px rgba(255,68,68,.1)}
+.form-input:disabled{opacity:.5;cursor:not-allowed}
+.form-select{appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e0a3ff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:left 14px center;padding-left:38px}
+.form-select option{background:#1a0a2e;color:#fff}
+.form-textarea{resize:vertical;min-height:90px;line-height:1.7}
+.char-count{font-size:11px;color:var(--text-muted);text-align:left;margin-top:4px}
+.err-msg{font-size:11px;color:#ff6b6b;font-weight:600;display:none;align-items:center;gap:4px}
+.err-msg.show{display:flex}
+
+/* HINT */
+.field-hint{font-size:11px;color:rgba(224,163,255,.4);margin-top:3px}
+
+/* PASSWORD TOGGLE */
+.pw-wrap{position:relative}
+.pw-wrap .form-input{padding-left:44px}
+.pw-eye{position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:17px;
+  transition:color .2s;padding:0}
+.pw-eye:hover{color:var(--primary)}
+
+/* PASSWORD STRENGTH */
+.pw-strength{margin-top:8px}
+.pw-strength-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.06);overflow:hidden;margin-bottom:5px}
+.pw-strength-fill{height:100%;border-radius:2px;width:0%;transition:width .4s ease,background .4s ease}
+.pw-strength-label{font-size:10px;font-weight:700}
+
+/* TABS */
+.profile-tabs{display:flex;gap:4px;margin-bottom:24px;background:rgba(255,255,255,.03);
+  border:1px solid var(--glass-border);border-radius:16px;padding:6px}
+.tab-btn{flex:1;padding:10px 16px;border:none;border-radius:12px;background:transparent;
+  color:rgba(224,163,255,.6);font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:7px}
+.tab-btn.active{background:linear-gradient(135deg,rgba(224,163,255,.18),rgba(255,105,180,.12));
+  color:#fff;box-shadow:0 2px 12px rgba(224,163,255,.15)}
+.tab-btn:hover:not(.active){background:rgba(224,163,255,.07);color:rgba(255,255,255,.8)}
+.tab-panel{display:none;animation:cardIn .4s ease}
+.tab-panel.active{display:block}
+
+/* POSTS HISTORY */
+.post-history-item{display:flex;align-items:center;gap:14px;padding:14px 16px;
+  background:rgba(255,255,255,.03);border:1px solid var(--glass-border);
+  border-radius:14px;margin-bottom:10px;transition:var(--tr)}
+.post-history-item:hover{background:rgba(224,163,255,.06);border-color:rgba(224,163,255,.2);transform:translateX(-4px)}
+.post-history-icon{width:44px;height:44px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(224,163,255,.15),rgba(255,105,180,.1));
+  border:1px solid rgba(224,163,255,.2);display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0}
+.post-history-info{flex:1;min-width:0}
+.post-history-title{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.post-history-meta{font-size:11px;color:var(--text-muted);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap}
+.post-history-status{font-size:11px;font-weight:700;padding:3px 9px;border-radius:8px;flex-shrink:0}
+.status-approved{background:rgba(0,255,135,.1);color:#00ff87;border:1px solid rgba(0,255,135,.2)}
+.status-pending{background:rgba(255,193,7,.1);color:#ffc107;border:1px solid rgba(255,193,7,.2)}
+.status-rejected{background:rgba(255,68,68,.1);color:#ff6b6b;border:1px solid rgba(255,68,68,.2)}
+
+/* BADGES */
+.badges-grid{display:flex;flex-wrap:wrap;gap:12px}
+.badge-item{display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;
+  padding:16px 14px;min-width:90px;transition:var(--tr);cursor:default}
+.badge-item:hover{background:rgba(224,163,255,.08);border-color:rgba(224,163,255,.25);transform:translateY(-3px)}
+.badge-item.locked{opacity:.35;filter:grayscale(1)}
+.badge-icon{font-size:32px}
+.badge-name{font-size:10px;font-weight:700;color:var(--text-muted);text-align:center}
+.badge-item:not(.locked) .badge-name{color:var(--primary)}
+
+/* DANGER ZONE */
+.danger-zone{border-color:rgba(255,68,68,.2) !important;background:rgba(255,68,68,.03) !important}
+.danger-zone .card-title{color:#ff6b6b}
+
+/* SUBMIT BUTTON */
+.submit-wrap{text-align:center;padding-top:8px}
+.submit-btn{padding:14px 40px;background:linear-gradient(45deg,var(--accent2),var(--accent));
+  border:none;border-radius:16px;color:#fff;font-family:'Cairo',sans-serif;
+  font-size:15px;font-weight:800;cursor:pointer;transition:var(--tr);
+  box-shadow:0 8px 30px rgba(147,112,219,.4);display:inline-flex;align-items:center;gap:10px}
+.submit-btn:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 14px 40px rgba(147,112,219,.6)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.submit-btn.danger-btn{background:linear-gradient(45deg,#c0392b,#e74c3c);box-shadow:0 8px 25px rgba(231,76,60,.3)}
+.submit-btn.danger-btn:hover:not(:disabled){box-shadow:0 14px 35px rgba(231,76,60,.5)}
+
+/* TIPS BOX */
+.tips-box{background:linear-gradient(135deg,rgba(147,112,219,.08),rgba(255,105,180,.08));
+  border:1px solid rgba(147,112,219,.2);border-radius:16px;padding:20px;margin-bottom:22px;
+  animation:cardIn .6s .1s ease both}
+.tips-title{font-size:13px;font-weight:800;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.tip-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:rgba(255,255,255,.55);
+  margin-bottom:8px;line-height:1.6;font-weight:500}
+.tip-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(30px);
+  background:rgba(20,10,35,.95);border:1px solid rgba(224,163,255,.2);border-radius:14px;
+  padding:12px 24px;font-size:14px;font-weight:600;color:#fff;z-index:9999;opacity:0;
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;backdrop-filter:blur(20px);
+  box-shadow:0 10px 30px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:rgba(0,255,135,.3)}
+.toast.error{border-color:rgba(255,68,68,.3)}
+
+/* CONFIRM DIALOG */
+.dialog-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  z-index:9998;display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .3s}
+.dialog-overlay.show{opacity:1;pointer-events:all}
+.dialog-box{background:rgba(20,10,35,.98);border:1px solid rgba(255,68,68,.3);border-radius:22px;
+  padding:36px;max-width:380px;width:100%;text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.7);
+  transform:scale(.9);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.dialog-overlay.show .dialog-box{transform:scale(1)}
+.dialog-icon{font-size:52px;display:block;margin-bottom:14px}
+.dialog-title{font-size:20px;font-weight:800;color:#fff;margin-bottom:8px}
+.dialog-msg{font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:24px}
+.dialog-btns{display:flex;gap:10px;justify-content:center}
+.dialog-btn{padding:11px 28px;border-radius:12px;font-family:'Cairo',sans-serif;
+  font-size:14px;font-weight:700;cursor:pointer;transition:var(--tr);border:none}
+.dialog-cancel{background:rgba(255,255,255,.07);border:1px solid var(--glass-border);color:rgba(255,255,255,.7)}
+.dialog-cancel:hover{background:rgba(255,255,255,.12)}
+.dialog-confirm{background:linear-gradient(45deg,#c0392b,#e74c3c);color:#fff;box-shadow:0 4px 14px rgba(231,76,60,.35)}
+.dialog-confirm:hover{box-shadow:0 8px 22px rgba(231,76,60,.55);transform:translateY(-2px)}
+
+/* SCROLL TOP */
+.scroll-top{position:fixed;bottom:30px;left:30px;width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(45deg,var(--accent2),var(--accent));border:none;color:#fff;
+  font-size:18px;cursor:pointer;box-shadow:0 8px 25px rgba(147,112,219,.4);
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);opacity:0;pointer-events:none;z-index:100;
+  display:flex;align-items:center;justify-content:center}
+.scroll-top.visible{opacity:1;pointer-events:all}
+.scroll-top:hover{transform:scale(1.15) translateY(-3px)}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:44px 20px;color:var(--text-muted)}
+.empty-state-icon{font-size:52px;display:block;margin-bottom:12px;opacity:.4}
+.empty-state p{font-size:14px;font-weight:500}
+
+/* NOT LOGGED IN */
+.auth-wall{text-align:center;padding:80px 20px;animation:cardIn .6s ease}
+.aw-icon{font-size:70px;display:block;margin-bottom:16px;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  .form-row{grid-template-columns:1fr}
+  nav .nav-links{display:none}
+  header{padding:12px 18px}
+  .form-card{padding:22px 18px}
+  .page-hero{padding:30px 16px 24px}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .profile-tabs{flex-wrap:wrap}
+  .tab-btn{font-size:12px;padding:9px 10px}
+  .badges-grid{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div class="neural-bg"></div>
+<div class="geo"><div></div><div></div><div></div><div></div></div>
+
+<!-- HEADER -->
+<header id="mainHeader">
+  <nav>
+    <a href="/index.html" class="logo">
+      <span class="logo-icon">🎓</span>
+      <span>منصة الطلاب</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/index.html">الرئيسية</a></li>
+      <li><a href="/browse.html">تصفح</a></li>
+      <li><a href="/requests.html">الطلبات</a></li>
+      <li><a href="/calculator.html">الحاسبة</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="theme-toggle-btn" class="btn-nav theme-toggle-btn">🎨 الثيم</button>
+      <div id="userNavArea"></div>
+      <button class="btn-nav btn-ghost" onclick="history.back()">← رجوع</button>
+    </div>
+  </nav>
+</header>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- CONFIRM DIALOG -->
+<div class="dialog-overlay" id="dialogOverlay">
+  <div class="dialog-box">
+    <span class="dialog-icon">⚠️</span>
+    <div class="dialog-title">هل أنت متأكد؟</div>
+    <div class="dialog-msg" id="dialogMsg">هذا الإجراء لا يمكن التراجع عنه.</div>
+    <div class="dialog-btns">
+      <button class="dialog-btn dialog-cancel" onclick="closeDialog()">إلغاء</button>
+      <button class="dialog-btn dialog-confirm" id="dialogConfirmBtn">تأكيد</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCROLL TOP -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div class="main">
+  <div class="page-hero">
+    <h1>الملف الشخصي</h1>
+    <p>إدارة بياناتك وتتبع مساهماتك في المنصة 🌟</p>
+  </div>
+
+  <div class="profile-layout">
+
+    <!-- AUTH WALL -->
+    <div id="authWall" style="display:none">
+      <div class="form-card" style="text-align:center;padding:60px 30px">
+        <span class="aw-icon">🔐</span>
+        <h2 style="font-size:22px;font-weight:900;color:rgba(255,255,255,.6);margin-bottom:8px">يجب تسجيل الدخول أولاً</h2>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px">لعرض ملفك الشخصي يجب أن تكون عضواً في المنصة</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <a href="/login.html" class="submit-btn" style="text-decoration:none">🔑 تسجيل الدخول</a>
+          <a href="/register.html" class="submit-btn" style="background:rgba(255,255,255,.06);border:1px solid var(--glass-border);color:rgba(255,255,255,.7);box-shadow:none;text-decoration:none">✨ إنشاء حساب</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE CONTENT -->
+    <div id="profileContent" style="display:none">
+
+      <!-- AVATAR + INFO CARD -->
+      <div class="form-card" style="animation-delay:0s">
+        <div class="avatar-section">
+          <div class="avatar-big-wrap">
+            <div id="avatarDisplay"></div>
+            <button class="avatar-edit-btn" onclick="document.getElementById('avatarInput').click()" title="تغيير الصورة">✏️</button>
+            <input type="file" id="avatarInput" class="avatar-input" accept="image/*" onchange="handleAvatarChange(event)">
+          </div>
+          <div style="text-align:center">
+            <div class="avatar-name" id="displayName">…</div>
+            <div class="avatar-role" id="displayRole">…</div>
+            <div class="avatar-join" id="displayJoin">…</div>
+          </div>
+        </div>
+
+        <!-- XP BAR -->
+        <div class="xp-section">
+          <div class="xp-top">
+            <span class="xp-label">⚡ نقاط XP</span>
+            <span class="xp-val" id="xpVal">0 / 1000</span>
+          </div>
+          <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
+          <div class="xp-level" id="xpLevel">المستوى 1 — مبتدئ</div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="stat-box-val" id="statPosts">0</div>
+            <div class="stat-box-lbl">منشور مقبول</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-val" id="statDownloads">0</div>
+            <div class="stat-box-lbl">تحميل إجمالي</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-val" id="statViews">0</div>
+            <div class="stat-box-lbl">مشاهدة</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="profile-tabs">
+        <button class="tab-btn active" onclick="switchTab('edit')"   id="tab-edit">✏️ تعديل البيانات</button>
+        <button class="tab-btn"        onclick="switchTab('posts')"  id="tab-posts">📚 منشوراتي</button>
+        <button class="tab-btn"        onclick="switchTab('badges')" id="tab-badges">🏅 الشارات</button>
+        <button class="tab-btn"        onclick="switchTab('danger')" id="tab-danger">⚠️ إدارة الحساب</button>
+      </div>
+
+      <!-- TAB: EDIT PROFILE -->
+      <div class="tab-panel active" id="panel-edit">
+
+        <div class="tips-box">
+          <div class="tips-title">💡 نصائح</div>
+          <div class="tip-item"><span class="tip-icon">👤</span>اختر اسماً واضحاً ليتعرف عليك الطلاب الآخرون</div>
+          <div class="tip-item"><span class="tip-icon">🖼️</span>أضف صورة شخصية لتعزيز مصداقية منشوراتك</div>
+          <div class="tip-item"><span class="tip-icon">🔒</span>استخدم كلمة مرور قوية تحتوي على أحرف وأرقام ورموز</div>
+        </div>
+
+        <!-- BASIC INFO -->
+        <div class="form-card" style="animation-delay:.05s">
+          <div class="card-title"><span>👤</span> المعلومات الأساسية</div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">الاسم الكامل</label>
+              <input type="text" class="form-input" id="editName" placeholder="اسمك الكامل" maxlength="50">
+              <div class="char-count"><span id="nameCount">0</span>/50</div>
+              <div class="err-msg" id="nameErr">⚠ الاسم مطلوب (3 أحرف على الأقل)</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">البريد الإلكتروني</label>
+              <input type="email" class="form-input" id="editEmail" disabled>
+              <div class="field-hint">البريد الإلكتروني لا يمكن تغييره</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">السنة الدراسية</label>
+              <select class="form-select" id="editYear">
+                <option value="">اختر السنة</option>
+                <optgroup label="إعدادي">
+                  <option value="7">السابعة</option>
+                  <option value="8">الثامنة</option>
+                  <option value="9">التاسعة</option>
+                </optgroup>
+                <optgroup label="ثانوي">
+                  <option value="1ثانوي">أولى ثانوي</option>
+                  <option value="2ثانوي">ثانية ثانوي</option>
+                  <option value="3ثانوي">ثالثة ثانوي</option>
+                  <option value="4ثانوي">رابعة ثانوي (باك)</option>
+                </optgroup>
+                <optgroup label="أخرى">
+                  <option value="جامعي">جامعي</option>
+                  <option value="أستاذ">أستاذ</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">الشعبة</label>
+              <select class="form-select" id="editBranch">
+                <option value="">اختر الشعبة</option>
+                <option value="آداب">📚 آداب</option>
+                <option value="علوم">🔬 علوم</option>
+                <option value="رياضيات">📐 رياضيات</option>
+                <option value="تقنية">⚙️ تقنية</option>
+                <option value="اقتصاد">💰 اقتصاد</option>
+                <option value="معلوماتية">💻 معلوماتية</option>
+                <option value="رياضة">⚽ رياضة</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row single">
+            <div class="form-group">
+              <label class="form-label">نبذة شخصية</label>
+              <textarea class="form-textarea" id="editBio" placeholder="اكتب نبذة قصيرة عن نفسك..." maxlength="200"></textarea>
+              <div class="char-count"><span id="bioCount">0</span>/200</div>
+            </div>
+          </div>
+
+          <div class="submit-wrap">
+            <button class="submit-btn" onclick="saveBasicInfo()">
+              <span>💾</span><span>حفظ المعلومات</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CHANGE PASSWORD -->
+        <div class="form-card" style="animation-delay:.1s">
+          <div class="card-title"><span>🔒</span> تغيير كلمة المرور</div>
+
+          <div class="form-row single">
+            <div class="form-group">
+              <label class="form-label">كلمة المرور الحالية</label>
+              <div class="pw-wrap">
+                <button class="pw-eye" type="button" onclick="togglePw('currentPw',this)">👁️</button>
+                <input type="password" class="form-input" id="currentPw" placeholder="كلمة المرور الحالية">
+              </div>
+              <div class="err-msg" id="currentPwErr">⚠ يرجى إدخال كلمة المرور الحالية</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">كلمة المرور الجديدة</label>
+              <div class="pw-wrap">
+                <button class="pw-eye" type="button" onclick="togglePw('newPw',this)">👁️</button>
+                <input type="password" class="form-input" id="newPw" placeholder="كلمة مرور قوية" oninput="checkPwStrength(this.value)">
+              </div>
+              <div class="pw-strength" id="pwStrength" style="display:none">
+                <div class="pw-strength-bar"><div class="pw-strength-fill" id="pwStrengthFill"></div></div>
+                <div class="pw-strength-label" id="pwStrengthLabel"></div>
+              </div>
+              <div class="err-msg" id="newPwErr">⚠ كلمة المرور يجب أن تكون 8 أحرف على الأقل</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">تأكيد كلمة المرور</label>
+              <div class="pw-wrap">
+                <button class="pw-eye" type="button" onclick="togglePw('confirmPw',this)">👁️</button>
+                <input type="password" class="form-input" id="confirmPw" placeholder="أعد كتابة كلمة المرور">
+              </div>
+              <div class="err-msg" id="confirmPwErr">⚠ كلمتا المرور غير متطابقتين</div>
+            </div>
+          </div>
+
+          <div class="submit-wrap">
+            <button class="submit-btn" onclick="changePassword()">
+              <span>🔑</span><span>تحديث كلمة المرور</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: MY POSTS -->
+      <div class="tab-panel" id="panel-posts">
+        <div class="form-card" style="animation-delay:.05s">
+          <div class="card-title"><span>📚</span> منشوراتي</div>
+          <div id="postsContainer">
+            <div class="empty-state">
+              <span class="empty-state-icon">⏳</span>
+              <p>جاري تحميل المنشورات…</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: BADGES -->
+      <div class="tab-panel" id="panel-badges">
+        <div class="form-card" style="animation-delay:.05s">
+          <div class="card-title"><span>🏅</span> الشارات والإنجازات</div>
+          <div class="badges-grid" id="badgesGrid"></div>
+        </div>
+      </div>
+
+      <!-- TAB: DANGER ZONE -->
+      <div class="tab-panel" id="panel-danger">
+
+        <div class="form-card danger-zone" style="animation-delay:.05s">
+          <div class="card-title"><span>🚪</span> تسجيل الخروج</div>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px;line-height:1.7">تسجيل الخروج من حسابك على هذا الجهاز. يمكنك تسجيل الدخول مجدداً في أي وقت.</p>
+          <div class="submit-wrap">
+            <button class="submit-btn danger-btn" onclick="logoutUser()">
+              <span>🚪</span><span>تسجيل الخروج</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-card danger-zone" style="animation-delay:.1s">
+          <div class="card-title"><span>🗑️</span> حذف الحساب نهائياً</div>
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;line-height:1.7">
+            سيتم حذف حسابك وجميع منشوراتك بشكل دائم ولا يمكن التراجع عن هذا الإجراء.
+          </p>
+          <div style="background:rgba(255,68,68,.06);border:1px solid rgba(255,68,68,.15);border-radius:12px;padding:12px 16px;margin-bottom:20px">
+            <div style="font-size:12px;color:#ff6b6b;font-weight:600;display:flex;align-items:center;gap:7px">
+              ⚠️ تحذير: هذا الإجراء لا يمكن التراجع عنه نهائياً
+            </div>
+          </div>
+          <div class="form-row single" style="margin-bottom:16px">
+            <div class="form-group">
+              <label class="form-label">أدخل كلمة المرور للتأكيد</label>
+              <div class="pw-wrap">
+                <button class="pw-eye" type="button" onclick="togglePw('deletePw',this)">👁️</button>
+                <input type="password" class="form-input" id="deletePw" placeholder="كلمة المرور">
+              </div>
+            </div>
+          </div>
+          <div class="submit-wrap">
+            <button class="submit-btn danger-btn" onclick="confirmDeleteAccount()">
+              <span>🗑️</span><span>حذف حسابي نهائياً</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <!-- END TABS -->
+
+    </div>
+    <!-- END PROFILE CONTENT -->
+
+  </div>
+</div>
+
+<!-- THEME STYLESHEET (injected by JS) -->
+<script>
+'use strict';
+
+/* ═══════════════════════════════════════════
+   THEME SYSTEM (identical to upload.html)
+═══════════════════════════════════════════ */
+let themeLink = document.createElement('link');
+themeLink.rel = 'stylesheet';
+themeLink.id = 'theme-stylesheet';
+document.head.appendChild(themeLink);
+
+const themes = {
+  'default':    '',
+  'ultra-dark': 'upload-theme-ultra-dark.css',
+  'light':      'upload-theme-light.css'
+};
+
+let currentTheme = localStorage.getItem('selectedTheme') || 'default';
+
+function applyTheme(name) {
+  themeLink.href = themes[name] || '';
+  currentTheme   = name;
+  localStorage.setItem('selectedTheme', name);
+  updateThemeBtn();
+}
+
+function switchTheme() {
+  const order = ['default','ultra-dark','light'];
+  applyTheme(order[(order.indexOf(currentTheme) + 1) % order.length]);
+}
+
+function updateThemeBtn() {
+  const btn = document.getElementById('theme-toggle-btn');
+  if (!btn) return;
+  btn.textContent = {'default':'🎨 الثيم الافتراضي','ultra-dark':'⚫ الثيم الداكن','light':'☀️ الثيم الفاتح'}[currentTheme] || '🎨 الثيم';
+}
+
+applyTheme(currentTheme);
+
+/* ═══════════════════════════════════════════
+   USER NAV (identical to upload.html)
+═══════════════════════════════════════════ */
+function renderUserNav() {
+  const area = document.getElementById('userNavArea');
+  if (!area) return;
+  const raw = localStorage.getItem('user');
+  if (!raw) {
+    area.innerHTML = `<a href="/login.html" class="login-nav-btn"><span>🔑</span><span>تسجيل الدخول</span></a>`;
+    return;
+  }
+  let user;
+  try { user = JSON.parse(raw); } catch { localStorage.removeItem('user'); renderUserNav(); return; }
+  const name = user.name || user.username || 'مستخدم';
+  const role = user.role === 'admin' ? 'مسؤول النظام' : 'طالب';
+  const firstLetter = name.trim().charAt(0).toUpperCase();
+  const avatar = user.avatar || user.profileImage || null;
+  const avatarHtml = avatar
+    ? `<img src="${avatar}" class="user-avatar-circle" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+       <div class="user-avatar-default" style="display:none">${firstLetter}</div>`
+    : `<div class="user-avatar-default">${firstLetter}</div>`;
+  area.innerHTML = `
+    <div class="user-nav-wrapper" id="userNavWrapper">
+      <div class="user-avatar-btn" id="userAvatarToggle" title="${name}">${avatarHtml}</div>
+      <div class="user-dropdown-menu">
+        <div class="dropdown-user-info">
+          <div class="dropdown-user-name">${name}</div>
+          <div class="dropdown-user-role">${role}</div>
+        </div>
+        <a href="/profile.html" class="dropdown-item"><span>👤</span><span>بيانات الحساب</span></a>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item danger" onclick="logoutUser()"><span>🚪</span><span>تسجيل الخروج</span></button>
+      </div>
+    </div>`;
+  const wrapper = document.getElementById('userNavWrapper');
+  document.getElementById('userAvatarToggle').addEventListener('click', e => { e.stopPropagation(); wrapper.classList.toggle('open'); });
+  document.addEventListener('click', e => { if (wrapper && !wrapper.contains(e.target)) wrapper.classList.remove('open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && wrapper) wrapper.classList.remove('open'); });
+}
+
+function logoutUser() {
+  localStorage.removeItem('user');
+  localStorage.removeItem('token');
+  sessionStorage.clear();
+  window.location.href = '/login.html';
+}
+
+// ── JWT HELPERS ──────────────────────────────
+function getToken() { return localStorage.getItem('token'); }
+function authHeader() {
+  const t = getToken();
+  return t ? { 'Authorization': `Bearer ${t}` } : {};
+}
+function authJsonHeader() {
+  return { 'Content-Type': 'application/json', ...authHeader() };
+}
+
+/* ═══════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════ */
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.innerHTML = `${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'} ${msg}`;
+  t.className = `toast ${type} show`;
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 3400);
+}
+
+let _dialogCb = null;
+function showDialog(msg, cb) {
+  document.getElementById('dialogMsg').textContent = msg;
+  document.getElementById('dialogOverlay').classList.add('show');
+  _dialogCb = cb;
+}
+function closeDialog() { document.getElementById('dialogOverlay').classList.remove('show'); _dialogCb = null; }
+document.getElementById('dialogConfirmBtn').addEventListener('click', () => { closeDialog(); if (_dialogCb) _dialogCb(); });
+
+function togglePw(id, btn) {
+  const inp = document.getElementById(id);
+  const show = inp.type === 'password';
+  inp.type = show ? 'text' : 'password';
+  btn.textContent = show ? '🙈' : '👁️';
+}
+
+/* ═══════════════════════════════════════════
+   XP & LEVEL SYSTEM
+═══════════════════════════════════════════ */
+const LEVELS = [
+  { min:0,    label:'مبتدئ',      next:200  },
+  { min:200,  label:'نشيط',       next:500  },
+  { min:500,  label:'متقدم',      next:1000 },
+  { min:1000, label:'خبير',       next:2000 },
+  { min:2000, label:'متميز',      next:5000 },
+  { min:5000, label:'أسطورة',     next:null },
+];
+
+function getLevel(xp) {
+  for (let i = LEVELS.length - 1; i >= 0; i--) {
+    if (xp >= LEVELS[i].min) return { ...LEVELS[i], index: i + 1 };
+  }
+  return { ...LEVELS[0], index: 1 };
+}
+
+function renderXP(xp) {
+  const lvl = getLevel(xp);
+  const pct  = lvl.next ? Math.min(100, ((xp - lvl.min) / (lvl.next - lvl.min)) * 100) : 100;
+  document.getElementById('xpVal').textContent   = lvl.next ? `${xp} / ${lvl.next}` : `${xp} (الحد الأقصى)`;
+  document.getElementById('xpLevel').textContent = `المستوى ${lvl.index} — ${lvl.label}`;
+  setTimeout(() => { document.getElementById('xpFill').style.width = pct + '%'; }, 300);
+}
+
+/* ═══════════════════════════════════════════
+   BADGES
+═══════════════════════════════════════════ */
+const ALL_BADGES = [
+  { id:'first_post',   icon:'📝', name:'أول منشور',      desc:'رفعت أول محتوى تعليمي' },
+  { id:'five_posts',   icon:'📚', name:'5 منشورات',       desc:'رفعت 5 منشورات' },
+  { id:'ten_posts',    icon:'🏆', name:'10 منشورات',      desc:'رفعت 10 منشورات' },
+  { id:'hundred_dl',   icon:'⬇️', name:'100 تحميل',      desc:'وصلت منشوراتك 100 تحميل' },
+  { id:'popular',      icon:'🔥', name:'محتوى شائع',      desc:'منشور وصل 50 مشاهدة' },
+  { id:'early_bird',   icon:'🌅', name:'من الأوائل',      desc:'انضممت مبكراً للمنصة' },
+  { id:'helper',       icon:'🤝', name:'متعاون',          desc:'ساعدت 10 طلاب' },
+  { id:'xp500',        icon:'⚡', name:'500 XP',          desc:'جمعت 500 نقطة XP' },
+  { id:'xp1000',       icon:'💎', name:'1000 XP',         desc:'جمعت 1000 نقطة XP' },
+  { id:'verified',     icon:'✅', name:'موثق',             desc:'حساب موثق من الإدارة' },
+];
+
+function renderBadges(earnedIds = []) {
+  const grid = document.getElementById('badgesGrid');
+  grid.innerHTML = ALL_BADGES.map(b => {
+    const earned = earnedIds.includes(b.id);
+    return `
+      <div class="badge-item ${earned ? '' : 'locked'}" title="${b.desc}">
+        <span class="badge-icon">${b.icon}</span>
+        <span class="badge-name">${b.name}</span>
+      </div>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════════
+   POSTS HISTORY
+═══════════════════════════════════════════ */
+const POST_TYPE_ICONS = { ملخص:'📋', درس:'📖', امتحان:'📝', تمارين:'🔢', حل:'✏️', فيديو:'🎥', أخرى:'📁' };
+const STATUS_LABELS   = { approved:{ cls:'status-approved', txt:'✅ معتمد' }, pending:{ cls:'status-pending', txt:'⏳ قيد المراجعة' }, rejected:{ cls:'status-rejected', txt:'❌ مرفوض' } };
+
+async function loadUserPosts(userId) {
+  const container = document.getElementById('postsContainer');
+  try {
+    const res  = await fetch(`/api/posts?userId=${userId}`, { headers: authHeader() });
+    const data = await res.json();
+    const posts = data.posts || [];
+
+    if (!posts.length) {
+      container.innerHTML = `<div class="empty-state"><span class="empty-state-icon">📭</span><p>لم ترفع أي منشور بعد</p></div>`;
+      return;
+    }
+
+    container.innerHTML = posts.map(p => {
+      const s   = STATUS_LABELS[p.status] || STATUS_LABELS.pending;
+      const ico = POST_TYPE_ICONS[p.type]  || '📁';
+      const dt  = new Date(p.createdAt).toLocaleDateString('ar-TN');
+      return `
+        <div class="post-history-item">
+          <div class="post-history-icon">${ico}</div>
+          <div class="post-history-info">
+            <div class="post-history-title">${p.title}</div>
+            <div class="post-history-meta">
+              <span>📚 ${p.subject}</span>
+              <span>🎓 ${p.year}</span>
+              <span>📅 ${dt}</span>
+              <span>👁️ ${p.views || 0}</span>
+              <span>⬇️ ${p.downloads || 0}</span>
+            </div>
+          </div>
+          <span class="post-history-status ${s.cls}">${s.txt}</span>
+        </div>`;
+    }).join('');
+
+    // update stats
+    const approved   = posts.filter(p => p.status === 'approved');
+    const totalDl    = approved.reduce((s, p) => s + (p.downloads || 0), 0);
+    const totalViews = approved.reduce((s, p) => s + (p.views     || 0), 0);
+    document.getElementById('statPosts').textContent     = approved.length;
+    document.getElementById('statDownloads').textContent = totalDl;
+    document.getElementById('statViews').textContent     = totalViews;
+
+  } catch {
+    container.innerHTML = `<div class="empty-state"><span class="empty-state-icon">❌</span><p>فشل تحميل المنشورات</p></div>`;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   AVATAR
+═══════════════════════════════════════════ */
+function renderAvatar(src, letter) {
+  const wrap = document.getElementById('avatarDisplay');
+  if (src) {
+    wrap.innerHTML = `<img src="${src}" class="avatar-big" alt="صورة الحساب" id="avatarImg" onerror="this.style.display='none';document.getElementById('avatarFallback').style.display='flex';">
+      <div class="avatar-big-default" id="avatarFallback" style="display:none">${letter}</div>`;
+  } else {
+    wrap.innerHTML = `<div class="avatar-big-default" id="avatarFallback">${letter}</div>`;
+  }
+}
+
+function handleAvatarChange(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 3 * 1024 * 1024) { showToast('حجم الصورة يجب أن يكون أقل من 3 ميغابايت', 'error'); return; }
+
+  const reader = new FileReader();
+  reader.onload = async (ev) => {
+    const base64 = ev.target.result;
+
+    // 1) عرض الصورة فوراً في الواجهة
+    const raw  = localStorage.getItem('user');
+    const user = JSON.parse(raw);
+    const letter = (user.name || 'م').charAt(0).toUpperCase();
+    renderAvatar(base64, letter);
+    renderUserNav();
+
+    // 2) رفع الصورة كـ FormData (ملف حقيقي) للسيرفر
+    try {
+      const fd = new FormData();
+      fd.append('avatar', file);
+
+      const res = await fetch('/api/profile/avatar', {
+        method:  'POST',
+        headers: authHeader(),   // بدون Content-Type — المتصفح يضعه تلقائياً مع boundary
+        body:    fd
+      });
+      const data = await res.json();
+
+      if (data.success && data.user) {
+        // الصورة الآن مخزنة كملف في السيرفر — نحفظ URL المسار بدل base64
+        const avatarUrl = data.user.avatar || base64;
+        const merged = { ...user, ...data.user, avatar: avatarUrl };
+        localStorage.setItem('user', JSON.stringify(merged));
+        // حدّث الواجهة بالـ URL الحقيقي
+        renderAvatar(avatarUrl, letter);
+        renderUserNav();
+        showToast('تم تحديث صورة الحساب ✨', 'success');
+      } else {
+        showToast(data.error || 'فشل رفع الصورة', 'error');
+        // أعِد الصورة القديمة
+        renderAvatar(user.avatar || null, letter);
+        renderUserNav();
+      }
+    } catch {
+      // فشل الاتصال — احتفظ بالصورة محلياً مؤقتاً
+      user.avatar = base64;
+      localStorage.setItem('user', JSON.stringify(user));
+      showToast('تم حفظ الصورة محلياً فقط، تحقق من الاتصال', 'error');
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ═══════════════════════════════════════════
+   SAVE BASIC INFO
+═══════════════════════════════════════════ */
+async function saveBasicInfo() {
+  const name = document.getElementById('editName').value.trim();
+  const nameErr = document.getElementById('nameErr');
+  const nameInp = document.getElementById('editName');
+
+  nameInp.classList.remove('error');
+  nameErr.classList.remove('show');
+
+  if (!name || name.length < 3) {
+    nameInp.classList.add('error');
+    nameErr.classList.add('show');
+    return;
+  }
+
+  const raw  = localStorage.getItem('user');
+  const user = JSON.parse(raw);
+  const updated = {
+    ...user,
+    name,
+    year:   document.getElementById('editYear').value,
+    branch: document.getElementById('editBranch').value,
+    bio:    document.getElementById('editBio').value.trim(),
+  };
+
+  try {
+    const res  = await fetch('/api/profile/update', {
+      method:  'POST',
+      headers: authJsonHeader(),
+      body:    JSON.stringify({ name: updated.name, year: updated.year, branch: updated.branch, bio: updated.bio }),
+    });
+    const data = await res.json();
+    if (data.success || res.ok) {
+      // الصورة المحلية تأخذ الأولوية دائماً لأنها آخر ما اختاره المستخدم
+      const localAvatar = user.avatar || '';
+      const merged = {
+        ...user,
+        ...(data.user || {}),
+        avatar: localAvatar, // لا نسمح لبيانات السيرفر بالكتابة فوق الصورة المحلية
+      };
+      localStorage.setItem('user', JSON.stringify(merged));
+      renderUserNav();
+      document.getElementById('displayName').textContent = merged.name;
+      showToast('تم حفظ المعلومات بنجاح 🎉', 'success');
+    } else {
+      showToast(data.error || 'فشل الحفظ، يرجى المحاولة مجدداً', 'error');
+    }
+  } catch {
+    // offline fallback — just update localStorage
+    localStorage.setItem('user', JSON.stringify(updated));
+    renderUserNav();
+    document.getElementById('displayName').textContent = updated.name;
+    showToast('تم حفظ المعلومات محلياً', 'success');
+  }
+}
+
+/* ═══════════════════════════════════════════
+   PASSWORD STRENGTH
+═══════════════════════════════════════════ */
+function checkPwStrength(pw) {
+  const wrap = document.getElementById('pwStrength');
+  const fill = document.getElementById('pwStrengthFill');
+  const lbl  = document.getElementById('pwStrengthLabel');
+  if (!pw) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+
+  let score = 0;
+  if (pw.length >= 8)   score++;
+  if (pw.length >= 12)  score++;
+  if (/[A-Z]/.test(pw)) score++;
+  if (/[0-9]/.test(pw)) score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+
+  const levels = [
+    { pct:'20%', color:'#ff4444', label:'ضعيفة جداً 😟' },
+    { pct:'40%', color:'#ff8c00', label:'ضعيفة 😐' },
+    { pct:'60%', color:'#ffc107', label:'متوسطة 🙂' },
+    { pct:'80%', color:'#8bc34a', label:'جيدة 😊' },
+    { pct:'100%',color:'#00e676', label:'قوية جداً 💪' },
+  ];
+  const lvl = levels[Math.min(score - 1, 4)] || levels[0];
+  fill.style.width      = lvl.pct;
+  fill.style.background = lvl.color;
+  lbl.style.color       = lvl.color;
+  lbl.textContent       = lvl.label;
+}
+
+/* ═══════════════════════════════════════════
+   CHANGE PASSWORD
+═══════════════════════════════════════════ */
+async function changePassword() {
+  const cur  = document.getElementById('currentPw').value;
+  const nw   = document.getElementById('newPw').value;
+  const conf = document.getElementById('confirmPw').value;
+  let ok = true;
+
+  [['currentPw','currentPwErr', !cur],
+   ['newPw',    'newPwErr',     nw.length < 8],
+   ['confirmPw','confirmPwErr', nw !== conf]
+  ].forEach(([inpId, errId, invalid]) => {
+    document.getElementById(inpId).classList.toggle('error', invalid);
+    document.getElementById(errId).classList.toggle('show',  invalid);
+    if (invalid) ok = false;
+  });
+  if (!ok) return;
+
+  const raw  = localStorage.getItem('user');
+  const user = JSON.parse(raw);
+
+  try {
+    const res  = await fetch('/api/profile/password', {
+      method:  'POST',
+      headers: authJsonHeader(),
+      body:    JSON.stringify({ currentPassword: cur, newPassword: nw }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('تم تحديث كلمة المرور بنجاح 🔒', 'success');
+      ['currentPw','newPw','confirmPw'].forEach(id => { document.getElementById(id).value = ''; });
+      document.getElementById('pwStrength').style.display = 'none';
+    } else {
+      showToast(data.error || 'كلمة المرور الحالية غير صحيحة', 'error');
+    }
+  } catch {
+    showToast('تعذر الاتصال بالخادم، حاول مجدداً', 'error');
+  }
+}
+
+/* ═══════════════════════════════════════════
+   DELETE ACCOUNT
+═══════════════════════════════════════════ */
+function confirmDeleteAccount() {
+  const pw = document.getElementById('deletePw').value;
+  if (!pw) { showToast('يرجى إدخال كلمة المرور للتأكيد', 'error'); return; }
+  showDialog('سيتم حذف حسابك ومنشوراتك بشكل دائم لا يمكن التراجع عنه. هل أنت متأكد تماماً؟', async () => {
+    const raw  = localStorage.getItem('user');
+    const user = JSON.parse(raw);
+    try {
+      const res  = await fetch('/api/profile/delete', {
+        method:  'DELETE',
+        headers: authJsonHeader(),
+        body:    JSON.stringify({ password: pw }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        sessionStorage.clear();
+        showToast('تم حذف الحساب. وداعاً 👋', 'success');
+        setTimeout(() => window.location.href = '/', 2000);
+      } else {
+        showToast(data.error || 'كلمة المرور غير صحيحة', 'error');
+      }
+    } catch {
+      showToast('تعذر الاتصال بالخادم', 'error');
+    }
+  });
+}
+
+/* ═══════════════════════════════════════════
+   TABS
+═══════════════════════════════════════════ */
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  document.getElementById('panel-' + id).classList.add('active');
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  // theme btn
+  const themeBtn = document.getElementById('theme-toggle-btn');
+  if (themeBtn) themeBtn.addEventListener('click', switchTheme);
+  updateThemeBtn();
+
+  // user nav
+  renderUserNav();
+
+  // scroll header
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
+    document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 200);
+  }, { passive: true });
+
+  // check auth
+  const raw = localStorage.getItem('user');
+  const token = getToken();
+  if (!raw || !token) {
+    document.getElementById('authWall').style.display    = 'block';
+    document.getElementById('profileContent').style.display = 'none';
+    return;
+  }
+
+  let user;
+  try { user = JSON.parse(raw); } catch { logoutUser(); return; }
+
+  document.getElementById('authWall').style.display    = 'none';
+  document.getElementById('profileContent').style.display = 'block';
+
+  // fill data from localStorage first (fast)
+  const name   = user.name     || user.username || 'مستخدم';
+  const role   = user.role === 'admin' ? 'مسؤول النظام ⚙️' : '👨‍🎓 طالب';
+  const letter = name.trim().charAt(0).toUpperCase();
+  const join   = user.joinedAt || user.createdAt
+    ? 'انضم في ' + new Date(user.joinedAt || user.createdAt).toLocaleDateString('ar-TN', { year:'numeric', month:'long' })
+    : '';
+
+  document.getElementById('displayName').textContent = name;
+  document.getElementById('displayRole').textContent = role;
+  document.getElementById('displayJoin').textContent = join;
+
+  renderAvatar(user.avatar || user.profileImage || null, letter);
+  renderXP(user.xp || 0);
+  renderBadges(user.badges || []);
+  loadUserPosts(user.id);
+
+  // fill form
+  document.getElementById('editName').value   = name;
+  document.getElementById('editEmail').value  = user.email || '';
+  document.getElementById('editYear').value   = user.year   || '';
+  document.getElementById('editBranch').value = user.branch || '';
+  document.getElementById('editBio').value    = user.bio    || '';
+  document.getElementById('nameCount').textContent = name.length;
+  document.getElementById('bioCount').textContent  = (user.bio || '').length;
+
+  // مزامنة البيانات من السيرفر (يضمن أن الصورة وكل البيانات محدّثة)
+  fetch('/api/user/' + user.id, { headers: authHeader() })
+    .then(r => r.json())
+    .then(data => {
+      if (!data.user) return;
+      const su = data.user;
+
+      // إذا السيرفر يملك URL للصورة (مسار ملف) فهو الأصح — نُعطيه الأولوية
+      // إذا السيرفر يملك base64 أو فارغ — نحتفظ بالنسخة المحلية
+      const serverAvatar = su.avatar || '';
+      const localAvatar  = user.avatar || '';
+      const isServerUrl  = serverAvatar.startsWith('/uploads/') || serverAvatar.startsWith('http');
+      const finalAvatar  = isServerUrl ? serverAvatar : (localAvatar || serverAvatar);
+
+      const merged = { ...user, ...su, avatar: finalAvatar };
+      localStorage.setItem('user', JSON.stringify(merged));
+
+      // حدّث الواجهة إذا تغيرت الصورة
+      if (finalAvatar && finalAvatar !== localAvatar) {
+        renderAvatar(finalAvatar, (su.name || name).trim().charAt(0).toUpperCase());
+        renderUserNav();
+      }
+      // حدّث XP إذا تغير
+      if (su.xp !== undefined) renderXP(su.xp);
+    })
+    .catch(() => {});
+
+  // char counters
+  document.getElementById('editName').addEventListener('input', function() {
+    document.getElementById('nameCount').textContent = this.value.length;
+  });
+  document.getElementById('editBio').addEventListener('input', function() {
+    document.getElementById('bioCount').textContent = this.value.length;
+  });
+});
+</script>
+</body>
+</html>

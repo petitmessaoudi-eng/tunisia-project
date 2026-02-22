@@ -1,0 +1,449 @@
+/* Ultra Dark Theme for Calculator - الثيم الأسود الطاغي */
+
+body {
+    background: #000000;
+    color: #b388ff;
+}
+
+/* Enhanced background colors - Ultra Dark */
+.animated-bg::before {
+    background: radial-gradient(circle at 15% 85%, rgba(40, 0, 70, 0.5) 0%, transparent 50%),
+                radial-gradient(circle at 85% 15%, rgba(60, 0, 60, 0.6) 0%, transparent 50%),
+                radial-gradient(circle at 45% 60%, rgba(50, 0, 50, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 40%, rgba(20, 60, 20, 0.3) 0%, transparent 50%),
+                linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { filter: brightness(0.6) saturate(1.2) hue-rotate(0deg); }
+    33% { filter: brightness(0.7) saturate(1.4) hue-rotate(10deg); }
+    66% { filter: brightness(0.65) saturate(1.3) hue-rotate(-5deg); }
+}
+
+/* Particles - Ultra Dark */
+.particle {
+    background: #b388ff;
+}
+
+/* Header - Ultra Dark */
+.header {
+    background: rgba(10, 10, 10, 0.85);
+    border-bottom: 1px solid rgba(179, 136, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+}
+
+.header.scrolled {
+    background: rgba(15, 15, 15, 0.9);
+    border-bottom-color: rgba(179, 136, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+}
+
+/* Logo - Ultra Dark */
+.logo {
+    background: linear-gradient(45deg, #b388ff, #9370db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-icon {
+    filter: drop-shadow(0 0 8px #b388ff);
+}
+
+@keyframes logoGlow {
+    0%, 100% { filter: drop-shadow(0 0 8px #b388ff); }
+    50% { filter: drop-shadow(0 0 15px #9370db); }
+}
+
+.logo-text {
+    background: linear-gradient(45deg, #b388ff, #9370db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Navigation - Ultra Dark */
+.back-btn {
+    background: rgba(179, 136, 255, 0.08);
+    color: #b388ff;
+    border: 1px solid rgba(179, 136, 255, 0.15);
+}
+
+.back-btn:hover {
+    background: rgba(179, 136, 255, 0.15);
+    border-color: rgba(179, 136, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(179, 136, 255, 0.2);
+}
+
+.theme-toggle {
+    background: rgba(179, 136, 255, 0.08);
+    border: 1px solid rgba(179, 136, 255, 0.15);
+    color: #b388ff;
+}
+
+.theme-toggle:hover {
+    background: rgba(179, 136, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(179, 136, 255, 0.2);
+}
+
+/* Page Header - Ultra Dark */
+.page-title {
+    background: linear-gradient(45deg, #b388ff, #9370db, #8a7db8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(179, 136, 255, 0.4);
+}
+
+.page-subtitle {
+    color: #9e9e9e;
+}
+
+/* Stats Cards - Ultra Dark */
+.stat-card {
+    background: rgba(15, 15, 15, 0.7);
+    border: 1px solid rgba(179, 136, 255, 0.1);
+}
+
+.stat-card:hover {
+    background: rgba(20, 20, 20, 0.8);
+    border-color: rgba(179, 136, 255, 0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+.stat-value {
+    background: linear-gradient(45deg, #b388ff, #9370db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+    color: #9e9e9e;
+}
+
+/* Calculator Card - Ultra Dark */
+.calculator-card {
+    background: rgba(15, 15, 15, 0.7);
+    border: 1px solid rgba(179, 136, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.section-title {
+    color: #d4b3ff;
+    text-shadow: 0 2px 10px rgba(179, 136, 255, 0.3);
+}
+
+/* Form Elements - Ultra Dark */
+.form-label {
+    color: #b388ff;
+    text-shadow: 0 2px 8px rgba(179, 136, 255, 0.2);
+}
+
+.form-select {
+    background: rgba(10, 10, 10, 0.8);
+    border: 2px solid rgba(179, 136, 255, 0.15);
+    color: #b388ff;
+}
+
+.form-select:focus {
+    border-color: rgba(179, 136, 255, 0.4);
+    background: rgba(15, 15, 15, 0.9);
+    box-shadow: 0 0 0 4px rgba(179, 136, 255, 0.08), 0 4px 20px rgba(179, 136, 255, 0.15);
+}
+
+.form-select option {
+    background: #0a0a0a;
+    color: #b388ff;
+}
+
+/* Subject Cards - Ultra Dark */
+.subject-card {
+    background: rgba(10, 10, 10, 0.6);
+    border: 1px solid rgba(179, 136, 255, 0.12);
+}
+
+.subject-card:hover {
+    background: rgba(15, 15, 15, 0.7);
+    border-color: rgba(179, 136, 255, 0.2);
+}
+
+.subject-name {
+    color: #ba68c8;
+}
+
+.subject-coef {
+    background: linear-gradient(45deg, rgba(179, 136, 255, 0.15), rgba(147, 112, 219, 0.15));
+    color: #d4b3ff;
+    border: 1px solid rgba(179, 136, 255, 0.25);
+}
+
+/* Input Fields - Ultra Dark */
+input[type="number"],
+input[type="text"],
+input[type="email"],
+textarea {
+    background: rgba(10, 10, 10, 0.8);
+    border: 2px solid rgba(179, 136, 255, 0.15);
+    color: #b388ff;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: rgba(179, 136, 255, 0.4);
+    background: rgba(15, 15, 15, 0.9);
+    box-shadow: 0 0 0 4px rgba(179, 136, 255, 0.08), 0 4px 20px rgba(179, 136, 255, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(179, 136, 255, 0.4);
+}
+
+.input-label {
+    color: #9e9e9e;
+}
+
+.grade-input {
+    background: linear-gradient(135deg, rgba(179, 136, 255, 0.06), rgba(147, 112, 219, 0.04));
+    border: 2px solid rgba(179, 136, 255, 0.2);
+}
+
+input[id*="oral-"]:focus,
+input[id*="practical-"]:focus,
+input[id*="controle-"]:focus,
+input[id*="controle1-"]:focus,
+input[id*="controle2-"]:focus,
+input[id*="synthese-"]:focus {
+    border-color: rgba(179, 136, 255, 0.5);
+    background: linear-gradient(135deg, rgba(179, 136, 255, 0.1), rgba(147, 112, 219, 0.06));
+    box-shadow: 0 0 0 4px rgba(179, 136, 255, 0.1), 0 4px 20px rgba(179, 136, 255, 0.2);
+}
+
+label {
+    color: #b388ff;
+    text-shadow: 0 2px 8px rgba(179, 136, 255, 0.2);
+}
+
+/* Buttons - Ultra Dark */
+.calculate-btn {
+    background: linear-gradient(45deg, #7b1fa2, #9c27b0);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(123, 31, 162, 0.3);
+}
+
+.calculate-btn:hover {
+    box-shadow: 0 8px 30px rgba(156, 39, 176, 0.4);
+    background: linear-gradient(45deg, #9c27b0, #ba68c8);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #7b1fa2, #9c27b0);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(123, 31, 162, 0.3);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 8px 30px rgba(156, 39, 176, 0.4);
+}
+
+.btn-secondary {
+    background: rgba(179, 136, 255, 0.08);
+    color: #b388ff;
+    border: 2px solid rgba(179, 136, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: rgba(179, 136, 255, 0.12);
+    border-color: rgba(179, 136, 255, 0.4);
+}
+
+.btn-success {
+    background: linear-gradient(45deg, #1b5e20, #2e7d32);
+    color: #fff;
+}
+
+.btn-danger {
+    background: linear-gradient(45deg, #b71c1c, #d32f2f);
+    color: #fff;
+}
+
+/* Result Card - Ultra Dark */
+.result-card {
+    background: rgba(15, 15, 15, 0.7);
+    border: 1px solid rgba(179, 136, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.result-title {
+    color: #9e9e9e;
+}
+
+.result-score {
+    background: linear-gradient(45deg, #b388ff, #9370db, #8a7db8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(179, 136, 255, 0.5);
+}
+
+.result-subtitle {
+    color: #9e9e9e;
+}
+
+.result-detail {
+    background: rgba(10, 10, 10, 0.6);
+    border: 1px solid rgba(179, 136, 255, 0.12);
+}
+
+.result-detail:hover {
+    background: rgba(15, 15, 15, 0.7);
+    border-color: rgba(179, 136, 255, 0.2);
+}
+
+.result-detail-value {
+    color: #d4b3ff;
+}
+
+.result-detail-label {
+    color: #9e9e9e;
+}
+
+/* Features Section - Ultra Dark */
+.feature-card {
+    background: rgba(10, 10, 10, 0.6);
+    border: 1px solid rgba(179, 136, 255, 0.12);
+}
+
+.feature-card:hover {
+    background: rgba(15, 15, 15, 0.7);
+    border-color: rgba(179, 136, 255, 0.2);
+}
+
+.feature-title {
+    color: #d4b3ff;
+}
+
+.feature-description {
+    color: #9e9e9e;
+}
+
+/* History Section - Ultra Dark */
+.history-card {
+    background: rgba(10, 10, 10, 0.6);
+    border: 1px solid rgba(179, 136, 255, 0.12);
+}
+
+.history-card:hover {
+    background: rgba(15, 15, 15, 0.7);
+    border-color: rgba(179, 136, 255, 0.2);
+}
+
+.history-date {
+    color: #9e9e9e;
+}
+
+.history-info-label {
+    color: #9e9e9e;
+}
+
+.history-info-value {
+    color: #d4b3ff;
+}
+
+/* Progress Bar - Ultra Dark */
+.progress-bar {
+    background: rgba(179, 136, 255, 0.1);
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #7b1fa2, #9c27b0);
+    box-shadow: 0 0 20px rgba(156, 39, 176, 0.5);
+}
+
+/* Alerts - Ultra Dark */
+.alert-success {
+    background: rgba(27, 94, 32, 0.2);
+    border: 2px solid rgba(46, 125, 50, 0.4);
+    color: #66bb6a;
+}
+
+.alert-error {
+    background: rgba(183, 28, 28, 0.2);
+    border: 2px solid rgba(211, 47, 47, 0.4);
+    color: #ef5350;
+}
+
+.alert-warning {
+    background: rgba(230, 81, 0, 0.2);
+    border: 2px solid rgba(239, 108, 0, 0.4);
+    color: #ff9800;
+}
+
+.alert-info {
+    background: rgba(179, 136, 255, 0.15);
+    border: 2px solid rgba(179, 136, 255, 0.4);
+    color: #b388ff;
+}
+
+/* Badges - Ultra Dark */
+.badge-primary {
+    background: linear-gradient(45deg, rgba(179, 136, 255, 0.2), rgba(147, 112, 219, 0.2));
+    color: #d4b3ff;
+    border: 1px solid rgba(179, 136, 255, 0.4);
+}
+
+.badge-success {
+    background: rgba(46, 125, 50, 0.2);
+    color: #66bb6a;
+    border: 1px solid rgba(46, 125, 50, 0.4);
+}
+
+.badge-danger {
+    background: rgba(211, 47, 47, 0.2);
+    color: #ef5350;
+    border: 1px solid rgba(211, 47, 47, 0.4);
+}
+
+/* Divider - Ultra Dark */
+.divider {
+    background: linear-gradient(90deg, transparent, rgba(179, 136, 255, 0.2), transparent);
+}
+
+/* Text Utilities - Ultra Dark */
+.text-gradient {
+    background: linear-gradient(45deg, #b388ff, #9370db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-muted {
+    color: #666;
+}
+
+/* Scrollbar - Ultra Dark */
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #7b1fa2, #9c27b0);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #9c27b0, #ba68c8);
+}
+
+/* Selection - Ultra Dark */
+::selection {
+    background: rgba(179, 136, 255, 0.3);
+    color: #fff;
+}
+
+/* Hover Glow - Ultra Dark */
+.calculator-card:hover,
+.stat-card:hover,
+.subject-card:hover,
+.feature-card:hover,
+.history-card:hover,
+.result-card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 0 30px rgba(179, 136, 255, 0.15);
+}

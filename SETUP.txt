@@ -1,0 +1,155 @@
+=============================================================================
+منصة الطلاب التونسيين - دليل التثبيت والتشغيل
+Educational Social Platform for Tunisian Students
+=============================================================================
+
+📦 STRUCTURE:
+├── server.js                 # Express REST API Server
+├── package.json             # Dependencies
+├── data/
+│   ├── users.json          # User accounts
+│   ├── posts.json          # Educational posts
+│   └── interactions.json   # Requests wall
+├── public/                  # Static HTML files
+│   ├── index.html          # Home page with filters
+│   ├── post.html           # Single post view
+│   ├── upload.html         # Upload form
+│   ├── auth.html           # Login/Register
+│   ├── admin.html          # Admin dashboard
+│   ├── calculator.html     # GPA calculator
+│   └── requests.html       # Requests wall
+└── uploads/                 # User uploaded files
+
+🚀 INSTALLATION & SETUP:
+
+1. Install Node.js (v14 or higher)
+
+2. Navigate to project directory:
+   cd tunisian-student-platform
+
+3. Install dependencies:
+   npm install
+
+4. Start the server:
+   npm start
+
+5. Open browser and go to:
+   http://localhost:3000
+
+🔑 DEFAULT LOGIN:
+Admin Account:
+  Email: admin@gmail.com
+  Password: admin123
+
+Test Student Account:
+  Email: student@test.com
+  Password: test123
+
+✨ FEATURES:
+
+1. HOME PAGE (index.html):
+   - Pinned posts section
+   - Advanced filters (Branch, Year, Subject, Type)
+   - Panic Mode (shows only summaries & videos)
+   - Dark/Light theme toggle
+   - RTL Arabic interface
+   - XP/Level system in navbar
+
+2. POST VIEW (post.html):
+   - 10-second countdown modal before download
+   - Image upload in comments
+   - View/Download/Comment statistics
+   - Correction system via image comments
+
+3. UPLOAD (upload.html):
+   - Drag & drop file upload
+   - Posts start as "pending"
+   - 50 XP reward on approval
+   - Support for PDF, DOC, DOCX, PPT, PPTX
+
+4. ADMIN DASHBOARD (admin.html):
+   - Approve/Reject pending posts
+   - Pin/Unpin posts
+   - Delete posts
+   - Statistics overview
+
+5. GPA CALCULATOR (calculator.html):
+   - Tunisian coefficient system
+   - Multiple branches (علوم، رياضيات، آداب، اقتصاد، تقنية)
+   - Automatic grade calculation
+
+6. REQUESTS WALL (requests.html):
+   - Community request system
+   - Students ask for missing exams
+   - Filter by branch/year/subject
+
+🎨 DESIGN:
+- Light Mode: Royal Blue (#4169E1) primary color
+- Dark Mode: Carbon/Metal theme from reference file
+- PRISM FLUX architecture adapted
+- Fully responsive mobile design
+- RTL Arabic layout
+
+💾 DATA STORAGE:
+- Native fs module with JSON files
+- No database required
+- Files stored in /uploads directory
+
+🎯 GAMIFICATION:
+- Upload: +50 XP
+- Comment: +10 XP
+- Level = XP / 100 + 1
+
+⚙️ API ENDPOINTS:
+
+Authentication:
+POST /api/register
+POST /api/login
+
+Posts:
+GET  /api/posts
+GET  /api/posts/:id
+POST /api/posts/:id/download
+POST /api/posts/:id/comments
+POST /api/upload
+
+Admin:
+GET    /api/admin/pending
+POST   /api/admin/approve/:id
+DELETE /api/admin/delete/:id
+POST   /api/admin/pin/:id
+
+Requests:
+GET  /api/requests
+POST /api/requests
+
+Stats:
+GET  /api/stats
+
+User:
+GET  /api/user/:id
+
+📱 BROWSER SUPPORT:
+- Chrome/Edge (Recommended)
+- Firefox
+- Safari
+- Mobile browsers
+
+🔒 SECURITY NOTES:
+- This is a demonstration/educational project
+- Passwords stored in plain text (use hashing in production)
+- No rate limiting implemented
+- Add proper authentication middleware for production
+
+💡 CUSTOMIZATION:
+- Edit CSS variables in each HTML file for theme changes
+- Modify coefficients in calculator.html for different systems
+- Add more subjects/branches in form options
+
+📞 SUPPORT:
+For issues or questions, check the code comments or
+review the inline documentation in each file.
+
+=============================================================================
+Created with ❤️ for Tunisian Students
+=============================================================================

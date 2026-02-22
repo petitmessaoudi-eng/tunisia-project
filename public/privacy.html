@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الخصوصية - منصة الطلاب التونسيين</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cairo', 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: #000;
+    color: #e0a3ff;
+    overflow-x: hidden;
+    min-height: 100vh;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Enhanced background colors */
+.neural-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: radial-gradient(circle at 15% 85%, rgba(75, 0, 130, 0.7) 0%, transparent 50%),
+                radial-gradient(circle at 85% 15%, rgba(139, 37, 99, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 45% 60%, rgba(128, 0, 128, 0.6) 0%, transparent 50%),
+                radial-gradient(circle at 70% 40%, rgba(34, 139, 34, 0.4) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a0a 0%, #2d1b3d 50%, #000000 100%);
+    animation: backgroundPulse 14s ease-in-out infinite;
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { filter: brightness(0.9) saturate(1.4) hue-rotate(0deg); }
+    33% { filter: brightness(1.1) saturate(1.7) hue-rotate(15deg); }
+    66% { filter: brightness(1.0) saturate(1.5) hue-rotate(-10deg); }
+}
+
+/* Floating geometric shapes */
+.geometric-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    animation: floatShape 20s linear infinite;
+}
+
+.shape:nth-child(1) { width: 100px; height: 100px; right: 10%; animation-delay: 0s; border-color: rgba(255, 105, 180, 0.4); }
+.shape:nth-child(2) { width: 60px; height: 60px; right: 70%; animation-delay: -5s; border-radius: 50%; border-color: rgba(147, 112, 219, 0.4); }
+.shape:nth-child(3) { width: 80px; height: 80px; right: 30%; animation-delay: -10s; transform: rotate(45deg); border-color: rgba(224, 163, 255, 0.4); }
+.shape:nth-child(4) { width: 120px; height: 120px; right: 50%; animation-delay: -15s; clip-path: polygon(50% 0%, 0% 100%, 100% 100%); background: linear-gradient(45deg, rgba(255, 105, 180, 0.1), transparent); }
+
+@keyframes floatShape {
+    from { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%, 90% { opacity: 1; }
+    to { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
+/* Neural network lines */
+.neural-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+.neural-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, #00ffff, transparent);
+    height: 1px;
+    animation: neuralPulse 3s ease-in-out infinite;
+}
+
+.neural-line:nth-child(1) { top: 20%; left: 0; width: 100%; background: linear-gradient(90deg, transparent, #e0a3ff, transparent); animation-delay: 0s; }
+.neural-line:nth-child(2) { top: 60%; left: 0; width: 100%; background: linear-gradient(90deg, transparent, #ff69b4, transparent); animation-delay: -1s; }
+.neural-line:nth-child(3) { top: 40%; left: 0; width: 100%; background: linear-gradient(90deg, transparent, #9370db, transparent); animation-delay: -2s; }
+
+@keyframes neuralPulse {
+    0%, 100% { opacity: 0.2; transform: scaleX(0.5); }
+    50% { opacity: 1; transform: scaleX(1); }
+}
+
+/* Glassmorphism styles */
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-strong {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Enhanced Header */
+header {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 96%;
+    max-width: 1200px;
+    padding: 18px 35px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(224, 163, 255, 0.08);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(224, 163, 255, 0.15);
+    border-radius: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+header.scrolled {
+    background: rgba(224, 163, 255, 0.12);
+    backdrop-filter: blur(30px);
+    border-color: rgba(224, 163, 255, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 0 0 1px rgba(224, 163, 255, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 28px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #e0a3ff, #ff69b4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    animation: logoGlow 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+.logo:hover { transform: scale(1.05); }
+.logo-icon { font-size: 40px; filter: drop-shadow(0 0 10px #e0a3ff); }
+
+@keyframes logoGlow {
+    0%, 100% { filter: drop-shadow(0 0 10px #e0a3ff); }
+    50% { filter: drop-shadow(0 0 20px #ff69b4); }
+}
+
+.nav-links { display: flex; list-style: none; gap: 12px; }
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    padding: 12px 20px;
+    border-radius: 15px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    color: #e0a3ff;
+    background: linear-gradient(135deg, rgba(224, 163, 255, 0.15), rgba(255, 105, 180, 0.1));
+    box-shadow: 0 0 20px rgba(224, 163, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 4px 15px rgba(224, 163, 255, 0.2);
+    border: 1px solid rgba(224, 163, 255, 0.3);
+    text-shadow: 0 0 10px rgba(224, 163, 255, 0.8);
+    transform: translateY(-1px);
+}
+
+/* Theme toggle button */
+.theme-toggle-btn {
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(224, 163, 255, 0.3);
+    background: rgba(224, 163, 255, 0.1);
+    color: #e0a3ff;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(224, 163, 255, 0.2);
+    box-shadow: 0 0 15px rgba(224, 163, 255, 0.3);
+}
+
+/* Mobile Menu */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+    background: rgba(224, 163, 255, 0.1);
+    box-shadow: 0 0 15px rgba(224, 163, 255, 0.3);
+}
+
+.hamburger-line {
+    width: 25px; height: 3px;
+    background: linear-gradient(45deg, #e0a3ff, #ff69b4);
+    margin: 3px 0; border-radius: 2px; transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(9px, 9px); }
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) { opacity: 0; }
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+
+.mobile-nav {
+    position: fixed;
+    top: 90px; left: 50%;
+    transform: translateX(-50%);
+    width: 90%; max-width: 400px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 30px;
+    display: none; flex-direction: column; gap: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    z-index: 99;
+}
+
+.mobile-nav.active { display: flex; animation: slideDown 0.3s ease-out; }
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.mobile-nav a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 15px 20px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav a:hover, .mobile-nav a.active {
+    background: linear-gradient(135deg, rgba(224, 163, 255, 0.2), rgba(255, 105, 180, 0.15));
+    color: #e0a3ff;
+    border: 1px solid rgba(224, 163, 255, 0.4);
+    box-shadow: 0 0 25px rgba(224, 163, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px rgba(224, 163, 255, 0.6);
+}
+
+/* =====================
+   Privacy Page Layout
+   ===================== */
+
+.privacy-hero {
+    padding-top: 160px;
+    padding-bottom: 60px;
+    text-align: center;
+    position: relative;
+}
+
+.privacy-hero::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 60%; height: 60%;
+    background: radial-gradient(circle, rgba(224, 163, 255, 0.04) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    animation: heroGlow 10s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes heroGlow {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+}
+
+.privacy-badge {
+    display: inline-block;
+    padding: 8px 24px;
+    border-radius: 50px;
+    background: rgba(224, 163, 255, 0.1);
+    border: 1px solid rgba(224, 163, 255, 0.3);
+    color: #e0a3ff;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    font-weight: 400;
+    animation: fadeInDown 1s ease 0.2s both;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.privacy-hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #e0a3ff 0%, #ff69b4 40%, #9370db 70%, #e0a3ff 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: modernGradient 8s ease infinite, fadeInUp 1s ease 0.4s both;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+@keyframes modernGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.privacy-hero p {
+    color: #aaa;
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 300;
+    animation: fadeInUp 1s ease 0.6s both;
+}
+
+/* Privacy Content */
+.privacy-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+}
+
+.privacy-intro {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(224, 163, 255, 0.2);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease 0.8s both;
+    position: relative;
+    overflow: hidden;
+}
+
+.privacy-intro::before {
+    content: '🔒';
+    position: absolute;
+    top: -10px; left: 30px;
+    font-size: 4rem;
+    opacity: 0.07;
+}
+
+.privacy-intro h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #e0a3ff;
+    margin-bottom: 15px;
+}
+
+.privacy-intro p {
+    color: #c0c0c0;
+    font-size: 1rem;
+    line-height: 1.8;
+    font-weight: 400;
+}
+
+/* Section Cards */
+.privacy-section {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(224, 163, 255, 0.12);
+    border-radius: 20px;
+    padding: 35px 40px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.privacy-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.privacy-section:hover {
+    border-color: rgba(224, 163, 255, 0.25);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 20px rgba(224, 163, 255, 0.05);
+    transform: translateY(-3px);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(224, 163, 255, 0.1);
+}
+
+.section-number {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(224, 163, 255, 0.2), rgba(255, 105, 180, 0.15));
+    border: 1px solid rgba(224, 163, 255, 0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #e0a3ff;
+    flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(224, 163, 255, 0.1);
+}
+
+.section-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #e0a3ff;
+    flex: 1;
+}
+
+.privacy-section p {
+    color: #bbb;
+    font-size: 0.97rem;
+    line-height: 1.85;
+    margin-bottom: 14px;
+    font-weight: 400;
+}
+
+.privacy-section p:last-child { margin-bottom: 0; }
+
+.privacy-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+}
+
+.privacy-list li {
+    color: #bbb;
+    font-size: 0.97rem;
+    line-height: 1.8;
+    padding: 10px 0 10px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.privacy-list li:last-child { border-bottom: none; }
+
+.privacy-list li::before {
+    content: '◆';
+    position: absolute;
+    right: 0;
+    color: #e0a3ff;
+    font-size: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+}
+
+.privacy-list li:hover { color: #ddd; }
+
+/* Highlight Box */
+.highlight-box {
+    background: linear-gradient(135deg, rgba(224, 163, 255, 0.08), rgba(255, 105, 180, 0.05));
+    border: 1px solid rgba(224, 163, 255, 0.2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 15px 0;
+    color: #d4b3ff;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+/* Contact Section */
+.privacy-contact {
+    background: linear-gradient(135deg, rgba(224, 163, 255, 0.08), rgba(255, 105, 180, 0.06));
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(224, 163, 255, 0.25);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 30px rgba(224, 163, 255, 0.05);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+}
+
+.privacy-contact.visible { opacity: 1; transform: translateY(0); }
+
+.privacy-contact h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #e0a3ff;
+    margin-bottom: 15px;
+}
+
+.privacy-contact p {
+    color: #aaa;
+    font-size: 0.97rem;
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.contact-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 15px;
+    background: rgba(224, 163, 255, 0.1);
+    border: 1px solid rgba(224, 163, 255, 0.3);
+    color: #e0a3ff;
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-link-btn:hover {
+    background: rgba(224, 163, 255, 0.2);
+    border-color: rgba(224, 163, 255, 0.5);
+    box-shadow: 0 8px 25px rgba(224, 163, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+/* Last Updated */
+.last-updated {
+    text-align: center;
+    color: #555;
+    font-size: 0.85rem;
+    margin-bottom: 50px;
+    font-weight: 400;
+}
+
+/* Section Title */
+.section-title {
+    text-align: center;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #e0a3ff 0%, #ff69b4 50%, #9370db 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #e0a3ff, transparent);
+    box-shadow: 0 0 10px rgba(224, 163, 255, 0.5);
+}
+
+/* Footer */
+footer {
+    background: rgba(224, 163, 255, 0.03);
+    border-top: 1px solid rgba(224, 163, 255, 0.1);
+    padding: 40px 20px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.footer-links a {
+    color: #888;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.footer-links a:hover { color: #e0a3ff; text-shadow: 0 0 10px rgba(224, 163, 255, 0.5); }
+.footer-links a.active { color: #e0a3ff; }
+
+.footer-copyright p { color: #444; font-size: 0.85rem; font-weight: 400; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #7b1fa2, #9c27b0); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #9c27b0, #ba68c8); }
+
+/* Selection */
+::selection { background: rgba(224, 163, 255, 0.3); color: #fff; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    header { padding: 15px 20px; top: 10px; }
+    .nav-links { display: none; }
+    .mobile-menu-toggle { display: flex; }
+    .privacy-hero { padding-top: 130px; padding-bottom: 40px; }
+    .privacy-intro, .privacy-section, .privacy-contact { padding: 25px 20px; }
+    .section-header { flex-wrap: wrap; }
+    .contact-links { flex-direction: column; align-items: center; }
+}
+
+/* ================================
+   LIGHT THEME OVERRIDES - privacy
+   ================================ */
+body.theme-light .privacy-badge {
+    background: rgba(123, 31, 162, 0.1);
+    border-color: rgba(123, 31, 162, 0.35);
+    color: #6a1b9a;
+}
+
+body.theme-light .privacy-hero h1 {
+    background: linear-gradient(135deg, #6a1b9a, #8e24aa, #9c27b0);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.theme-light .privacy-hero p { color: #555 !important; }
+
+body.theme-light .last-updated { color: #888; }
+
+body.theme-light .privacy-intro {
+    background: rgba(255,255,255,0.92);
+    border-color: rgba(156,39,176,0.25);
+    box-shadow: 0 8px 30px rgba(123,31,162,0.15);
+}
+
+body.theme-light .privacy-intro h2 { color: #6a1b9a !important; }
+body.theme-light .privacy-intro p { color: #424242 !important; }
+
+body.theme-light .privacy-section {
+    background: rgba(255,255,255,0.93);
+    border-color: rgba(156,39,176,0.2);
+    box-shadow: 0 6px 25px rgba(123,31,162,0.12);
+}
+
+body.theme-light .privacy-section:hover {
+    border-color: rgba(156,39,176,0.38);
+    box-shadow: 0 12px 40px rgba(123,31,162,0.2);
+}
+
+body.theme-light .section-header {
+    border-bottom-color: rgba(156,39,176,0.15);
+}
+
+body.theme-light .section-number {
+    background: linear-gradient(135deg, rgba(156,39,176,0.18), rgba(186,104,200,0.14));
+    border-color: rgba(156,39,176,0.35);
+    color: #6a1b9a;
+}
+
+body.theme-light .section-header h2 { color: #6a1b9a !important; }
+
+body.theme-light .privacy-section p { color: #424242 !important; }
+
+body.theme-light .privacy-list li { color: #424242 !important; border-bottom-color: rgba(0,0,0,0.06); }
+body.theme-light .privacy-list li::before { color: #8e24aa; }
+body.theme-light .privacy-list li strong { color: #6a1b9a; }
+
+body.theme-light .highlight-box {
+    background: linear-gradient(135deg, rgba(156,39,176,0.08), rgba(186,104,200,0.06));
+    border-color: rgba(156,39,176,0.25);
+    color: #6a1b9a;
+}
+
+body.theme-light .privacy-contact {
+    background: linear-gradient(135deg, rgba(156,39,176,0.07), rgba(186,104,200,0.05));
+    border-color: rgba(156,39,176,0.25);
+    box-shadow: 0 8px 30px rgba(123,31,162,0.15);
+}
+
+body.theme-light .privacy-contact h2 { color: #6a1b9a !important; }
+body.theme-light .privacy-contact p { color: #555 !important; }
+
+body.theme-light .contact-link-btn {
+    background: rgba(123,31,162,0.08);
+    border-color: rgba(123,31,162,0.3);
+    color: #6a1b9a;
+}
+
+body.theme-light .contact-link-btn:hover {
+    background: rgba(123,31,162,0.15);
+    border-color: rgba(123,31,162,0.5);
+    box-shadow: 0 8px 20px rgba(123,31,162,0.2);
+}
+
+body.theme-light footer {
+    background: rgba(243,229,245,0.95);
+    border-top-color: rgba(156,39,176,0.2);
+}
+
+body.theme-light .footer-links a { color: #6a1b9a; }
+body.theme-light .footer-links a:hover { color: #8e24aa; }
+body.theme-light .footer-copyright p { color: #6a1b9a; opacity: 0.6; }
+
+body.theme-light .mobile-nav {
+    background: rgba(255,255,255,0.98);
+    border-color: rgba(156,39,176,0.25);
+}
+
+body.theme-light .mobile-nav a { color: #6a1b9a; border-bottom-color: rgba(156,39,176,0.12); background: rgba(243,229,245,0.5); border-color: rgba(156,39,176,0.15); }
+body.theme-light .mobile-nav a:hover { background: rgba(156,39,176,0.12); color: #8e24aa; }
+    </style>
+</head>
+<body>
+
+    <!-- Background Effects -->
+    <div class="neural-background"></div>
+    <div class="geometric-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="neural-lines">
+        <div class="neural-line"></div>
+        <div class="neural-line"></div>
+        <div class="neural-line"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🎓</span>
+                <span>منصة الطلاب</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#features">المميزات</a></li>
+                <li><a href="index.html#showcase">الخدمات</a></li>
+                <li><a href="index.html#stats">إحصائيات</a></li>
+                <li><a href="index.html#timeline">رحلتنا</a></li>
+                <li><a href="index.html#contact">اتصل بنا</a></li>
+                <li><a href="privacy.html" class="active">الخصوصية</a></li>
+            </ul>
+            <button class="theme-toggle-btn" id="theme-toggle-btn">الثيم الافتراضي</button>
+            <div class="mobile-menu-toggle" id="mobile-toggle">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="index.html#features">المميزات</a>
+        <a href="index.html#showcase">الخدمات</a>
+        <a href="index.html#stats">إحصائيات</a>
+        <a href="index.html#timeline">رحلتنا</a>
+        <a href="index.html#contact">اتصل بنا</a>
+        <a href="privacy.html" class="active">الخصوصية</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="privacy-hero">
+        <div class="privacy-badge">وثيقة رسمية</div>
+        <h1>سياسة الخصوصية</h1>
+        <p>نحن نحمي بياناتك ونولي خصوصيتك أولوية قصوى في كل ما نقوم به</p>
+    </section>
+
+    <!-- Privacy Content -->
+    <div class="privacy-content">
+
+        <p class="last-updated">آخر تحديث: يناير 2025</p>
+
+        <!-- Introduction -->
+        <div class="privacy-intro">
+            <h2>مقدمة</h2>
+            <p>
+                نحن في منصة الطلاب التونسيين نولي أهمية قصوى لخصوصية مستخدمينا. توضح هذه السياسة كيفية جمع البيانات، واستخدامها، وحمايتك عند مشاركة الامتحانات، الدروس، أو التطبيقات التعليمية عبر منصتنا.
+            </p>
+        </div>
+
+        <!-- Section 1 -->
+        <div class="privacy-section">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <span class="section-icon">📋</span>
+                <h2>المعلومات التي نجمعها</h2>
+            </div>
+            <p>عند استخدامك للمنصة، قد نقوم بجمع المعلومات التالية:</p>
+            <ul class="privacy-list">
+                <li><strong>معلومات الحساب:</strong> مثل الاسم، البريد الإلكتروني، والمستوى الدراسي عند التسجيل.</li>
+                <li><strong>المحتوى المرفوع:</strong> الامتحانات، الملخصات، أو التطبيقات التي تختار مشاركتها مع زملائك.</li>
+                <li><strong>بيانات الاستخدام:</strong> معلومات تقنية مثل عنوان IP، نوع المتصفح، وصفحات الموقع التي تزورها لتحسين تجربتك.</li>
+            </ul>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="privacy-section">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <span class="section-icon">🤝</span>
+                <h2>كيفية استخدام المحتوى المشترك</h2>
+            </div>
+            <p>بما أن المنصة قائمة على التشارك، فإنك توافق على ما يلي:</p>
+            <ul class="privacy-list">
+                <li>أي محتوى تعليمي (امتحان، درس، تطبيق) تقوم برفعه يصبح متاحاً للمشاهدة والتحميل من قبل الطلاب الآخرين.</li>
+                <li>يتم عرض اسم المستخدم الخاص بك (أو الاسم المستعار) بجانب المحتوى الذي شاركته لتوثيق المساهمة في نظام النقاط.</li>
+            </ul>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="privacy-section">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <span class="section-icon">©️</span>
+                <h2>حقوق الملكية الفكرية</h2>
+            </div>
+            <ul class="privacy-list">
+                <li>يجب أن يكون المحتوى الذي تشاركه لا ينتهك حقوق ملكية خاصة (مثل الكتب الخارجية المحمية بحقوق الطبع).</li>
+                <li>نحن نشجع على مشاركة المجهودات الشخصية، الإصلاحات الخاصة، وامتحانات المعاهد العمومية التي تهدف للنفع العام.</li>
+            </ul>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="privacy-section">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <span class="section-icon">🛡️</span>
+                <h2>حماية البيانات</h2>
+            </div>
+            <p>
+                نحن نلتزم باتخاذ إجراءات أمنية تقنية وتنظيمية لحماية بياناتك الشخصية من الوصول غير المصرح به أو التغيير أو الإفصاح.
+            </p>
+            <div class="highlight-box">
+                🔒 نحن لا نقوم ببيع أو تأجير بياناتك الشخصية لأطراف ثالثة لأغراض تسويقية.
+            </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="privacy-section">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <span class="section-icon">🍪</span>
+                <h2>ملفات تعريف الارتباط (Cookies)</h2>
+            </div>
+            <p>
+                نستخدم ملفات تعريف الارتباط لتحسين أداء الموقع، وحفظ تفضيلاتك (مثل "الثيم" الذي اخترته)، وتسهيل عملية تسجيل الدخول.
+            </p>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="privacy-section">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <span class="section-icon">📌</span>
+                <h2>التزامات المستخدم</h2>
+            </div>
+            <p>عند رفع أي محتوى، يلتزم المستخدم بـ:</p>
+            <ul class="privacy-list">
+                <li>عدم رفع أي محتوى مخالف للأخلاق الحميدة أو يحتوي على معلومات شخصية حساسة.</li>
+                <li>التأكد من دقة المعلومات التعليمية قدر الإمكان لضمان فائدة الزملاء.</li>
+            </ul>
+        </div>
+
+        <!-- Section 7 -->
+        <div class="privacy-section">
+            <div class="section-header">
+                <div class="section-number">7</div>
+                <span class="section-icon">⚖️</span>
+                <h2>حقوقك</h2>
+            </div>
+            <p>لك الحق في:</p>
+            <ul class="privacy-list">
+                <li>تعديل أو حذف بيانات حسابك في أي وقت.</li>
+                <li>طلب حذف محتوى تعليمي قمت برفعه سابقاً إذا كنت ترغب في ذلك.</li>
+            </ul>
+        </div>
+
+        <!-- Section 8 -->
+        <div class="privacy-section">
+            <div class="section-header">
+                <div class="section-number">8</div>
+                <span class="section-icon">🔄</span>
+                <h2>التغييرات في سياسة الخصوصية</h2>
+            </div>
+            <p>
+                قد نقوم بتحديث هذه السياسة من حين لآخر لمواكبة التطورات في المنصة. سيتم إخطار المستخدمين بأي تغييرات جوهرية عبر البريد الإلكتروني أو من خلال إشعار على الموقع.
+            </p>
+        </div>
+
+        <!-- Contact -->
+        <div class="privacy-contact">
+            <h2>اتصل بنا</h2>
+            <p>إذا كان لديك أي سؤال حول سياسة الخصوصية، يمكنك التواصل معنا عبر:</p>
+            <div class="contact-links">
+                <a href="/cdn-cgi/l/email-protection#a4d7d1d4d4cbd6d0e4d7d0d1c0c1cad0d4c8c5d0c2cbd6c98ad0ca" class="contact-link-btn">
+                    <span>📧</span>
+                    <span><span class="__cf_email__" data-cfemail="93e0e6e3e3fce1e7d3e0e7e6f7f6fde7e3fff2e7f5fce1febde7fd">[email&#160;protected]</span></span>
+                </a>
+                <a href="index.html#contact" class="contact-link-btn">
+                    <span>💬</span>
+                    <span>صفحة اتصل بنا</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html#features">المميزات</a>
+                <a href="index.html#showcase">الخدمات</a>
+                <a href="index.html#timeline">رحلتنا</a>
+                <a href="privacy.html" class="active">سياسة الخصوصية</a>
+                <a href="terms.html">شروط الاستخدام</a>
+                <a href="about.html">من نحن</a>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2025 منصة الطلاب التونسيين. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Mobile menu
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mobileToggle.contains(e.target) && !mobileNav.contains(e.target)) {
+                mobileToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            }
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.pageYOffset > 50);
+        });
+
+        // Intersection Observer for section animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    entry.target.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.privacy-section, .privacy-contact').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Neural lines pulse effect
+        const neuralLines = document.querySelectorAll('.neural-line');
+        setInterval(() => {
+            neuralLines.forEach((line, index) => {
+                setTimeout(() => {
+                    line.style.opacity = '1';
+                    line.style.transform = 'scaleX(1.2)';
+                    setTimeout(() => {
+                        line.style.opacity = '0.2';
+                        line.style.transform = 'scaleX(0.5)';
+                    }, 200);
+                }, index * 300);
+            });
+        }, 2000);
+
+        // ============================
+        // Theme System (same as index)
+        // ============================
+        let themeLink = document.createElement('link');
+        themeLink.rel = 'stylesheet';
+        themeLink.id = 'theme-stylesheet';
+        document.head.appendChild(themeLink);
+
+        const themes = {
+            'default': '',
+            'ultra-dark': 'theme-ultra-dark.css',
+            'light': 'theme-light.css'
+        };
+
+        let currentTheme = localStorage.getItem('selectedTheme') || 'default';
+
+        function applyTheme(themeName) {
+            const themeFile = themes[themeName];
+            themeLink.href = themeFile || '';
+            currentTheme = themeName;
+            localStorage.setItem('selectedTheme', themeName);
+            document.body.classList.toggle('theme-light', themeName === 'light');
+            document.body.classList.toggle('theme-ultra-dark', themeName === 'ultra-dark');
+            updateThemeButtonText();
+        }
+
+        function switchTheme() {
+            const themeOrder = ['default', 'ultra-dark', 'light'];
+            const nextIndex = (themeOrder.indexOf(currentTheme) + 1) % themeOrder.length;
+            applyTheme(themeOrder[nextIndex]);
+        }
+
+        function updateThemeButtonText() {
+            const btn = document.getElementById('theme-toggle-btn');
+            if (btn) {
+                const names = { 'default': 'الثيم الافتراضي', 'ultra-dark': 'الثيم الداكن', 'light': 'الثيم الفاتح' };
+                       btn.textContent = names[currentTheme] || 'تغيير الثيم';
+            }
+        }
+
+        applyTheme(currentTheme);
+        document.getElementById('theme-toggle-btn').addEventListener('click', switchTheme);
+    </script>
+</body>
+</html>

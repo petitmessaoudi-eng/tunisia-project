@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شروط الاستخدام - منصة الطلاب التونسيين</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cairo', 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: #000;
+    color: #e0a3ff;
+    overflow-x: hidden;
+    min-height: 100vh;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.neural-background {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -2;
+    background: radial-gradient(circle at 15% 85%, rgba(75, 0, 130, 0.7) 0%, transparent 50%),
+                radial-gradient(circle at 85% 15%, rgba(139, 37, 99, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 45% 60%, rgba(128, 0, 128, 0.6) 0%, transparent 50%),
+                radial-gradient(circle at 70% 40%, rgba(34, 139, 34, 0.4) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a0a 0%, #2d1b3d 50%, #000000 100%);
+    animation: backgroundPulse 14s ease-in-out infinite;
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { filter: brightness(0.9) saturate(1.4) hue-rotate(0deg); }
+    33% { filter: brightness(1.1) saturate(1.7) hue-rotate(15deg); }
+    66% { filter: brightness(1.0) saturate(1.5) hue-rotate(-10deg); }
+}
+
+.geometric-shapes {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    animation: floatShape 20s linear infinite;
+}
+
+.shape:nth-child(1) { width: 100px; height: 100px; right: 10%; animation-delay: 0s; border-color: rgba(255, 105, 180, 0.4); }
+.shape:nth-child(2) { width: 60px; height: 60px; right: 70%; animation-delay: -5s; border-radius: 50%; border-color: rgba(147, 112, 219, 0.4); }
+.shape:nth-child(3) { width: 80px; height: 80px; right: 30%; animation-delay: -10s; transform: rotate(45deg); border-color: rgba(224, 163, 255, 0.4); }
+.shape:nth-child(4) { width: 120px; height: 120px; right: 50%; animation-delay: -15s; clip-path: polygon(50% 0%, 0% 100%, 100% 100%); background: linear-gradient(45deg, rgba(255, 105, 180, 0.1), transparent); }
+
+@keyframes floatShape {
+    from { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%, 90% { opacity: 1; }
+    to { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
+.neural-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+.neural-line {
+    position: absolute;
+    height: 1px;
+    animation: neuralPulse 3s ease-in-out infinite;
+}
+
+.neural-line:nth-child(1) { top: 20%; left: 0; width: 100%; background: linear-gradient(90deg, transparent, #e0a3ff, transparent); animation-delay: 0s; }
+.neural-line:nth-child(2) { top: 60%; left: 0; width: 100%; background: linear-gradient(90deg, transparent, #ff69b4, transparent); animation-delay: -1s; }
+.neural-line:nth-child(3) { top: 40%; left: 0; width: 100%; background: linear-gradient(90deg, transparent, #9370db, transparent); animation-delay: -2s; }
+
+@keyframes neuralPulse {
+    0%, 100% { opacity: 0.2; transform: scaleX(0.5); }
+    50% { opacity: 1; transform: scaleX(1); }
+}
+
+/* Header */
+header {
+    position: fixed;
+    top: 20px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 96%; max-width: 1200px;
+    padding: 18px 35px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(224, 163, 255, 0.08);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(224, 163, 255, 0.15);
+    border-radius: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+header.scrolled {
+    background: rgba(224, 163, 255, 0.12);
+    backdrop-filter: blur(30px);
+    border-color: rgba(224, 163, 255, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 0 0 1px rgba(224, 163, 255, 0.1);
+}
+
+nav { display: flex; justify-content: space-between; align-items: center; }
+
+.logo {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 28px; font-weight: bold;
+    background: linear-gradient(45deg, #e0a3ff, #ff69b4);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    animation: logoGlow 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+.logo:hover { transform: scale(1.05); }
+.logo-icon { font-size: 40px; filter: drop-shadow(0 0 10px #e0a3ff); }
+
+@keyframes logoGlow {
+    0%, 100% { filter: drop-shadow(0 0 10px #e0a3ff); }
+    50% { filter: drop-shadow(0 0 20px #ff69b4); }
+}
+
+.nav-links { display: flex; list-style: none; gap: 12px; }
+
+.nav-links a {
+    color: #ffffff; text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative; padding: 12px 20px;
+    border-radius: 15px; font-size: 0.95rem;
+    font-weight: 500; letter-spacing: 0.02em;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    color: #e0a3ff;
+    background: linear-gradient(135deg, rgba(224, 163, 255, 0.15), rgba(255, 105, 180, 0.1));
+    box-shadow: 0 0 20px rgba(224, 163, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 4px 15px rgba(224, 163, 255, 0.2);
+    border: 1px solid rgba(224, 163, 255, 0.3);
+    text-shadow: 0 0 10px rgba(224, 163, 255, 0.8);
+    transform: translateY(-1px);
+}
+
+.theme-toggle-btn {
+    padding: 10px 20px; border-radius: 15px;
+    border: 1px solid rgba(224, 163, 255, 0.3);
+    background: rgba(224, 163, 255, 0.1);
+    color: #e0a3ff; cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.9rem; font-weight: 600;
+    transition: all 0.3s ease; white-space: nowrap;
+}
+
+.theme-toggle-btn:hover {
+    background: rgba(224, 163, 255, 0.2);
+    box-shadow: 0 0 15px rgba(224, 163, 255, 0.3);
+}
+
+.mobile-menu-toggle {
+    display: none; flex-direction: column;
+    cursor: pointer; padding: 8px; border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+    background: rgba(224, 163, 255, 0.1);
+    box-shadow: 0 0 15px rgba(224, 163, 255, 0.3);
+}
+
+.hamburger-line {
+    width: 25px; height: 3px;
+    background: linear-gradient(45deg, #e0a3ff, #ff69b4);
+    margin: 3px 0; border-radius: 2px; transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle.active .hamburger-line:nth-child(1) { transform: rotate(45deg) translate(9px, 9px); }
+.mobile-menu-toggle.active .hamburger-line:nth-child(2) { opacity: 0; }
+.mobile-menu-toggle.active .hamburger-line:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+
+.mobile-nav {
+    position: fixed; top: 90px; left: 50%;
+    transform: translateX(-50%);
+    width: 90%; max-width: 400px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px; padding: 30px;
+    display: none; flex-direction: column; gap: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    z-index: 99;
+}
+
+.mobile-nav.active { display: flex; animation: slideDown 0.3s ease-out; }
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.mobile-nav a {
+    color: #ffffff; text-decoration: none;
+    padding: 15px 20px; border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center; font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav a:hover, .mobile-nav a.active {
+    background: linear-gradient(135deg, rgba(224, 163, 255, 0.2), rgba(255, 105, 180, 0.15));
+    color: #e0a3ff;
+    border: 1px solid rgba(224, 163, 255, 0.4);
+    box-shadow: 0 0 25px rgba(224, 163, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    text-shadow: 0 0 10px rgba(224, 163, 255, 0.6);
+}
+
+/* =====================
+   Terms Page Layout
+   ===================== */
+
+.terms-hero {
+    padding-top: 160px;
+    padding-bottom: 60px;
+    text-align: center;
+    position: relative;
+}
+
+.terms-hero::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 60%; height: 60%;
+    background: radial-gradient(circle, rgba(224, 163, 255, 0.04) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    animation: heroGlow 10s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes heroGlow {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+}
+
+.terms-badge {
+    display: inline-block;
+    padding: 8px 24px;
+    border-radius: 50px;
+    background: rgba(255, 105, 180, 0.1);
+    border: 1px solid rgba(255, 105, 180, 0.3);
+    color: #ff69b4;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    font-weight: 400;
+    animation: fadeInDown 1s ease 0.2s both;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.terms-hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #ff69b4 0%, #e0a3ff 40%, #9370db 70%, #ff69b4 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: modernGradient 8s ease infinite, fadeInUp 1s ease 0.4s both;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+@keyframes modernGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.terms-hero p {
+    color: #aaa;
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 300;
+    animation: fadeInUp 1s ease 0.6s both;
+}
+
+/* Agreement Banner */
+.agreement-banner {
+    max-width: 900px;
+    margin: 0 auto 30px;
+    padding: 0 20px;
+    animation: fadeInUp 1s ease 0.8s both;
+}
+
+.agreement-inner {
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.08), rgba(224, 163, 255, 0.06));
+    border: 1px solid rgba(255, 105, 180, 0.25);
+    border-radius: 16px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.agreement-icon { font-size: 1.6rem; flex-shrink: 0; }
+
+.agreement-inner p {
+    color: #ccc;
+    font-size: 0.93rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.agreement-inner strong { color: #ff69b4; }
+
+/* Terms Content */
+.terms-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 80px;
+}
+
+.terms-intro {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 105, 180, 0.2);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.terms-intro::before {
+    content: '📜';
+    position: absolute;
+    top: -10px; left: 30px;
+    font-size: 4rem;
+    opacity: 0.07;
+}
+
+.terms-intro h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ff69b4;
+    margin-bottom: 15px;
+}
+
+.terms-intro p {
+    color: #c0c0c0;
+    font-size: 1rem;
+    line-height: 1.8;
+    font-weight: 400;
+}
+
+/* Section Cards */
+.terms-section {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 105, 180, 0.1);
+    border-radius: 20px;
+    padding: 35px 40px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.terms-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.terms-section:hover {
+    border-color: rgba(255, 105, 180, 0.22);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 20px rgba(255, 105, 180, 0.05);
+    transform: translateY(-3px);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(255, 105, 180, 0.1);
+}
+
+.section-number {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.18), rgba(224, 163, 255, 0.12));
+    border: 1px solid rgba(255, 105, 180, 0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; font-weight: 700;
+    color: #ff69b4; flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.1);
+}
+
+.section-icon { font-size: 1.5rem; flex-shrink: 0; }
+
+.section-header h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffaacc;
+    flex: 1;
+}
+
+.terms-section p {
+    color: #bbb;
+    font-size: 0.97rem;
+    line-height: 1.85;
+    margin-bottom: 14px;
+    font-weight: 400;
+}
+
+.terms-section p:last-child { margin-bottom: 0; }
+
+/* Sub-items list */
+.terms-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+}
+
+.terms-list li {
+    color: #bbb;
+    font-size: 0.97rem;
+    line-height: 1.8;
+    padding: 10px 22px 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.terms-list li:last-child { border-bottom: none; }
+
+.terms-list li::before {
+    content: '◆';
+    position: absolute;
+    right: 0;
+    color: #ff69b4;
+    font-size: 0.45rem;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+}
+
+.terms-list li:hover { color: #ddd; }
+
+.terms-list li strong { color: #d4a0ff; font-weight: 600; }
+
+/* Warning / Highlight box */
+.highlight-box {
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.07), rgba(224, 163, 255, 0.05));
+    border: 1px solid rgba(255, 105, 180, 0.2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 15px 0;
+    color: #ffaacc;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.warning-box {
+    background: linear-gradient(135deg, rgba(255, 180, 50, 0.07), rgba(255, 105, 180, 0.05));
+    border: 1px solid rgba(255, 180, 50, 0.25);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 15px 0;
+    color: #ffd580;
+    font-size: 0.93rem;
+    line-height: 1.7;
+}
+
+/* Footer note */
+.terms-footer-note {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(224, 163, 255, 0.12);
+    border-radius: 20px;
+    padding: 35px 40px;
+    text-align: center;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+}
+
+.terms-footer-note.visible { opacity: 1; transform: translateY(0); }
+
+.terms-footer-note h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #e0a3ff;
+    margin-bottom: 12px;
+}
+
+.terms-footer-note p {
+    color: #888;
+    font-size: 0.93rem;
+    line-height: 1.8;
+    margin-bottom: 8px;
+}
+
+/* Last Updated */
+.last-updated {
+    text-align: center;
+    color: #555;
+    font-size: 0.85rem;
+    margin-bottom: 50px;
+    font-weight: 400;
+}
+
+/* Footer */
+footer {
+    background: rgba(224, 163, 255, 0.03);
+    border-top: 1px solid rgba(224, 163, 255, 0.1);
+    padding: 40px 20px;
+}
+
+.footer-content { max-width: 1200px; margin: 0 auto; text-align: center; }
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.footer-links a {
+    color: #888; text-decoration: none;
+    padding: 8px 16px; border-radius: 10px;
+    font-size: 0.9rem; transition: all 0.3s ease; font-weight: 500;
+}
+
+.footer-links a:hover { color: #e0a3ff; text-shadow: 0 0 10px rgba(224, 163, 255, 0.5); }
+.footer-links a.active { color: #ff69b4; }
+
+.footer-copyright p { color: #444; font-size: 0.85rem; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #7b1fa2, #9c27b0); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #9c27b0, #ba68c8); }
+
+::selection { background: rgba(224, 163, 255, 0.3); color: #fff; }
+
+/* Mobile */
+@media (max-width: 768px) {
+    header { padding: 15px 20px; top: 10px; }
+    .nav-links { display: none; }
+    .mobile-menu-toggle { display: flex; }
+    .terms-hero { padding-top: 130px; padding-bottom: 40px; }
+    .terms-intro, .terms-section, .terms-footer-note { padding: 25px 20px; }
+    .section-header { flex-wrap: wrap; }
+    .agreement-inner { flex-direction: column; text-align: center; }
+}
+
+/* ================================
+   LIGHT THEME OVERRIDES - terms
+   ================================ */
+body.theme-light .terms-badge {
+    background: rgba(123,31,162,0.1);
+    border-color: rgba(123,31,162,0.3);
+    color: #6a1b9a;
+}
+
+body.theme-light .terms-hero h1 {
+    background: linear-gradient(135deg, #7b1fa2, #9c27b0, #6a1b9a);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.theme-light .terms-hero p { color: #555 !important; }
+body.theme-light .last-updated { color: #888; }
+
+body.theme-light .agreement-inner {
+    background: linear-gradient(135deg, rgba(123,31,162,0.07), rgba(156,39,176,0.05));
+    border-color: rgba(123,31,162,0.25);
+}
+body.theme-light .agreement-inner p { color: #424242; }
+body.theme-light .agreement-inner strong { color: #8e24aa; }
+
+body.theme-light .terms-intro {
+    background: rgba(255,255,255,0.93);
+    border-color: rgba(156,39,176,0.2);
+    box-shadow: 0 8px 30px rgba(123,31,162,0.12);
+}
+body.theme-light .terms-intro h2 { color: #6a1b9a !important; }
+body.theme-light .terms-intro p { color: #424242 !important; }
+
+body.theme-light .terms-section {
+    background: rgba(255,255,255,0.93);
+    border-color: rgba(156,39,176,0.15);
+    box-shadow: 0 6px 25px rgba(123,31,162,0.1);
+}
+body.theme-light .terms-section:hover {
+    border-color: rgba(156,39,176,0.35);
+    box-shadow: 0 12px 40px rgba(123,31,162,0.18);
+}
+
+body.theme-light .section-header { border-bottom-color: rgba(156,39,176,0.15); }
+body.theme-light .section-number {
+    background: linear-gradient(135deg, rgba(156,39,176,0.15), rgba(186,104,200,0.12));
+    border-color: rgba(156,39,176,0.3);
+    color: #6a1b9a;
+    box-shadow: none;
+}
+body.theme-light .section-header h2 { color: #6a1b9a !important; }
+
+body.theme-light .terms-section p { color: #424242 !important; }
+body.theme-light .terms-section strong[style] { color: #6a1b9a !important; }
+
+body.theme-light .terms-list li { color: #424242 !important; border-bottom-color: rgba(0,0,0,0.06); }
+body.theme-light .terms-list li::before { color: #8e24aa; }
+body.theme-light .terms-list li strong { color: #6a1b9a; }
+
+body.theme-light .highlight-box {
+    background: linear-gradient(135deg, rgba(156,39,176,0.08), rgba(186,104,200,0.05));
+    border-color: rgba(156,39,176,0.22);
+    color: #6a1b9a;
+}
+body.theme-light .warning-box {
+    background: linear-gradient(135deg, rgba(180,100,0,0.06), rgba(156,39,176,0.04));
+    border-color: rgba(180,100,0,0.25);
+    color: #7a4f00;
+}
+
+body.theme-light .terms-footer-note {
+    background: rgba(255,255,255,0.9);
+    border-color: rgba(156,39,176,0.15);
+}
+body.theme-light .terms-footer-note h2 { color: #6a1b9a !important; }
+body.theme-light .terms-footer-note p { color: #555 !important; }
+body.theme-light .terms-footer-note a { color: #7b1fa2 !important; }
+
+body.theme-light footer {
+    background: rgba(243,229,245,0.95);
+    border-top-color: rgba(156,39,176,0.2);
+}
+body.theme-light .footer-links a { color: #6a1b9a; }
+body.theme-light .footer-links a:hover { color: #8e24aa; }
+body.theme-light .footer-copyright p { color: #6a1b9a; opacity: 0.6; }
+body.theme-light .mobile-nav { background: rgba(255,255,255,0.98); border-color: rgba(156,39,176,0.25); }
+body.theme-light .mobile-nav a { color: #6a1b9a; background: rgba(243,229,245,0.5); border-color: rgba(156,39,176,0.15); }
+body.theme-light .mobile-nav a:hover { background: rgba(156,39,176,0.12); color: #8e24aa; }
+    </style>
+</head>
+<body>
+
+    <!-- Background Effects -->
+    <div class="neural-background"></div>
+    <div class="geometric-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <div class="neural-lines">
+        <div class="neural-line"></div>
+        <div class="neural-line"></div>
+        <div class="neural-line"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🎓</span>
+                <span>منصة الطلاب</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#features">المميزات</a></li>
+                <li><a href="index.html#showcase">الخدمات</a></li>
+                <li><a href="index.html#stats">إحصائيات</a></li>
+                <li><a href="index.html#timeline">رحلتنا</a></li>
+                <li><a href="index.html#contact">اتصل بنا</a></li>
+                <li><a href="terms.html" class="active">شروط الاستخدام</a></li>
+            </ul>
+            <button class="theme-toggle-btn" id="theme-toggle-btn">الثيم الافتراضي</button>
+            <div class="mobile-menu-toggle" id="mobile-toggle">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="index.html#features">المميزات</a>
+        <a href="index.html#showcase">الخدمات</a>
+        <a href="index.html#stats">إحصائيات</a>
+        <a href="index.html#timeline">رحلتنا</a>
+        <a href="index.html#contact">اتصل بنا</a>
+        <a href="terms.html" class="active">شروط الاستخدام</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="terms-hero">
+        <div class="terms-badge">وثيقة قانونية ملزمة</div>
+        <h1>شروط الاستخدام</h1>
+        <p>يُرجى قراءة هذه الشروط بعناية قبل استخدام المنصة — استمرارك يعني موافقتك</p>
+    </section>
+
+    <!-- Agreement Banner -->
+    <div class="agreement-banner">
+        <div class="agreement-inner">
+            <span class="agreement-icon">⚠️</span>
+            <p>
+                باستخدامك لموقعنا أو تسجيلك فيه، فإنك توافق صراحةً على جميع الشروط والأحكام المذكورة أدناه.
+                إذا كنت لا توافق على أي من هذه الشروط، <strong>يُرجى التوقف عن استخدام المنصة.</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Terms Content -->
+    <div class="terms-content">
+
+        <p class="last-updated">آخر تحديث: يناير 2025</p>
+
+        <!-- Introduction -->
+        <div class="terms-intro">
+            <h2>مقدمة</h2>
+            <p>
+                مرحباً بك في منصة الطلاب التونسيين. تمثل هذه الصفحة اتفاقية ملزمة قانوناً بينك كـ "مستخدم" وبين "إدارة المنصة". نحن نسعى دائماً لتوفير بيئة تعليمية آمنة ومنتجة لجميع الطلاب التونسيين.
+            </p>
+        </div>
+
+        <!-- Section 1 -->
+        <div class="terms-section">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <span class="section-icon">🏛️</span>
+                <h2>طبيعة المنصة وإخلاء المسؤولية العلمية</h2>
+            </div>
+            <p>منصة الطلاب التونسيين هي بيئة تشاركية تهدف إلى مساعدة الطلاب من خلال تبادل المعرفة.</p>
+            <ul class="terms-list">
+                <li><strong>دقة المحتوى:</strong> يتم رفع الامتحانات، الملخصات، والدروس من قبل الطلاب والأساتذة المتطوعين. نحن لا نضمن الدقة العلمية أو الخلو من الأخطاء في أي محتوى يتم نشره، والاعتماد عليه يكون على مسؤوليتك الشخصية.</li>
+                <li><strong>النجاح الأكاديمي:</strong> استخدام المنصة هو وسيلة مساعدة للمراجعة ولا يغني عن المناهج الرسمية للمؤسسات التعليمية التونسية، ولا نتحمل مسؤولية أي نتائج دراسية.</li>
+            </ul>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="terms-section">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <span class="section-icon">👤</span>
+                <h2>حساب المستخدم والتسجيل</h2>
+            </div>
+            <p>للاستفادة من بعض ميزات المنصة (مثل رفع الملفات، التعليق، وجمع النقاط)، يجب عليك إنشاء حساب:</p>
+            <ul class="terms-list">
+                <li>أنت مسؤول عن الحفاظ على سرية كلمة المرور الخاصة بك.</li>
+                <li>يُمنع استخدام حسابات بأسماء مسيئة أو انتحال شخصية طلاب آخرين أو أساتذة.</li>
+                <li>يحق للإدارة تعليق أو حذف أي حساب ينتهك هذه الشروط دون إنذار مسبق.</li>
+            </ul>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="terms-section">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <span class="section-icon">📂</span>
+                <h2>المحتوى الذي يشاركه المستخدم</h2>
+            </div>
+            <p>نحن نشجع مشاركة المعرفة، ولكن وفقاً لضوابط صارمة:</p>
+            <ul class="terms-list">
+                <li><strong>الملكية:</strong> أنت تحتفظ بملكية المحتوى الأصلي الذي ترفعه، ولكنك تمنح المنصة ترخيصاً مجانياً ودائماً لعرضه ومشاركته مع باقي المستخدمين.</li>
+                <li><strong>حقوق الطبع والنشر:</strong> يُمنع منعاً باتاً رفع الكتب المدرسية أو المراجع الخارجية المحمية بحقوق الطبع والنشر التجارية. يقتصر الرفع على المجهودات الشخصية، امتحانات المعاهد، والإصلاحات المقترحة.</li>
+                <li><strong>المحتوى المحظور:</strong> يُمنع نشر أي محتوى يروج للغش في الامتحانات الرسمية، أو يحتوي على برمجيات خبيثة، أو يتضمن إساءة لأي شخص أو مؤسسة تربوية.</li>
+            </ul>
+            <div class="warning-box">
+                ⚠️ أي مخالفة لقواعد المحتوى قد تؤدي إلى حذف المحتوى فوراً وتعليق الحساب.
+            </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="terms-section">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <span class="section-icon">⭐</span>
+                <h2>نظام النقاط والمنتديات</h2>
+            </div>
+            <ul class="terms-list">
+                <li><strong>قيمة النقاط:</strong> نظام النقاط والخبرة (XP) هو نظام تحفيزي افتراضي بحت لتشجيع التفاعل، ولا يحمل أي قيمة مالية ولا يمكن استبداله بأموال حقيقية.</li>
+                <li><strong>النقاشات:</strong> يجب أن تكون النقاشات في المنتدى محترمة وبناءة. سيتم حذف أي تعليقات تحتوي على تنمر، لغة مسيئة، أو إعلانات تجارية (Spam).</li>
+            </ul>
+            <div class="highlight-box">
+                💡 نظام النقاط مصمم لتحفيز المساهمة الإيجابية في المجتمع التعليمي — استخدمه بروح الزمالة.
+            </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="terms-section">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <span class="section-icon">🔐</span>
+                <h2>حقوق الملكية الخاصة بالمنصة</h2>
+            </div>
+            <p>
+                تصميم الموقع، الشعارات، الأكواد البرمجية (بما في ذلك الثيمات والخلفيات التفاعلية)، والمحتويات الحصرية التي تنتجها إدارة المنصة هي ملكية فكرية خاصة بـ "منصة الطلاب التونسيين".
+            </p>
+            <div class="warning-box">
+                🚫 لا يجوز نسخها أو إعادة استخدامها خارج إطار المنصة دون إذن كتابي مسبق من الإدارة.
+            </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="terms-section">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <span class="section-icon">🔄</span>
+                <h2>التعديل على الشروط</h2>
+            </div>
+            <p>
+                تحتفظ إدارة المنصة بالحق في تعديل أو تحديث "شروط الاستخدام" في أي وقت لتطوير الخدمات.
+            </p>
+            <div class="highlight-box">
+                ✅ استمرارك في استخدام المنصة بعد أي تعديل يُعد قبولاً صريحاً منك للشروط الجديدة.
+            </div>
+        </div>
+
+        <!-- Section 7 -->
+        <div class="terms-section">
+            <div class="section-header">
+                <div class="section-number">7</div>
+                <span class="section-icon">⚖️</span>
+                <h2>القانون المطبق</h2>
+            </div>
+            <p>
+                تخضع هذه الشروط والأحكام وتُفسر وفقاً للقوانين المعمول بها في <strong style="color:#ffaacc;">الجمهورية التونسية</strong>.
+            </p>
+        </div>
+
+        <!-- Footer Note -->
+        <div class="terms-footer-note">
+            <h2>هل لديك سؤال؟</h2>
+            <p>إذا كنت بحاجة إلى توضيح حول أي بند من هذه الشروط، لا تتردد في التواصل معنا.</p>
+            <p style="margin-top:8px;">
+                📧 <a href="/cdn-cgi/l/email-protection#9be8eeebebf4e9efdbe8efeefffef5efebf7faeffdf4e9f6b5eff5" style="color:#e0a3ff; text-decoration:none;"><span class="__cf_email__" data-cfemail="a0d3d5d0d0cfd2d4e0d3d4d5c4c5ced4d0ccc1d4c6cfd2cd8ed4ce">[email&#160;protected]</span></a>
+                &nbsp;|&nbsp;
+                <a href="index.html#contact" style="color:#e0a3ff; text-decoration:none;">💬 صفحة اتصل بنا</a>
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html#features">المميزات</a>
+                <a href="index.html#showcase">الخدمات</a>
+                <a href="index.html#timeline">رحلتنا</a>
+                <a href="privacy.html">سياسة الخصوصية</a>
+                <a href="terms.html" class="active">شروط الاستخدام</a>
+                <a href="about.html">من نحن</a>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2025 منصة الطلاب التونسيين. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Mobile menu
+        const mobileToggle = document.getElementById('mobile-toggle');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mobileToggle.contains(e.target) && !mobileNav.contains(e.target)) {
+                mobileToggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+            }
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            document.querySelector('header').classList.toggle('scrolled', window.pageYOffset > 50);
+        });
+
+        // Intersection Observer for section animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.terms-section, .terms-footer-note').forEach(el => observer.observe(el));
+
+        // Neural lines pulse
+        const neuralLines = document.querySelectorAll('.neural-line');
+        setInterval(() => {
+            neuralLines.forEach((line, index) => {
+                setTimeout(() => {
+                    line.style.opacity = '1';
+                    line.style.transform = 'scaleX(1.2)';
+                    setTimeout(() => {
+                        line.style.opacity = '0.2';
+                        line.style.transform = 'scaleX(0.5)';
+                    }, 200);
+                }, index * 300);
+            });
+        }, 2000);
+
+        // ============================
+        // Theme System
+        // ============================
+        let themeLink = document.createElement('link');
+        themeLink.rel = 'stylesheet';
+        themeLink.id = 'theme-stylesheet';
+        document.head.appendChild(themeLink);
+
+        const themes = {
+            'default': '',
+            'ultra-dark': 'theme-ultra-dark.css',
+            'light': 'theme-light.css'
+        };
+
+        let currentTheme = localStorage.getItem('selectedTheme') || 'default';
+
+        function applyTheme(themeName) {
+            themeLink.href = themes[themeName] || '';
+            currentTheme = themeName;
+            localStorage.setItem('selectedTheme', themeName);
+            document.body.classList.toggle('theme-light', themeName === 'light');
+            document.body.classList.toggle('theme-ultra-dark', themeName === 'ultra-dark');
+            updateThemeButtonText();
+        }
+
+        function switchTheme() {
+            const order = ['default', 'ultra-dark', 'light'];
+            applyTheme(order[(order.indexOf(currentTheme) + 1) % order.length]);
+        }
+
+        function updateThemeButtonText() {
+            const btn = document.getElementById('theme-toggle-btn');
+            if (btn) {
+                const names = { 'default': 'الثيم الافتراضي', 'ultra-dark': 'الثيم الداكن', 'light': 'الثيم الفاتح' };
+                      btn.textContent = names[currentTheme] || 'تغيير الثيم';
+            }
+        }
+
+        applyTheme(currentTheme);
+        document.getElementById('theme-toggle-btn').addEventListener('click', switchTheme);
+    </script>
+</body>
+</html>

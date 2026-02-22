@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الملف الشخصي - منصة الطلاب التونسيين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#e0a3ff;--accent:#ff69b4;--accent2:#9370db;
+  --cyan:#00e5ff;--green:#00ff87;--gold:#ffd700;
+  --text:rgba(224,163,255,0.9);--text-muted:rgba(224,163,255,0.5);
+  --glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);
+  --radius:22px;--tr:all 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#0a0a0a}
+::-webkit-scrollbar-thumb{background:linear-gradient(#e0a3ff,#ff69b4);border-radius:3px}
+body{font-family:'Cairo',sans-serif;background:#000;color:var(--primary);overflow-x:hidden;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* ── BG ── */
+.neural-bg{position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(circle at 20% 80%,rgba(75,0,130,.65) 0%,transparent 50%),
+  radial-gradient(circle at 80% 10%,rgba(139,37,99,.7) 0%,transparent 50%),
+  radial-gradient(circle at 50% 55%,rgba(128,0,128,.5) 0%,transparent 50%),
+  linear-gradient(135deg,#0a0a0a 0%,#2d1b3d 50%,#000 100%);
+  animation:bgPulse 14s ease-in-out infinite}
+@keyframes bgPulse{0%,100%{filter:brightness(.9) saturate(1.4)}33%{filter:brightness(1.1) saturate(1.7) hue-rotate(10deg)}66%{filter:brightness(1) saturate(1.5) hue-rotate(-5deg)}}
+.geo{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.geo div{position:absolute;border:1px solid rgba(0,255,255,.15);animation:floatS 22s linear infinite}
+.geo div:nth-child(1){width:90px;height:90px;right:8%;border-color:rgba(255,105,180,.25)}
+.geo div:nth-child(2){width:55px;height:55px;right:65%;animation-delay:-6s;border-radius:50%;border-color:rgba(147,112,219,.25)}
+.geo div:nth-child(3){width:70px;height:70px;right:28%;animation-delay:-12s;transform:rotate(45deg);border-color:rgba(224,163,255,.25)}
+.geo div:nth-child(4){width:110px;height:110px;right:48%;animation-delay:-18s;clip-path:polygon(50% 0%,0% 100%,100% 100%);background:linear-gradient(45deg,rgba(255,105,180,.08),transparent)}
+@keyframes floatS{from{transform:translateY(100vh) rotate(0deg);opacity:0}10%,90%{opacity:1}to{transform:translateY(-120px) rotate(360deg);opacity:0}}
+
+/* ── PARTICLES ── */
+.particles{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.particle{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--primary);opacity:0;animation:floatParticle linear infinite}
+@keyframes floatParticle{0%{transform:translateY(100vh) translateX(0);opacity:0}10%{opacity:.6}90%{opacity:.2}100%{transform:translateY(-20vh) translateX(40px);opacity:0}}
+
+/* ── HEADER ── */
+header{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:1000;width:96%;max-width:1400px;
+  padding:14px 28px;background:rgba(224,163,255,.07);backdrop-filter:blur(28px);
+  border:1px solid rgba(224,163,255,.13);border-radius:25px;
+  box-shadow:0 8px 32px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);transition:var(--tr)}
+header.scrolled{background:rgba(224,163,255,.11);box-shadow:0 12px 45px rgba(0,0,0,.55)}
+nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;
+  background:linear-gradient(45deg,#e0a3ff,#ff69b4);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;text-decoration:none;white-space:nowrap}
+.logo-icon{font-size:28px;filter:drop-shadow(0 0 8px #e0a3ff)}
+.nav-links{display:flex;gap:6px;list-style:none}
+.nav-links a{color:rgba(224,163,255,.75);text-decoration:none;padding:7px 14px;border-radius:11px;font-size:13px;font-weight:600;transition:var(--tr)}
+.nav-links a:hover{background:rgba(224,163,255,.13);color:#fff}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn-back{padding:8px 18px;border:1px solid rgba(255,255,255,.1);border-radius:11px;
+  background:rgba(255,255,255,.05);color:rgba(255,255,255,.65);font-family:'Cairo',sans-serif;
+  font-size:13px;font-weight:600;cursor:pointer;transition:var(--tr)}
+.btn-back:hover{background:rgba(224,163,255,.1);border-color:rgba(224,163,255,.3);color:var(--primary)}
+
+/* ── USER NAV (from profile.html) ── */
+.user-nav-wrapper{position:relative}
+.user-avatar-default{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#e0a3ff,#ff69b4);border:2px solid rgba(224,163,255,.5);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#000;cursor:pointer;transition:all .3s}
+.user-avatar-default:hover{box-shadow:0 0 0 4px rgba(224,163,255,.3);transform:scale(1.08)}
+.user-avatar-circle{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid rgba(224,163,255,.5);cursor:pointer;display:block;transition:all .3s}
+.user-avatar-circle:hover{box-shadow:0 0 0 4px rgba(224,163,255,.3);transform:scale(1.08)}
+.login-nav-btn{display:flex;align-items:center;gap:8px;padding:8px 16px;background:linear-gradient(135deg,rgba(224,163,255,.1),rgba(255,105,180,.1));border:1px solid rgba(224,163,255,.3);border-radius:11px;color:#e0a3ff;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .3s}
+.login-nav-btn:hover{background:linear-gradient(135deg,rgba(224,163,255,.22),rgba(255,105,180,.22));transform:translateY(-2px)}
+.user-dropdown-menu{position:absolute;top:calc(100% + 12px);left:0;min-width:195px;background:rgba(12,8,20,.93);backdrop-filter:blur(24px);border:1px solid rgba(224,163,255,.2);border-radius:16px;padding:8px;box-shadow:0 16px 50px rgba(0,0,0,.6);opacity:0;visibility:hidden;transform:translateY(-8px) scale(.96);transition:all .25s;z-index:3000}
+.user-nav-wrapper.open .user-dropdown-menu{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+.dropdown-user-info{padding:11px 14px 9px;border-bottom:1px solid rgba(224,163,255,.1);margin-bottom:6px}
+.dropdown-user-name{font-size:13px;font-weight:700;color:#e0a3ff}
+.dropdown-item{display:flex;align-items:center;gap:10px;width:100%;padding:9px 14px;border-radius:10px;border:none;background:transparent;color:rgba(224,163,255,.8);font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;text-align:right}
+.dropdown-item:hover{background:rgba(224,163,255,.1);color:#e0a3ff;transform:translateX(-3px)}
+.dropdown-item.danger{color:rgba(255,107,129,.8)}
+.dropdown-item.danger:hover{background:rgba(255,69,96,.13);color:#ff6b81}
+.dropdown-divider{height:1px;background:rgba(224,163,255,.1);margin:4px 8px}
+
+/* ── MAIN ── */
+.main{padding-top:110px;min-height:100vh}
+
+/* ── COVER SECTION ── */
+.cover-section{position:relative;width:100%;height:280px;overflow:hidden;margin-bottom:0}
+.cover-img{width:100%;height:100%;object-fit:cover}
+.cover-default{width:100%;height:100%;
+  background:linear-gradient(135deg,#1a0033 0%,#2d0059 20%,#1a0040 40%,#3d1060 60%,#1a0033 80%,#2d0050 100%);
+  position:relative;overflow:hidden}
+.cover-default::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 50%,rgba(224,163,255,.15) 0%,transparent 60%),
+  radial-gradient(circle at 70% 30%,rgba(255,105,180,.1) 0%,transparent 50%);
+  animation:coverShimmer 6s ease-in-out infinite}
+@keyframes coverShimmer{0%,100%{opacity:.8}50%{opacity:1}}
+.cover-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,rgba(0,0,0,.6) 100%)}
+.cover-stars{position:absolute;inset:0;pointer-events:none}
+.cover-star{position:absolute;background:#fff;border-radius:50%;animation:twinkle ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.9;transform:scale(1.4)}}
+
+/* ── PROFILE HEADER ── */
+.profile-header{max-width:1100px;margin:0 auto;padding:0 24px;position:relative}
+.profile-identity{display:flex;align-items:flex-end;gap:24px;margin-top:-60px;margin-bottom:28px;flex-wrap:wrap}
+.avatar-wrap{position:relative;flex-shrink:0}
+.avatar-ring{width:130px;height:130px;border-radius:50%;
+  background:linear-gradient(135deg,#e0a3ff,#ff69b4,#9370db);
+  padding:3px;box-shadow:0 0 0 4px rgba(0,0,0,.8),0 0 30px rgba(224,163,255,.4);
+  animation:ringPulse 3s ease-in-out infinite}
+@keyframes ringPulse{0%,100%{box-shadow:0 0 0 4px rgba(0,0,0,.8),0 0 25px rgba(224,163,255,.3)}50%{box-shadow:0 0 0 4px rgba(0,0,0,.8),0 0 45px rgba(224,163,255,.6)}}
+.avatar-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#e0a3ff,#ff69b4)}
+.avatar-inner img{width:100%;height:100%;object-fit:cover}
+.avatar-inner-default{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#e0a3ff,#ff69b4);display:flex;align-items:center;justify-content:center;font-size:50px;font-weight:900;color:#000}
+.online-dot{position:absolute;bottom:6px;right:6px;width:18px;height:18px;background:#00ff87;border-radius:50%;border:3px solid #000;box-shadow:0 0 10px rgba(0,255,135,.6)}
+.level-badge-wrap{position:absolute;top:-4px;left:-4px}
+.level-badge{background:linear-gradient(135deg,var(--gold),#ff9500);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#000;border:2px solid rgba(0,0,0,.6);box-shadow:0 4px 12px rgba(255,215,0,.4)}
+.identity-info{flex:1;min-width:0;padding-bottom:8px}
+.profile-name{font-size:clamp(22px,4vw,36px);font-weight:900;color:#fff;line-height:1.2;margin-bottom:6px}
+.profile-name-glow{background:linear-gradient(135deg,#fff 0%,#e0a3ff 50%,#ff69b4 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.profile-role-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.role-tag{padding:5px 14px;border-radius:50px;font-size:12px;font-weight:700;border:1px solid}
+.role-student{background:rgba(0,229,255,.1);color:var(--cyan);border-color:rgba(0,229,255,.25)}
+.role-admin{background:rgba(255,215,0,.1);color:var(--gold);border-color:rgba(255,215,0,.3)}
+.role-level{background:rgba(224,163,255,.1);color:var(--primary);border-color:rgba(224,163,255,.2)}
+.join-info{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:6px}
+.profile-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.action-btn{padding:9px 20px;border-radius:13px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:var(--tr);border:none;display:flex;align-items:center;gap:8px}
+.action-primary{background:linear-gradient(45deg,#9370db,#e0a3ff);color:#000;box-shadow:0 4px 18px rgba(147,112,219,.35)}
+.action-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(147,112,219,.55)}
+.action-ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7)}
+.action-ghost:hover{background:rgba(224,163,255,.1);border-color:rgba(224,163,255,.3);color:var(--primary);transform:translateY(-2px)}
+
+/* ── QUICK STATS BAR ── */
+.quick-stats-bar{max-width:1100px;margin:0 auto 32px;padding:0 24px}
+.quick-stats-inner{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:20px 28px;display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+.qs-item{text-align:center;position:relative;padding:8px 0}
+.qs-item:not(:last-child)::after{content:'';position:absolute;left:0;top:20%;height:60%;width:1px;background:rgba(255,255,255,.07)}
+.qs-val{font-size:24px;font-weight:900;display:block;margin-bottom:4px;
+  background:linear-gradient(135deg,#e0a3ff,#ff69b4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.qs-lbl{font-size:11px;color:var(--text-muted);font-weight:600}
+
+/* ── MAIN LAYOUT ── */
+.profile-body{max-width:1100px;margin:0 auto;padding:0 24px 80px;display:grid;grid-template-columns:1fr 320px;gap:24px}
+
+/* ── CARDS ── */
+.card{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:28px;margin-bottom:20px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);animation:cardIn .6s ease both;transition:border-color .3s}
+.card:hover{border-color:rgba(224,163,255,.15)}
+@keyframes cardIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--glass-border)}
+.card-title{font-size:15px;font-weight:800;color:#fff;display:flex;align-items:center;gap:9px}
+.card-title-icon{font-size:18px}
+.card-badge{padding:3px 11px;border-radius:50px;font-size:11px;font-weight:700;background:rgba(224,163,255,.1);color:var(--primary);border:1px solid rgba(224,163,255,.2)}
+
+/* ── XP SECTION ── */
+.xp-card{background:linear-gradient(135deg,rgba(0,255,135,.05),rgba(0,229,255,.05));border-color:rgba(0,255,135,.15) !important}
+.xp-top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.xp-label{font-size:13px;font-weight:700;color:#00ff87;display:flex;align-items:center;gap:7px}
+.xp-val-text{font-size:13px;font-weight:800;color:#00ff87}
+.xp-track{height:10px;background:rgba(255,255,255,.06);border-radius:5px;overflow:hidden;margin-bottom:8px}
+.xp-fill{height:100%;background:linear-gradient(90deg,#00ff87,#00e5ff,#e0a3ff);border-radius:5px;width:0%;transition:width 1.4s cubic-bezier(.4,0,.2,1);position:relative}
+.xp-fill::after{content:'';position:absolute;top:0;right:0;height:100%;width:40px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45));animation:shimmerBar 1.2s ease infinite}
+@keyframes shimmerBar{0%{opacity:.4}50%{opacity:1}100%{opacity:.4}}
+.xp-level-text{font-size:11px;color:rgba(0,255,135,.6);display:flex;justify-content:space-between}
+.xp-milestones{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.milestone{padding:5px 12px;border-radius:50px;font-size:11px;font-weight:700;border:1px solid;transition:var(--tr)}
+.milestone.done{background:rgba(0,255,135,.1);color:#00ff87;border-color:rgba(0,255,135,.25)}
+.milestone.locked{background:rgba(255,255,255,.03);color:rgba(255,255,255,.25);border-color:rgba(255,255,255,.07)}
+
+/* ── BIO CARD ── */
+.bio-text{font-size:14px;color:rgba(255,255,255,.65);line-height:1.85;font-weight:400}
+.bio-empty{font-size:13px;color:var(--text-muted);font-style:italic;text-align:center;padding:14px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.info-item{display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid var(--glass-border);border-radius:13px;transition:var(--tr)}
+.info-item:hover{background:rgba(224,163,255,.05);border-color:rgba(224,163,255,.15)}
+.info-icon{font-size:18px;flex-shrink:0}
+.info-content{flex:1;min-width:0}
+.info-lbl{font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.7px}
+.info-val{font-size:13px;font-weight:600;color:#fff;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ── BADGES ── */
+.badges-grid{display:flex;flex-wrap:wrap;gap:10px}
+.badge-item{display:flex;flex-direction:column;align-items:center;gap:7px;
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;
+  padding:16px 12px;min-width:80px;transition:var(--tr);cursor:default;position:relative;overflow:hidden}
+.badge-item::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(224,163,255,.06),transparent);opacity:0;transition:opacity .3s}
+.badge-item:hover::before{opacity:1}
+.badge-item.earned{border-color:rgba(224,163,255,.22);box-shadow:0 4px 15px rgba(224,163,255,.08)}
+.badge-item.earned:hover{transform:translateY(-4px);box-shadow:0 8px 25px rgba(224,163,255,.18)}
+.badge-item.locked{opacity:.3;filter:grayscale(1)}
+.badge-icon{font-size:28px;position:relative;z-index:1}
+.badge-name{font-size:10px;font-weight:700;color:var(--text-muted);text-align:center;line-height:1.3;position:relative;z-index:1}
+.badge-item.earned .badge-name{color:var(--primary)}
+.badge-glow{position:absolute;top:-20px;left:50%;transform:translateX(-50%);width:60px;height:60px;
+  background:radial-gradient(circle,rgba(224,163,255,.2),transparent 70%);pointer-events:none}
+
+/* ── POSTS TABS ── */
+.posts-tabs{display:flex;gap:4px;margin-bottom:20px;background:rgba(255,255,255,.03);border:1px solid var(--glass-border);border-radius:14px;padding:5px}
+.ptab{flex:1;padding:8px 12px;border:none;border-radius:11px;background:transparent;
+  color:var(--text-muted);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;
+  cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:6px}
+.ptab.active{background:linear-gradient(135deg,rgba(224,163,255,.18),rgba(255,105,180,.12));color:#fff;box-shadow:0 2px 10px rgba(224,163,255,.12)}
+.ptab-panel{display:none;animation:cardIn .35s ease}
+.ptab-panel.active{display:block}
+
+/* ── POST CARD ── */
+.post-card{display:flex;align-items:flex-start;gap:14px;padding:16px;
+  background:rgba(255,255,255,.03);border:1px solid var(--glass-border);
+  border-radius:16px;margin-bottom:12px;text-decoration:none;transition:var(--tr);cursor:pointer}
+.post-card:hover{background:rgba(224,163,255,.06);border-color:rgba(224,163,255,.2);transform:translateX(-4px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.post-card-icon{width:48px;height:48px;border-radius:13px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  background:linear-gradient(135deg,rgba(224,163,255,.12),rgba(255,105,180,.08));
+  border:1px solid rgba(224,163,255,.18)}
+.post-card-body{flex:1;min-width:0}
+.post-card-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.post-card-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--text-muted);font-weight:500}
+.post-card-meta span{display:flex;align-items:center;gap:4px}
+.post-card-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0}
+.post-status{padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700}
+.s-approved{background:rgba(0,255,135,.1);color:#00ff87;border:1px solid rgba(0,255,135,.2)}
+.s-pending{background:rgba(255,193,7,.1);color:#ffc107;border:1px solid rgba(255,193,7,.2)}
+.s-rejected{background:rgba(255,68,68,.1);color:#ff6b6b;border:1px solid rgba(255,68,68,.2)}
+.post-rating{font-size:12px;color:var(--gold);font-weight:700;display:flex;align-items:center;gap:4px}
+
+/* ── ACTIVITY FEED ── */
+.activity-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04);align-items:flex-start}
+.activity-item:last-child{border-bottom:none}
+.activity-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.activity-dot.upload{background:#00ff87;box-shadow:0 0 8px rgba(0,255,135,.5)}
+.activity-dot.xp{background:var(--gold);box-shadow:0 0 8px rgba(255,215,0,.5)}
+.activity-dot.badge{background:var(--primary);box-shadow:0 0 8px rgba(224,163,255,.5)}
+.activity-line{width:1px;background:rgba(255,255,255,.06);position:absolute;top:12px;right:4.5px;bottom:0;z-index:0}
+.activity-content{flex:1;min-width:0}
+.activity-text{font-size:13px;color:rgba(255,255,255,.7);line-height:1.6;font-weight:500}
+.activity-time{font-size:11px;color:var(--text-muted);margin-top:3px}
+.activity-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+
+/* ── SIDEBAR ── */
+.sidebar{}
+
+/* RANK CARD */
+.rank-card{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,149,0,.04));border-color:rgba(255,215,0,.2) !important}
+.rank-display{text-align:center;padding:10px 0 20px}
+.rank-crown{font-size:50px;display:block;animation:float 3.5s ease-in-out infinite;filter:drop-shadow(0 0 15px rgba(255,215,0,.5))}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.rank-number{font-size:48px;font-weight:900;background:linear-gradient(135deg,var(--gold),#ff9500);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.rank-label{font-size:12px;color:rgba(255,215,0,.6);font-weight:600;margin-top:4px}
+.rank-progress{margin-top:16px}
+.rank-progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-bottom:7px}
+.rank-track{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.rank-fill{height:100%;background:linear-gradient(90deg,var(--gold),#ff9500);border-radius:3px;transition:width 1.2s ease}
+
+/* TROPHY CASE */
+.trophy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.trophy-item{text-align:center;padding:14px 6px;background:rgba(255,255,255,.03);border:1px solid var(--glass-border);border-radius:13px;transition:var(--tr)}
+.trophy-item:hover{background:rgba(255,215,0,.05);border-color:rgba(255,215,0,.15);transform:translateY(-2px)}
+.trophy-icon{font-size:26px;display:block;margin-bottom:5px;filter:drop-shadow(0 0 6px rgba(255,215,0,.3))}
+.trophy-val{font-size:15px;font-weight:900;color:var(--gold);display:block}
+.trophy-lbl{font-size:9px;color:var(--text-muted);font-weight:600;margin-top:2px}
+
+/* CONTACT CARD */
+.contact-card{}
+.social-list{display:flex;flex-direction:column;gap:8px}
+.social-item{display:flex;align-items:center;gap:12px;padding:11px 14px;background:rgba(255,255,255,.03);border:1px solid var(--glass-border);border-radius:13px;text-decoration:none;transition:var(--tr)}
+.social-item:hover{background:rgba(224,163,255,.07);border-color:rgba(224,163,255,.2);transform:translateX(-3px)}
+.social-icon{font-size:20px;flex-shrink:0;width:32px;text-align:center}
+.social-info{flex:1;min-width:0}
+.social-name{font-size:12px;font-weight:700;color:#fff}
+.social-handle{font-size:11px;color:var(--text-muted);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.social-arrow{color:var(--text-muted);font-size:12px;transition:var(--tr)}
+.social-item:hover .social-arrow{color:var(--primary);transform:translateX(-3px)}
+
+/* SHARE CARD */
+.share-card{}
+.share-desc{font-size:13px;color:var(--text-muted);margin-bottom:16px;line-height:1.6}
+.share-btns{display:flex;flex-direction:column;gap:8px}
+.share-btn{padding:10px 16px;border-radius:12px;border:none;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:8px}
+.share-copy{background:rgba(224,163,255,.1);border:1px solid rgba(224,163,255,.25);color:var(--primary)}
+.share-copy:hover{background:rgba(224,163,255,.18);transform:translateY(-2px)}
+.share-wa{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.25);color:#25d366}
+.share-wa:hover{background:rgba(37,211,102,.18);transform:translateY(-2px)}
+
+/* ── LOADING / ERROR / EMPTY ── */
+.loading-state{text-align:center;padding:50px 20px}
+.loader{width:44px;height:44px;border:3px solid rgba(224,163,255,.15);border-top-color:#e0a3ff;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:14px;color:var(--text-muted);font-weight:500}
+.error-state,.empty-state{text-align:center;padding:40px 20px}
+.error-state-icon,.empty-state-icon{font-size:48px;display:block;margin-bottom:12px;opacity:.5}
+.error-state p,.empty-state p{font-size:13px;color:var(--text-muted);font-weight:500;margin-top:6px}
+.not-found-state{text-align:center;padding:80px 20px;max-width:480px;margin:0 auto}
+.nf-icon{font-size:80px;display:block;margin-bottom:20px;animation:float 3s ease-in-out infinite}
+.nf-title{font-size:26px;font-weight:900;color:#fff;margin-bottom:10px}
+.nf-msg{font-size:14px;color:var(--text-muted);line-height:1.7}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(30px);
+  background:rgba(20,10,35,.95);border:1px solid rgba(224,163,255,.2);border-radius:14px;
+  padding:12px 22px;font-size:14px;font-weight:600;color:#fff;z-index:9999;opacity:0;
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;backdrop-filter:blur(20px);
+  box-shadow:0 10px 30px rgba(0,0,0,.5);display:flex;align-items:center;gap:10px;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:rgba(0,255,135,.3)}
+.toast.error{border-color:rgba(255,68,68,.3)}
+
+/* ── SCROLL TOP ── */
+.scroll-top{position:fixed;bottom:30px;left:30px;width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(45deg,var(--accent2),var(--accent));border:none;color:#fff;
+  font-size:18px;cursor:pointer;box-shadow:0 8px 25px rgba(147,112,219,.4);
+  transition:all .4s cubic-bezier(.34,1.56,.64,1);opacity:0;pointer-events:none;z-index:100;
+  display:flex;align-items:center;justify-content:center}
+.scroll-top.visible{opacity:1;pointer-events:all}
+.scroll-top:hover{transform:scale(1.15) translateY(-3px)}
+
+/* ── REPORT BUTTON ── */
+.report-btn{padding:7px 14px;border-radius:10px;border:1px solid rgba(255,68,68,.2);background:rgba(255,68,68,.05);color:rgba(255,107,107,.7);font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:var(--tr);display:flex;align-items:center;gap:6px}
+.report-btn:hover{background:rgba(255,68,68,.12);border-color:rgba(255,68,68,.35);color:#ff6b6b;transform:translateY(-1px)}
+
+/* ── THEME BUTTON ── */
+#theme-toggle-btn{
+  padding:9px 18px;
+  background:rgba(224,163,255,.1);
+  border:1px solid rgba(224,163,255,.3);
+  border-radius:12px;
+  color:#e0a3ff;
+  font-family:'Cairo',sans-serif;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:var(--tr);
+  white-space:nowrap;
+}
+#theme-toggle-btn:hover{
+  background:rgba(224,163,255,.2);
+  border-color:rgba(224,163,255,.55);
+  transform:translateY(-2px);
+  box-shadow:0 4px 15px rgba(224,163,255,.3);
+}
+
+/* ══════════════════════════════════════════
+   ULTRA-DARK THEME OVERRIDES
+══════════════════════════════════════════ */
+body.theme-ultra-dark{background:#000}
+body.theme-ultra-dark .neural-bg{
+  background:
+    radial-gradient(circle at 15% 85%,rgba(30,0,55,.85) 0%,transparent 50%),
+    radial-gradient(circle at 85% 15%,rgba(50,0,45,.9) 0%,transparent 50%),
+    radial-gradient(circle at 50% 55%,rgba(40,0,40,.7) 0%,transparent 50%),
+    linear-gradient(135deg,#000 0%,#070010 50%,#000 100%) !important;
+  animation:bgPulse 14s ease-in-out infinite;
+  filter:brightness(.65) saturate(1.2);
+}
+body.theme-ultra-dark header{
+  background:rgba(5,0,15,.88) !important;
+  border-color:rgba(179,136,255,.1) !important;
+  box-shadow:0 8px 32px rgba(0,0,0,.8),inset 0 1px 0 rgba(179,136,255,.06) !important;
+}
+body.theme-ultra-dark header.scrolled{
+  background:rgba(8,0,20,.92) !important;
+  border-color:rgba(179,136,255,.13) !important;
+}
+body.theme-ultra-dark .logo{
+  background:linear-gradient(45deg,#b388ff,#9370db);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+body.theme-ultra-dark #theme-toggle-btn{
+  background:rgba(179,136,255,.07);
+  border-color:rgba(179,136,255,.18);
+  color:#b388ff;
+}
+body.theme-ultra-dark #theme-toggle-btn:hover{
+  background:rgba(179,136,255,.14);
+  border-color:rgba(179,136,255,.35);
+  box-shadow:0 4px 15px rgba(179,136,255,.2);
+}
+body.theme-ultra-dark .nav-links a{color:#b388ff}
+body.theme-ultra-dark .nav-links a:hover{background:rgba(179,136,255,.08);color:#d4b3ff}
+body.theme-ultra-dark .btn-back{background:rgba(179,136,255,.06);border-color:rgba(179,136,255,.12);color:#9370db}
+body.theme-ultra-dark .btn-back:hover{background:rgba(179,136,255,.12);border-color:rgba(179,136,255,.25);color:#b388ff}
+body.theme-ultra-dark .cover-default{
+  background:linear-gradient(135deg,#000,#06000f,#0d0020,#06000f,#000) !important;
+}
+body.theme-ultra-dark .cover-overlay{background:linear-gradient(to bottom,rgba(0,0,0,.2),rgba(0,0,0,.85)) !important}
+body.theme-ultra-dark .cover-glow-line{
+  background:linear-gradient(90deg,transparent,#7b1fa2,#9370db,#7b1fa2,transparent) !important;
+  box-shadow:0 0 15px rgba(123,31,162,.5),0 0 40px rgba(123,31,162,.2);
+}
+body.theme-ultra-dark .avatar-ring{
+  box-shadow:0 0 0 4px rgba(0,0,0,.95),0 0 25px rgba(179,136,255,.3) !important;
+}
+body.theme-ultra-dark .profile-name{
+  background:linear-gradient(135deg,#d4b3ff 0%,#b388ff 50%,#9370db 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+body.theme-ultra-dark .role-student{background:rgba(0,150,180,.07);color:#00acc1;border-color:rgba(0,150,180,.18)}
+body.theme-ultra-dark .role-admin{background:rgba(179,136,255,.08);color:#b388ff;border-color:rgba(179,136,255,.2)}
+body.theme-ultra-dark .role-level{background:rgba(100,70,180,.08);color:#9370db;border-color:rgba(100,70,180,.18)}
+body.theme-ultra-dark .join-info{color:rgba(179,136,255,.45)}
+body.theme-ultra-dark .action-primary{background:linear-gradient(45deg,#4a0072,#6a1b9a);box-shadow:0 4px 18px rgba(70,0,110,.5)}
+body.theme-ultra-dark .action-ghost{background:rgba(179,136,255,.05);border-color:rgba(179,136,255,.12);color:#9370db}
+body.theme-ultra-dark .action-ghost:hover{background:rgba(179,136,255,.1);border-color:rgba(179,136,255,.25);color:#b388ff}
+body.theme-ultra-dark .quick-stats-inner{
+  background:rgba(5,0,15,.7);
+  border-color:rgba(179,136,255,.08);
+  box-shadow:0 4px 20px rgba(0,0,0,.6);
+}
+body.theme-ultra-dark .qs-val{background:linear-gradient(135deg,#b388ff,#9370db);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+body.theme-ultra-dark .qs-lbl{color:rgba(179,136,255,.4)}
+body.theme-ultra-dark .qs-item::after{background:rgba(179,136,255,.06) !important}
+body.theme-ultra-dark .card{
+  background:rgba(255,255,255,.02) !important;
+  border-color:rgba(179,136,255,.08) !important;
+  box-shadow:0 8px 32px rgba(0,0,0,.7);
+}
+body.theme-ultra-dark .card:hover{border-color:rgba(179,136,255,.14) !important}
+body.theme-ultra-dark .card-header{border-bottom-color:rgba(179,136,255,.07)}
+body.theme-ultra-dark .card-title{color:#d4b3ff}
+body.theme-ultra-dark .card-badge{background:rgba(179,136,255,.07);color:#9370db;border-color:rgba(179,136,255,.12)}
+body.theme-ultra-dark .xp-card{background:rgba(0,20,15,.6) !important;border-color:rgba(0,200,100,.1) !important}
+body.theme-ultra-dark .xp-label{color:rgba(0,255,135,.7)}
+body.theme-ultra-dark .xp-val-text{color:rgba(0,255,135,.7)}
+body.theme-ultra-dark .milestone.done{background:rgba(0,180,100,.07);color:rgba(0,255,135,.7);border-color:rgba(0,180,100,.15)}
+body.theme-ultra-dark .milestone.locked{background:rgba(255,255,255,.02);color:rgba(255,255,255,.15);border-color:rgba(255,255,255,.05)}
+body.theme-ultra-dark .bio-text{color:rgba(255,255,255,.45)}
+body.theme-ultra-dark .bio-empty{color:rgba(255,255,255,.2)}
+body.theme-ultra-dark .info-item{background:rgba(255,255,255,.018);border-color:rgba(179,136,255,.07)}
+body.theme-ultra-dark .info-item:hover{background:rgba(179,136,255,.05);border-color:rgba(179,136,255,.14)}
+body.theme-ultra-dark .info-lbl{color:rgba(179,136,255,.35)}
+body.theme-ultra-dark .info-val{color:rgba(255,255,255,.7)}
+body.theme-ultra-dark .badge-item{background:rgba(255,255,255,.018);border-color:rgba(179,136,255,.07)}
+body.theme-ultra-dark .badge-item.earned{border-color:rgba(179,136,255,.18);box-shadow:0 2px 10px rgba(179,136,255,.06)}
+body.theme-ultra-dark .badge-item.earned .badge-name{color:#9370db}
+body.theme-ultra-dark .posts-tabs{background:rgba(255,255,255,.015);border-color:rgba(179,136,255,.07)}
+body.theme-ultra-dark .ptab{color:rgba(179,136,255,.4)}
+body.theme-ultra-dark .ptab.active{background:rgba(179,136,255,.08);color:#b388ff}
+body.theme-ultra-dark .post-card{background:rgba(255,255,255,.018);border-color:rgba(179,136,255,.07)}
+body.theme-ultra-dark .post-card:hover{background:rgba(179,136,255,.05);border-color:rgba(179,136,255,.16);box-shadow:0 6px 20px rgba(0,0,0,.5)}
+body.theme-ultra-dark .post-card-icon{background:rgba(179,136,255,.06);border-color:rgba(179,136,255,.1)}
+body.theme-ultra-dark .post-card-title{color:rgba(255,255,255,.8)}
+body.theme-ultra-dark .post-card-meta{color:rgba(179,136,255,.35)}
+body.theme-ultra-dark .activity-text{color:rgba(255,255,255,.5)}
+body.theme-ultra-dark .activity-time{color:rgba(179,136,255,.3)}
+body.theme-ultra-dark .activity-item{border-bottom-color:rgba(255,255,255,.03)}
+body.theme-ultra-dark .rank-card{background:rgba(10,8,0,.7) !important;border-color:rgba(179,136,255,.08) !important}
+body.theme-ultra-dark .rank-label{color:rgba(179,136,255,.35)}
+body.theme-ultra-dark .rank-track{background:rgba(255,255,255,.04)}
+body.theme-ultra-dark .trophy-item{background:rgba(255,255,255,.018);border-color:rgba(179,136,255,.07)}
+body.theme-ultra-dark .trophy-item:hover{background:rgba(179,136,255,.05);border-color:rgba(179,136,255,.15)}
+body.theme-ultra-dark .trophy-val{color:rgba(255,200,0,.7)}
+body.theme-ultra-dark .trophy-lbl{color:rgba(179,136,255,.35)}
+body.theme-ultra-dark .share-desc{color:rgba(179,136,255,.4)}
+body.theme-ultra-dark .share-copy{background:rgba(179,136,255,.06);border-color:rgba(179,136,255,.14);color:#9370db}
+body.theme-ultra-dark .share-wa{background:rgba(37,211,102,.05);border-color:rgba(37,211,102,.12);color:rgba(37,211,102,.7)}
+body.theme-ultra-dark .user-dropdown-menu{background:rgba(4,0,12,.96) !important;border-color:rgba(179,136,255,.12) !important}
+body.theme-ultra-dark .dropdown-item{color:rgba(179,136,255,.75)}
+body.theme-ultra-dark .dropdown-item:hover{background:rgba(179,136,255,.07);color:#b388ff}
+body.theme-ultra-dark .toast{background:rgba(4,0,12,.97);border-color:rgba(179,136,255,.15)}
+body.theme-ultra-dark .loading-text{color:rgba(179,136,255,.4)}
+body.theme-ultra-dark .loader{border-color:rgba(179,136,255,.1);border-top-color:#7b1fa2}
+
+/* ══════════════════════════════════════════
+   LIGHT THEME OVERRIDES
+══════════════════════════════════════════ */
+body.theme-light { background:#f3e5f5; color:#6a1b9a; }
+body.theme-light .neural-bg {
+  background: radial-gradient(circle at 20% 80%,rgba(156,39,176,.12) 0%,transparent 50%),
+  radial-gradient(circle at 80% 10%,rgba(123,31,162,.15) 0%,transparent 50%),
+  linear-gradient(135deg,#fff 0%,#f3e5f5 50%,#e1bee7 100%) !important;
+  animation:none;
+}
+body.theme-light .geo div { border-color: rgba(123,31,162,.15) !important; }
+body.theme-light header { background:rgba(255,255,255,.85) !important; border-color:rgba(156,39,176,.2) !important; box-shadow:0 8px 32px rgba(123,31,162,.15) !important; backdrop-filter:blur(20px); }
+body.theme-light .logo { background:linear-gradient(45deg,#6a1b9a,#9c27b0); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+body.theme-light .nav-links a { color:#6a1b9a; }
+body.theme-light .nav-links a:hover { background:rgba(123,31,162,.1); color:#4a148c; }
+body.theme-light .btn-ghost-nav { background:rgba(123,31,162,.08); border-color:rgba(123,31,162,.2); color:#6a1b9a; }
+body.theme-light .btn-ghost-nav:hover { background:rgba(123,31,162,.15); color:#4a148c; }
+body.theme-light .btn-back { background:rgba(123,31,162,.06); border-color:rgba(123,31,162,.15); color:#6a1b9a; }
+body.theme-light .cover-default { background:linear-gradient(135deg,#ce93d8,#ab47bc,#8e24aa,#6a1b9a) !important; }
+body.theme-light .cover-overlay { background:linear-gradient(to bottom,rgba(255,255,255,.05),rgba(255,255,255,.3)) !important; }
+body.theme-light .cover-glow-line { background:linear-gradient(90deg,transparent,#9c27b0,#ce93d8,#9370db,transparent) !important; }
+body.theme-light .avatar-ring { box-shadow:0 0 0 4px rgba(255,255,255,.9),0 0 30px rgba(156,39,176,.4) !important; }
+body.theme-light .online-dot { border-color:#f3e5f5 !important; }
+body.theme-light .level-badge { background:linear-gradient(135deg,#ffd700,#ff9500) !important; }
+body.theme-light .profile-name { background:linear-gradient(135deg,#4a148c,#7b1fa2,#9c27b0); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+body.theme-light .role-student { background:rgba(0,150,180,.1); color:#00838f; border-color:rgba(0,150,180,.25); }
+body.theme-light .role-admin { background:rgba(200,150,0,.1); color:#b8860b; border-color:rgba(200,150,0,.25); }
+body.theme-light .role-level { background:rgba(123,31,162,.1); color:#6a1b9a; border-color:rgba(123,31,162,.2); }
+body.theme-light .join-info { color:#888; }
+body.theme-light .action-primary { background:linear-gradient(45deg,#7b1fa2,#9c27b0); color:#fff; }
+body.theme-light .action-ghost { background:rgba(123,31,162,.07); border-color:rgba(123,31,162,.2); color:#6a1b9a; }
+body.theme-light .action-ghost:hover { background:rgba(123,31,162,.14); border-color:rgba(123,31,162,.35); color:#4a148c; }
+body.theme-light .quick-stats-inner { background:rgba(255,255,255,.85); border-color:rgba(156,39,176,.15); box-shadow:0 4px 20px rgba(123,31,162,.1); }
+body.theme-light .qs-item::after { background:rgba(123,31,162,.12) !important; }
+body.theme-light .qs-val { background:linear-gradient(135deg,#6a1b9a,#9c27b0); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+body.theme-light .qs-lbl { color:#888; }
+body.theme-light .card { background:rgba(255,255,255,.88); border-color:rgba(156,39,176,.15); box-shadow:0 6px 25px rgba(123,31,162,.1); }
+body.theme-light .card:hover { border-color:rgba(156,39,176,.28); }
+body.theme-light .card-header { border-bottom-color:rgba(123,31,162,.1); }
+body.theme-light .card-title { color:#4a148c; }
+body.theme-light .card-badge { background:rgba(123,31,162,.1); color:#6a1b9a; border-color:rgba(123,31,162,.2); }
+body.theme-light .xp-card { background:rgba(240,255,248,.88) !important; border-color:rgba(0,180,100,.2) !important; }
+body.theme-light .xp-top-row .xp-label { color:#2e7d32; }
+body.theme-light .xp-val-text { color:#2e7d32; }
+body.theme-light .xp-track { background:rgba(0,0,0,.08); }
+body.theme-light .xp-level-text { color:#666; }
+body.theme-light .milestone.done { background:rgba(0,180,100,.1); color:#2e7d32; border-color:rgba(0,180,100,.25); }
+body.theme-light .milestone.locked { background:rgba(0,0,0,.04); color:#bbb; border-color:rgba(0,0,0,.1); }
+body.theme-light .bio-text { color:#444; }
+body.theme-light .bio-empty { color:#aaa; }
+body.theme-light .info-item { background:rgba(123,31,162,.04); border-color:rgba(123,31,162,.1); }
+body.theme-light .info-item:hover { background:rgba(123,31,162,.08); border-color:rgba(123,31,162,.2); }
+body.theme-light .info-lbl { color:#999; }
+body.theme-light .info-val { color:#333; }
+body.theme-light .badge-item { background:rgba(255,255,255,.7); border-color:rgba(123,31,162,.12); }
+body.theme-light .badge-item.earned { border-color:rgba(123,31,162,.25); }
+body.theme-light .badge-item.earned .badge-name { color:#6a1b9a; }
+body.theme-light .badge-item.locked { opacity:.35; }
+body.theme-light .posts-tabs { background:rgba(123,31,162,.05); border-color:rgba(123,31,162,.12); }
+body.theme-light .ptab { color:#888; }
+body.theme-light .ptab.active { background:linear-gradient(135deg,rgba(123,31,162,.15),rgba(156,39,176,.1)); color:#4a148c; }
+body.theme-light .post-card { background:rgba(255,255,255,.7); border-color:rgba(123,31,162,.1); }
+body.theme-light .post-card:hover { background:rgba(243,229,245,.9); border-color:rgba(123,31,162,.25); box-shadow:0 6px 20px rgba(123,31,162,.12); }
+body.theme-light .post-card-icon { background:linear-gradient(135deg,rgba(123,31,162,.1),rgba(156,39,176,.07)); border-color:rgba(123,31,162,.18); }
+body.theme-light .post-card-title { color:#333; }
+body.theme-light .post-card-meta { color:#888; }
+body.theme-light .activity-item { border-bottom-color:rgba(0,0,0,.06); }
+body.theme-light .activity-text { color:#555; }
+body.theme-light .activity-time { color:#999; }
+body.theme-light .rank-card { background:rgba(255,252,235,.9) !important; border-color:rgba(200,150,0,.2) !important; }
+body.theme-light .rank-number { background:linear-gradient(135deg,#b8860b,#d4a017); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+body.theme-light .rank-label { color:#b8860b; opacity:.7; }
+body.theme-light .rank-progress-label { color:#888; }
+body.theme-light .rank-track { background:rgba(0,0,0,.08); }
+body.theme-light .rank-fill { background:linear-gradient(90deg,#b8860b,#d4a017) !important; }
+body.theme-light .trophy-item { background:rgba(255,255,255,.6); border-color:rgba(123,31,162,.1); }
+body.theme-light .trophy-item:hover { background:rgba(255,252,235,.9); border-color:rgba(200,150,0,.2); }
+body.theme-light .trophy-val { color:#b8860b; }
+body.theme-light .trophy-lbl { color:#999; }
+body.theme-light .share-desc { color:#888; }
+body.theme-light .share-copy { background:rgba(123,31,162,.08); border-color:rgba(123,31,162,.2); color:#6a1b9a; }
+body.theme-light .share-wa { background:rgba(37,211,102,.08); border-color:rgba(37,211,102,.2); color:#1a7a3c; }
+body.theme-light footer { background:rgba(243,229,245,.95); border-top-color:rgba(156,39,176,.15); }
+body.theme-light .not-found-state .nf-title { color:#4a148c; }
+body.theme-light .not-found-state .nf-msg { color:#888; }
+body.theme-light .empty-state p { color:#aaa; }
+body.theme-light .loading-text { color:#888; }
+body.theme-light .loader { border-color:rgba(123,31,162,.15); border-top-color:#7b1fa2; }
+body.theme-light .toast { background:rgba(255,255,255,.97); color:#333; border-color:rgba(123,31,162,.2); box-shadow:0 10px 30px rgba(123,31,162,.15); }
+body.theme-light .scroll-top { background:linear-gradient(45deg,#7b1fa2,#9c27b0); }
+body.theme-light .user-dropdown-menu { background:rgba(255,255,255,.97); border-color:rgba(123,31,162,.2); }
+body.theme-light .dropdown-user-name { color:#6a1b9a; }
+body.theme-light .dropdown-item { color:#6a1b9a; }
+body.theme-light .dropdown-item:hover { background:rgba(123,31,162,.08); color:#4a148c; }
+body.theme-light .dropdown-divider { background:rgba(123,31,162,.1); }
+body.theme-light .report-btn { background:rgba(220,50,50,.05); border-color:rgba(220,50,50,.15); color:rgba(180,30,30,.7); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .profile-body{grid-template-columns:1fr}
+  .sidebar{order:-1}
+  .quick-stats-inner{grid-template-columns:repeat(3,1fr)}
+  .qs-item:nth-child(3)::after,.qs-item:nth-child(4)::after{display:none}
+  nav .nav-links{display:none}
+}
+@media(max-width:600px){
+  header{padding:11px 16px;top:10px}
+  .profile-identity{flex-direction:column;align-items:center;text-align:center;margin-top:-50px}
+  .profile-actions{justify-content:center}
+  .quick-stats-inner{grid-template-columns:1fr 1fr;gap:10px}
+  .qs-item::after{display:none!important}
+  .info-grid{grid-template-columns:1fr}
+  .cover-section{height:200px}
+  .avatar-ring{width:100px;height:100px}
+  .avatar-inner-default{font-size:38px}
+  .profile-body{padding:0 14px 60px}
+  .card{padding:20px 16px}
+}
+</style>
+</head>
+<body>
+
+<div class="neural-bg"></div>
+<div class="geo"><div></div><div></div><div></div><div></div></div>
+<div class="particles" id="particles"></div>
+
+<!-- HEADER -->
+<header id="mainHeader">
+  <nav>
+    <a href="/index.html" class="logo">
+      <span class="logo-icon">🎓</span>
+      <span>منصة الطلاب</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/index.html">الرئيسية</a></li>
+      <li><a href="/browse.html">تصفح</a></li>
+      <li><a href="/requests.html">الطلبات</a></li>
+      <li><a href="/calculator.html">الحاسبة</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-ghost-nav" id="theme-toggle-btn">🎨 الثيم</button>
+      <div id="userNavArea"></div>
+      <button class="btn-back" onclick="history.back()">← رجوع</button>
+    </div>
+  </nav>
+</header>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- SCROLL TOP -->
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div class="main" id="mainContent">
+
+  <!-- NOT FOUND STATE -->
+  <div id="notFoundState" style="display:none">
+    <div class="not-found-state">
+      <span class="nf-icon">👤</span>
+      <div class="nf-title">المستخدم غير موجود</div>
+      <p class="nf-msg">لم نتمكن من العثور على هذا الحساب. ربما تم حذفه أو الرابط غير صحيح.</p>
+      <br>
+      <button class="action-btn action-primary" onclick="history.back()" style="margin:0 auto">← العودة</button>
+    </div>
+  </div>
+
+  <!-- PROFILE CONTENT -->
+  <div id="profileContent" style="display:none">
+
+    <!-- COVER -->
+    <div class="cover-section">
+      <div class="cover-default" id="coverBg">
+        <div class="cover-stars" id="coverStars"></div>
+        <div class="cover-overlay"></div>
+      </div>
+    </div>
+
+    <!-- PROFILE HEADER -->
+    <div class="profile-header">
+      <div class="profile-identity">
+        <!-- AVATAR -->
+        <div class="avatar-wrap">
+          <div class="avatar-ring">
+            <div class="avatar-inner" id="avatarInner">
+              <div class="avatar-inner-default" id="avatarDefault">?</div>
+            </div>
+          </div>
+          <div class="online-dot" title="نشط مؤخراً"></div>
+          <div class="level-badge-wrap">
+            <div class="level-badge" id="levelBadge">1</div>
+          </div>
+        </div>
+
+        <!-- INFO -->
+        <div class="identity-info">
+          <div class="profile-name profile-name-glow" id="profileName">جاري التحميل…</div>
+          <div class="profile-role-row">
+            <span class="role-tag" id="roleTag">طالب</span>
+            <span class="role-tag role-level" id="levelTag">المستوى 1</span>
+          </div>
+          <div class="join-info">
+            <span>📅</span>
+            <span id="joinDate">—</span>
+          </div>
+          <div class="profile-actions">
+            <button class="action-btn action-primary" id="msgBtn" style="display:none" onclick="contactUser()">
+              💬 تواصل
+            </button>
+            <button class="action-btn action-ghost" onclick="shareProfile()">
+              🔗 مشاركة الملف
+            </button>
+            <button class="report-btn" id="reportBtn" style="display:none" onclick="reportUser()">
+              🚩 إبلاغ
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK STATS BAR -->
+    <div class="quick-stats-bar">
+      <div class="quick-stats-inner">
+        <div class="qs-item">
+          <span class="qs-val" id="qsPosts">0</span>
+          <span class="qs-lbl">المنشورات</span>
+        </div>
+        <div class="qs-item">
+          <span class="qs-val" id="qsDownloads">0</span>
+          <span class="qs-lbl">التحميلات</span>
+        </div>
+        <div class="qs-item">
+          <span class="qs-val" id="qsViews">0</span>
+          <span class="qs-lbl">المشاهدات</span>
+        </div>
+        <div class="qs-item">
+          <span class="qs-val" id="qsXP">0</span>
+          <span class="qs-lbl">نقاط XP</span>
+        </div>
+        <div class="qs-item">
+          <span class="qs-val" id="qsRating">—</span>
+          <span class="qs-lbl">متوسط التقييم</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="profile-body">
+
+      <!-- LEFT COLUMN -->
+      <div class="main-col">
+
+        <!-- BIO & INFO -->
+        <div class="card" style="animation-delay:.05s">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">👤</span> نبذة عني</div>
+          </div>
+          <div class="bio-text" id="bioText"><div class="bio-empty">لا توجد نبذة شخصية بعد</div></div>
+          <div class="info-grid" id="infoGrid"></div>
+        </div>
+
+        <!-- XP -->
+        <div class="card xp-card" style="animation-delay:.1s">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">⚡</span> مسيرة الخبرة</div>
+            <div class="card-badge" id="xpBadgeLabel">مبتدئ</div>
+          </div>
+          <div class="xp-top-row">
+            <span class="xp-label">⚡ نقاط XP</span>
+            <span class="xp-val-text" id="xpValText">0 / 200</span>
+          </div>
+          <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
+          <div class="xp-level-text">
+            <span id="xpLevelLeft">المستوى 1 — مبتدئ</span>
+            <span id="xpLevelRight">المستوى التالي: نشيط</span>
+          </div>
+          <div class="xp-milestones" id="xpMilestones"></div>
+        </div>
+
+        <!-- BADGES -->
+        <div class="card" style="animation-delay:.15s">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🏅</span> الشارات المكتسبة</div>
+            <div class="card-badge" id="badgeCount">0 / 10</div>
+          </div>
+          <div class="badges-grid" id="badgesGrid"></div>
+        </div>
+
+        <!-- POSTS -->
+        <div class="card" style="animation-delay:.2s">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">📚</span> المنشورات</div>
+            <div class="card-badge" id="postsCount">0 منشور</div>
+          </div>
+          <div class="posts-tabs" id="postsTabs">
+            <button class="ptab active" onclick="switchPTab('all',this)">📂 الكل</button>
+            <button class="ptab" onclick="switchPTab('approved',this)">✅ معتمدة</button>
+            <button class="ptab" onclick="switchPTab('pending',this)">⏳ معلقة</button>
+          </div>
+          <div class="ptab-panel active" id="ptab-all">
+            <div class="loading-state"><div class="loader"></div><div class="loading-text">جاري تحميل المنشورات…</div></div>
+          </div>
+          <div class="ptab-panel" id="ptab-approved"></div>
+          <div class="ptab-panel" id="ptab-pending"></div>
+        </div>
+
+        <!-- ACTIVITY -->
+        <div class="card" style="animation-delay:.25s">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">📡</span> آخر النشاطات</div>
+          </div>
+          <div id="activityFeed">
+            <div class="loading-state"><div class="loader"></div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+
+        <!-- RANK CARD -->
+        <div class="card rank-card" style="animation-delay:.1s">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🏆</span> الترتيب</div>
+          </div>
+          <div class="rank-display">
+            <span class="rank-crown" id="rankCrown">👑</span>
+            <div class="rank-number" id="rankNumber">#—</div>
+            <div class="rank-label">في قائمة المساهمين</div>
+          </div>
+          <div class="rank-progress">
+            <div class="rank-progress-label">
+              <span id="rankProgressLabel">تقدم نحو المرتبة التالية</span>
+              <span id="rankProgressPct">0%</span>
+            </div>
+            <div class="rank-track"><div class="rank-fill" id="rankFill" style="width:0%"></div></div>
+          </div>
+        </div>
+
+        <!-- TROPHY CASE -->
+        <div class="card" style="animation-delay:.15s">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🎖️</span> الإنجازات</div>
+          </div>
+          <div class="trophy-grid">
+            <div class="trophy-item">
+              <span class="trophy-icon">📝</span>
+              <span class="trophy-val" id="trophyPosts">0</span>
+              <span class="trophy-lbl">منشور</span>
+            </div>
+            <div class="trophy-item">
+              <span class="trophy-icon">⬇️</span>
+              <span class="trophy-val" id="trophyDl">0</span>
+              <span class="trophy-lbl">تحميل</span>
+            </div>
+            <div class="trophy-item">
+              <span class="trophy-icon">👁️</span>
+              <span class="trophy-val" id="trophyViews">0</span>
+              <span class="trophy-lbl">مشاهدة</span>
+            </div>
+            <div class="trophy-item">
+              <span class="trophy-icon">⭐</span>
+              <span class="trophy-val" id="trophyRating">0</span>
+              <span class="trophy-lbl">تقييم</span>
+            </div>
+            <div class="trophy-item">
+              <span class="trophy-icon">💬</span>
+              <span class="trophy-val" id="trophyComments">0</span>
+              <span class="trophy-lbl">تعليق</span>
+            </div>
+            <div class="trophy-item">
+              <span class="trophy-icon">🏅</span>
+              <span class="trophy-val" id="trophyBadges">0</span>
+              <span class="trophy-lbl">شارة</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SHARE CARD -->
+        <div class="card share-card" style="animation-delay:.2s">
+          <div class="card-header">
+            <div class="card-title"><span class="card-title-icon">🔗</span> مشاركة الملف</div>
+          </div>
+          <div class="share-desc">شارك ملف هذا الطالب مع أصدقائك</div>
+          <div class="share-btns">
+            <button class="share-btn share-copy" onclick="copyLink()">📋 نسخ الرابط</button>
+            <button class="share-btn share-wa" onclick="shareWhatsapp()">💬 مشاركة واتساب</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   THEME SYSTEM — نفس طريقة index.html
+══════════════════════════════════════════ */
+let themeLink = document.createElement('link');
+themeLink.rel = 'stylesheet';
+themeLink.id = 'theme-stylesheet';
+document.head.appendChild(themeLink);
+
+const themes = {
+  'default':    '',
+  'ultra-dark': 'theme-ultra-dark.css',
+  'light':      'theme-light.css'
+};
+
+let currentTheme = localStorage.getItem('selectedTheme') || 'default';
+
+function applyTheme(themeName) {
+  themeLink.href = themes[themeName] || '';
+  currentTheme = themeName;
+  localStorage.setItem('selectedTheme', themeName);
+  document.body.classList.toggle('theme-light', themeName === 'light');
+  document.body.classList.toggle('theme-ultra-dark', themeName === 'ultra-dark');
+  updateThemeButtonText();
+}
+
+function switchTheme() {
+  const order = ['default', 'ultra-dark', 'light'];
+  applyTheme(order[(order.indexOf(currentTheme) + 1) % order.length]);
+}
+
+function updateThemeButtonText() {
+  const btn = document.getElementById('theme-toggle-btn');
+  if (!btn) return;
+  btn.textContent = {
+    'default':    '🎨 الثيم الافتراضي',
+    'ultra-dark': '⚫ الثيم الداكن',
+    'light':      '☀️ الثيم الفاتح'
+  }[currentTheme] || '🎨 الثيم';
+}
+
+applyTheme(currentTheme);
+
+/* ══════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════ */
+function getToken() { return localStorage.getItem('token'); }
+function authHeader() {
+  const t = getToken();
+  return t ? { 'Authorization': `Bearer ${t}` } : {};
+}
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.innerHTML = `${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'} ${msg}`;
+  t.className = `toast ${type} show`;
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 3400);
+}
+
+/* ══════════════════════════════════════════
+   PARTICLES
+══════════════════════════════════════════ */
+(function spawnParticles() {
+  const c = document.getElementById('particles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      width:${Math.random()*2+1}px;height:${Math.random()*2+1}px;
+      animation-duration:${12+Math.random()*18}s;
+      animation-delay:-${Math.random()*20}s;
+      opacity:${Math.random()*.5}`;
+    c.appendChild(p);
+  }
+})();
+
+/* ══════════════════════════════════════════
+   COVER STARS
+══════════════════════════════════════════ */
+(function spawnStars() {
+  const c = document.getElementById('coverStars');
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'cover-star';
+    const size = Math.random() * 2.5 + 1;
+    s.style.cssText = `
+      left:${Math.random()*100}%;top:${Math.random()*100}%;
+      width:${size}px;height:${size}px;
+      animation-duration:${2+Math.random()*4}s;
+      animation-delay:-${Math.random()*4}s;
+      opacity:${Math.random()*.7}`;
+    c.appendChild(s);
+  }
+})();
+
+/* ══════════════════════════════════════════
+   USER NAV
+══════════════════════════════════════════ */
+function renderUserNav() {
+  const area = document.getElementById('userNavArea');
+  const raw = localStorage.getItem('user');
+  if (!raw || !getToken()) {
+    area.innerHTML = `<a href="/login.html" class="login-nav-btn">🔑 تسجيل الدخول</a>`;
+    return;
+  }
+  let user;
+  try { user = JSON.parse(raw); } catch { area.innerHTML = ''; return; }
+  const name = user.name || user.username || 'أنا';
+  const letter = name.trim().charAt(0).toUpperCase();
+  const avatarHtml = (user.avatar && !user.avatar.startsWith('data:'))
+    ? `<img src="${user.avatar}" class="user-avatar-circle" id="userAvatarToggle" alt="avatar">`
+    : `<div class="user-avatar-default" id="userAvatarToggle">${letter}</div>`;
+  area.innerHTML = `
+    <div class="user-nav-wrapper" id="userNavWrapper">
+      <div class="user-avatar-btn">${avatarHtml}</div>
+      <div class="user-dropdown-menu">
+        <div class="dropdown-user-info">
+          <div class="dropdown-user-name">${name}</div>
+        </div>
+        <a href="/profile.html" class="dropdown-item">👤 ملفي الشخصي</a>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item danger" onclick="logoutUser()">🚪 خروج</button>
+      </div>
+    </div>`;
+  const wrapper = document.getElementById('userNavWrapper');
+  document.getElementById('userAvatarToggle').addEventListener('click', e => {
+    e.stopPropagation(); wrapper.classList.toggle('open');
+  });
+  document.addEventListener('click', e => { if (wrapper && !wrapper.contains(e.target)) wrapper.classList.remove('open'); });
+}
+function logoutUser() {
+  localStorage.removeItem('user'); localStorage.removeItem('token');
+  window.location.href = '/login.html';
+}
+
+/* ══════════════════════════════════════════
+   XP SYSTEM
+══════════════════════════════════════════ */
+const LEVELS = [
+  { min:0,    label:'مبتدئ',   next:200,  emoji:'🌱' },
+  { min:200,  label:'نشيط',    next:500,  emoji:'⚡' },
+  { min:500,  label:'متقدم',   next:1000, emoji:'🔥' },
+  { min:1000, label:'خبير',    next:2000, emoji:'💫' },
+  { min:2000, label:'متميز',   next:5000, emoji:'💎' },
+  { min:5000, label:'أسطورة',  next:null, emoji:'👑' },
+];
+
+function getLevel(xp) {
+  for (let i = LEVELS.length-1; i >= 0; i--) {
+    if (xp >= LEVELS[i].min) return { ...LEVELS[i], index: i+1 };
+  }
+  return { ...LEVELS[0], index:1 };
+}
+
+function renderXP(xp) {
+  const lvl = getLevel(xp);
+  const pct = lvl.next ? Math.min(100, ((xp-lvl.min)/(lvl.next-lvl.min))*100) : 100;
+  document.getElementById('xpValText').textContent = lvl.next ? `${xp} / ${lvl.next} XP` : `${xp} XP (الحد الأقصى)`;
+  document.getElementById('xpLevelLeft').textContent = `المستوى ${lvl.index} — ${lvl.emoji} ${lvl.label}`;
+  document.getElementById('xpBadgeLabel').textContent = `${lvl.emoji} ${lvl.label}`;
+  document.getElementById('levelBadge').textContent = lvl.index;
+  document.getElementById('qsXP').textContent = xp;
+  const nextLvl = LEVELS[lvl.index] || null;
+  document.getElementById('xpLevelRight').textContent = nextLvl ? `المرحلة القادمة: ${nextLvl.emoji} ${nextLvl.label}` : '🏆 أقصى مستوى';
+  document.getElementById('levelTag').textContent = `المستوى ${lvl.index} — ${lvl.label}`;
+  setTimeout(() => { document.getElementById('xpFill').style.width = pct + '%'; }, 400);
+
+  // milestones
+  const milestones = [
+    { xp:200, label:'نشيط' }, { xp:500, label:'متقدم' },
+    { xp:1000, label:'خبير' }, { xp:2000, label:'متميز' }, { xp:5000, label:'أسطورة' }
+  ];
+  document.getElementById('xpMilestones').innerHTML = milestones.map(m =>
+    `<div class="milestone ${xp >= m.xp ? 'done' : 'locked'}">
+      ${xp >= m.xp ? '✅' : '🔒'} ${m.label} (${m.xp} XP)
+    </div>`
+  ).join('');
+}
+
+/* ══════════════════════════════════════════
+   BADGES
+══════════════════════════════════════════ */
+const ALL_BADGES = [
+  { id:'first_post',  icon:'📝', name:'أول منشور',    desc:'رفع أول محتوى تعليمي' },
+  { id:'five_posts',  icon:'📚', name:'5 منشورات',     desc:'رفع 5 منشورات' },
+  { id:'ten_posts',   icon:'🏆', name:'10 منشورات',    desc:'رفع 10 منشورات' },
+  { id:'hundred_dl',  icon:'⬇️', name:'100 تحميل',    desc:'وصلت منشوراته 100 تحميل' },
+  { id:'popular',     icon:'🔥', name:'محتوى شائع',    desc:'منشور وصل 50 مشاهدة' },
+  { id:'early_bird',  icon:'🌅', name:'من الأوائل',    desc:'انضم مبكراً للمنصة' },
+  { id:'helper',      icon:'🤝', name:'متعاون',        desc:'ساعد 10 طلاب' },
+  { id:'xp500',       icon:'⚡', name:'500 XP',        desc:'جمع 500 نقطة XP' },
+  { id:'xp1000',      icon:'💎', name:'1000 XP',       desc:'جمع 1000 نقطة XP' },
+  { id:'verified',    icon:'✅', name:'موثق',           desc:'حساب موثق من الإدارة' },
+];
+
+function renderBadges(earnedIds = []) {
+  const grid = document.getElementById('badgesGrid');
+  let earnedCount = 0;
+  grid.innerHTML = ALL_BADGES.map(b => {
+    const earned = earnedIds.includes(b.id);
+    if (earned) earnedCount++;
+    return `
+      <div class="badge-item ${earned ? 'earned' : 'locked'}" title="${b.desc}">
+        ${earned ? '<div class="badge-glow"></div>' : ''}
+        <span class="badge-icon">${b.icon}</span>
+        <span class="badge-name">${b.name}</span>
+      </div>`;
+  }).join('');
+  document.getElementById('badgeCount').textContent = `${earnedCount} / ${ALL_BADGES.length}`;
+  document.getElementById('trophyBadges').textContent = earnedCount;
+}
+
+/* ══════════════════════════════════════════
+   POSTS
+══════════════════════════════════════════ */
+const TYPE_ICONS = { ملخص:'📋', درس:'📖', امتحان:'📝', تمارين:'🔢', حل:'✏️', فيديو:'🎥', أخرى:'📁' };
+
+function renderPosts(posts) {
+  const approved = posts.filter(p => p.status === 'approved');
+  const pending  = posts.filter(p => p.status === 'pending');
+  const total    = posts.length;
+  const totalDl  = posts.reduce((s,p) => s+(p.downloads||0), 0);
+  const totalV   = posts.reduce((s,p) => s+(p.views||0), 0);
+  const ratings  = posts.filter(p => p.avgRating > 0).map(p => p.avgRating);
+  const avgRat   = ratings.length ? (ratings.reduce((a,b)=>a+b,0)/ratings.length).toFixed(1) : '—';
+  const totalCom = posts.reduce((s,p) => s+(p.comments?.length||0), 0);
+
+  // Quick stats
+  document.getElementById('qsPosts').textContent = total;
+  document.getElementById('qsDownloads').textContent = totalDl;
+  document.getElementById('qsViews').textContent = totalV;
+  document.getElementById('qsRating').textContent = avgRat !== '—' ? `${avgRat}⭐` : '—';
+  document.getElementById('postsCount').textContent = `${total} منشور`;
+
+  // Trophies
+  document.getElementById('trophyPosts').textContent = total;
+  document.getElementById('trophyDl').textContent = totalDl;
+  document.getElementById('trophyViews').textContent = totalV;
+  document.getElementById('trophyRating').textContent = avgRat !== '—' ? avgRat : '—';
+  document.getElementById('trophyComments').textContent = totalCom;
+
+  // Render tabs
+  ['all','approved','pending'].forEach(tab => {
+    const list = tab === 'all' ? posts : tab === 'approved' ? approved : pending;
+    const el = document.getElementById(`ptab-${tab}`);
+    if (!list.length) {
+      el.innerHTML = `<div class="empty-state"><span class="empty-state-icon">📭</span><p>لا توجد منشورات في هذه الفئة</p></div>`;
+      return;
+    }
+    el.innerHTML = list.map(p => {
+      const ico = TYPE_ICONS[p.type] || '📁';
+      const dt  = new Date(p.createdAt).toLocaleDateString('ar-TN');
+      const sClass = p.status === 'approved' ? 's-approved' : p.status === 'pending' ? 's-pending' : 's-rejected';
+      const sTxt   = p.status === 'approved' ? '✅ معتمد' : p.status === 'pending' ? '⏳ معلق' : '❌ مرفوض';
+      return `
+        <div class="post-card" onclick="window.location.href='/post.html?id=${p._id || p.id}'">
+          <div class="post-card-icon">${ico}</div>
+          <div class="post-card-body">
+            <div class="post-card-title">${p.title}</div>
+            <div class="post-card-meta">
+              <span>📚 ${p.subject || '—'}</span>
+              <span>🎓 ${p.year || '—'}</span>
+              <span>📅 ${dt}</span>
+              <span>👁️ ${p.views||0}</span>
+              <span>⬇️ ${p.downloads||0}</span>
+            </div>
+          </div>
+          <div class="post-card-right">
+            <div class="post-status ${sClass}">${sTxt}</div>
+            ${p.avgRating > 0 ? `<div class="post-rating">⭐ ${p.avgRating}</div>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+  });
+
+  // Activity feed
+  renderActivity(posts);
+
+  // Rank (based on XP for now — server would give actual rank)
+  renderRank(document.getElementById('qsXP').textContent);
+}
+
+function switchPTab(name, btn) {
+  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.ptab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(`ptab-${name}`).classList.add('active');
+}
+
+/* ══════════════════════════════════════════
+   ACTIVITY FEED
+══════════════════════════════════════════ */
+function renderActivity(posts) {
+  const feed = document.getElementById('activityFeed');
+  if (!posts.length) {
+    feed.innerHTML = `<div class="empty-state"><span class="empty-state-icon">📡</span><p>لا توجد نشاطات بعد</p></div>`;
+    return;
+  }
+  // بناء قائمة النشاطات من منشورات المستخدم فقط
+  const items = [];
+  posts.slice(0, 12).forEach(p => {
+    items.push({
+      icon: TYPE_ICONS[p.type] || '📁',
+      dotClass: 'upload',
+      text: `رفع منشوراً: <strong style="color:#fff;cursor:pointer" onclick="window.location.href='/post.html?id=${p._id||p.id}'">${p.title}</strong>`,
+      time: timeAgo(p.createdAt),
+      sort: new Date(p.createdAt).getTime()
+    });
+    if (p.views > 10) items.push({
+      icon: '👁️', dotClass: 'xp',
+      text: `منشور <strong style="color:#fff">${p.title}</strong> وصل ${p.views} مشاهدة`,
+      time: timeAgo(p.createdAt),
+      sort: new Date(p.createdAt).getTime() - 1
+    });
+  });
+  items.sort((a,b) => b.sort - a.sort);
+  feed.innerHTML = items.slice(0,8).map(item => `
+    <div class="activity-item">
+      <span class="activity-icon">${item.icon}</span>
+      <div style="display:flex;align-items:flex-start;gap:10px;flex:1">
+        <div class="activity-dot ${item.dotClass}" style="margin-top:6px;flex-shrink:0"></div>
+        <div class="activity-content">
+          <div class="activity-text">${item.text}</div>
+          <div class="activity-time">${item.time}</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function timeAgo(dateStr) {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const m = Math.floor(diff/60000);
+  if (m < 1) return 'الآن';
+  if (m < 60) return `منذ ${m} دقيقة`;
+  const h = Math.floor(m/60);
+  if (h < 24) return `منذ ${h} ساعة`;
+  const d = Math.floor(h/24);
+  if (d < 30) return `منذ ${d} يوم`;
+  const mo = Math.floor(d/30);
+  if (mo < 12) return `منذ ${mo} شهر`;
+  return `منذ ${Math.floor(mo/12)} سنة`;
+}
+
+/* ══════════════════════════════════════════
+   RANK
+══════════════════════════════════════════ */
+function renderRank(xp) {
+  const xpNum = parseInt(xp) || 0;
+  // Simulated rank based on XP tiers
+  let rank = '#—', crown = '👑', pct = 0;
+  if (xpNum >= 5000) { rank = 'أسطورة 🌟'; crown = '👑'; pct = 100; }
+  else if (xpNum >= 2000) { rank = 'متميز 💎'; crown = '🏆'; pct = Math.min(100, (xpNum-2000)/3000*100); }
+  else if (xpNum >= 1000) { rank = 'خبير 💫'; crown = '🥇'; pct = (xpNum-1000)/1000*100; }
+  else if (xpNum >= 500)  { rank = 'متقدم 🔥'; crown = '🥈'; pct = (xpNum-500)/500*100; }
+  else if (xpNum >= 200)  { rank = 'نشيط ⚡'; crown = '🥉'; pct = (xpNum-200)/300*100; }
+  else { rank = 'مبتدئ 🌱'; crown = '🎯'; pct = xpNum/200*100; }
+
+  document.getElementById('rankNumber').textContent = rank;
+  document.getElementById('rankCrown').textContent = crown;
+  document.getElementById('rankProgressPct').textContent = Math.round(pct) + '%';
+  setTimeout(() => { document.getElementById('rankFill').style.width = pct + '%'; }, 600);
+}
+
+/* ══════════════════════════════════════════
+   AVATAR
+══════════════════════════════════════════ */
+function renderAvatar(avatarUrl, letter) {
+  const inner = document.getElementById('avatarInner');
+  if (avatarUrl && (avatarUrl.startsWith('/uploads/') || avatarUrl.startsWith('http') || avatarUrl.startsWith('data:'))) {
+    inner.innerHTML = `<img src="${avatarUrl}" alt="avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+  } else {
+    inner.innerHTML = `<div class="avatar-inner-default">${letter}</div>`;
+  }
+}
+
+/* ══════════════════════════════════════════
+   SHARE / CONTACT / REPORT
+══════════════════════════════════════════ */
+function shareProfile() {
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: 'ملف طالب', url });
+  } else {
+    copyLink();
+  }
+}
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href)
+    .then(() => showToast('تم نسخ الرابط! 🔗', 'success'))
+    .catch(() => showToast('تعذر النسخ', 'error'));
+}
+function shareWhatsapp() {
+  const url = encodeURIComponent(window.location.href);
+  const name = document.getElementById('profileName').textContent;
+  window.open(`https://wa.me/?text=تفقد ملف الطالب ${encodeURIComponent(name)} على منصة الطلاب التونسيين: ${url}`, '_blank');
+}
+function contactUser() {
+  showToast('ميزة التواصل المباشر قادمة قريباً 🚧', 'info');
+}
+function reportUser() {
+  showToast('تم إرسال إبلاغك للمراجعة 🚩', 'success');
+}
+
+/* ══════════════════════════════════════════
+   MAIN LOAD
+══════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', async () => {
+  // theme button
+  const themeBtn = document.getElementById('theme-toggle-btn');
+  if (themeBtn) themeBtn.addEventListener('click', switchTheme);
+  updateThemeButtonText();
+
+  // Scroll header
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainHeader').classList.toggle('scrolled', window.scrollY > 50);
+    document.getElementById('scrollTopBtn').classList.toggle('visible', window.scrollY > 200);
+  }, { passive: true });
+
+  // Render user nav
+  renderUserNav();
+
+  // Get userId from URL
+  const params = new URLSearchParams(window.location.search);
+  const userId = params.get('id');
+
+  if (!userId) {
+    document.getElementById('notFoundState').style.display = 'block';
+    document.getElementById('mainContent').style.paddingTop = '120px';
+    return;
+  }
+
+  // Check if viewing own profile
+  const rawMe = localStorage.getItem('user');
+  const me = rawMe ? JSON.parse(rawMe) : null;
+  const isOwnProfile = me && (me.id === userId || me._id === userId);
+
+  try {
+    // 1. Fetch user data
+    const userRes = await fetch(`/api/user/${userId}`, { headers: authHeader() });
+    if (!userRes.ok) throw new Error('not_found');
+    const { user } = await userRes.json();
+
+    // 2. Fetch user posts — filtered by uploadedBy on server
+    const postsRes = await fetch(`/api/posts?uploadedBy=${userId}`, { headers: authHeader() });
+    const postsData = await postsRes.json();
+    // فلتر مزدوج: السيرفر + العميل لضمان عدم ظهور منشورات مستخدمين آخرين
+    const allPosts = (postsData.posts || []).filter(p =>
+      p.uploadedBy === userId || p.uploadedBy?.toString() === userId
+    );
+    // Public: only show approved posts for others; all posts for own profile
+    const posts = isOwnProfile ? allPosts : allPosts.filter(p => p.status === 'approved');
+
+    // Show content
+    document.getElementById('notFoundState').style.display = 'none';
+    document.getElementById('profileContent').style.display = 'block';
+
+    // 3. Fill profile
+    const name   = user.name || 'مستخدم';
+    const letter = name.trim().charAt(0).toUpperCase();
+    const isAdmin = user.role === 'admin';
+    const joinDate = user.joinedAt
+      ? 'انضم في ' + new Date(user.joinedAt).toLocaleDateString('ar-TN', { year:'numeric', month:'long' })
+      : '';
+
+    document.title = `${name} - منصة الطلاب التونسيين`;
+    document.getElementById('profileName').textContent = name;
+    document.getElementById('joinDate').textContent = joinDate;
+    document.getElementById('roleTag').textContent = isAdmin ? '⚙️ مسؤول النظام' : '👨‍🎓 طالب';
+    document.getElementById('roleTag').className = `role-tag ${isAdmin ? 'role-admin' : 'role-student'}`;
+
+    renderAvatar(user.avatar || '', letter);
+    renderXP(user.xp || 0);
+    renderBadges(user.badges || []);
+    renderPosts(posts);
+
+    // Bio
+    const bioEl = document.getElementById('bioText');
+    if (user.bio && user.bio.trim()) {
+      bioEl.innerHTML = `<div class="bio-text">${user.bio}</div>`;
+    }
+
+    // Info grid
+    const infoItems = [
+      { icon:'🎓', lbl:'السنة الدراسية', val:user.year || '—' },
+      { icon:'📖', lbl:'الشعبة', val:user.branch || '—' },
+      { icon:'⚡', lbl:'نقاط XP', val:`${user.xp || 0} XP` },
+      { icon:'🏆', lbl:'المستوى', val:getLevel(user.xp||0).label },
+    ];
+    document.getElementById('infoGrid').innerHTML = infoItems.map(item => `
+      <div class="info-item">
+        <span class="info-icon">${item.icon}</span>
+        <div class="info-content">
+          <div class="info-lbl">${item.lbl}</div>
+          <div class="info-val">${item.val}</div>
+        </div>
+      </div>`).join('');
+
+    // Show action buttons (only for logged-in other users)
+    if (me && !isOwnProfile) {
+      document.getElementById('msgBtn').style.display = 'flex';
+      document.getElementById('reportBtn').style.display = 'flex';
+    }
+    if (isOwnProfile) {
+      // Replace actions with edit link
+      document.getElementById('msgBtn').style.display = 'none';
+      document.getElementById('reportBtn').style.display = 'none';
+      const actionsDiv = document.querySelector('.profile-actions');
+      const editBtn = document.createElement('a');
+      editBtn.href = '/profile.html';
+      editBtn.className = 'action-btn action-primary';
+      editBtn.style.textDecoration = 'none';
+      editBtn.innerHTML = '✏️ تعديل الملف';
+      actionsDiv.prepend(editBtn);
+    }
+
+    // Posts tabs: hide pending tab for others
+    if (!isOwnProfile) {
+      document.querySelector('.ptab[onclick*="pending"]').style.display = 'none';
+    }
+
+  } catch (err) {
+    if (err.message === 'not_found') {
+      document.getElementById('notFoundState').style.display = 'block';
+    } else {
+      showToast('تعذر تحميل الملف الشخصي', 'error');
+      document.getElementById('notFoundState').style.display = 'block';
+    }
+  }
+});
+</script>
+</body>
+</html>

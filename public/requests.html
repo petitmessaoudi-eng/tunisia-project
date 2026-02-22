@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>طلبات الامتحانات - منصة الطلاب التونسيين</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+--primary-color: #4169E1;
+--background: #ffffff;
+--surface: #f8f9fa;
+--surface-hover: #e9ecef;
+--text-primary: #2c3e50;
+--text-secondary: #6c757d;
+--text-dim: #adb5bd;
+--border: #dee2e6;
+--accent-green: #28a745;
+--accent-orange: #fd7e14;
+}
+body.dark-mode {
+--primary-color: #4169E1;
+--background: #0a0a0a;
+--surface: #1a1a1a;
+--surface-hover: #2a2a2a;
+--text-primary: #ffffff;
+--text-secondary: #b0b0b0;
+--text-dim: #808080;
+--border: #3a3a3a;
+--accent-green: #00ff88;
+--accent-orange: #ff8c00;
+}
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: var(--background);
+color: var(--text-primary);
+transition: background 0.3s, color 0.3s;
+}
+body::before {
+content: '';
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(65, 105, 225, 0.03) 2px, rgba(65, 105, 225, 0.03) 4px),
+repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(65, 105, 225, 0.03) 2px, rgba(65, 105, 225, 0.03) 4px);
+z-index: -2;
+pointer-events: none;
+}
+body.dark-mode::before {
+background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px),
+repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px),
+linear-gradient(135deg, #0a0a0a 0%, #121212 25%, #1a1a1a 50%, #121212 75%, #0a0a0a 100%);
+}
+.header {
+position: fixed;
+top: 0;
+width: 100%;
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(20px);
+border-bottom: 1px solid var(--border);
+z-index: 1000;
+}
+body.dark-mode .header {
+background: rgba(18, 18, 18, 0.95);
+}
+.nav-container {
+max-width: 1400px;
+margin: 0 auto;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px 30px;
+}
+.logo {
+display: flex;
+align-items: center;
+text-decoration: none;
+gap: 12px;
+}
+.logo-icon {
+width: 40px;
+height: 40px;
+background: linear-gradient(135deg, var(--primary-color), #00a8ff);
+border-radius: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 24px;
+color: white;
+}
+.logo-text {
+font-size: 22px;
+font-weight: 700;
+color: var(--text-primary);
+}
+.back-btn {
+display: flex;
+align-items: center;
+gap: 8px;
+padding: 10px 20px;
+background: var(--surface);
+color: var(--text-primary);
+text-decoration: none;
+border-radius: 8px;
+font-weight: 600;
+transition: all 0.3s;
+border: 1px solid var(--border);
+}
+.back-btn:hover {
+background: var(--surface-hover);
+transform: translateX(5px);
+}
+.theme-toggle {
+background: var(--surface);
+border: 1px solid var(--border);
+width: 40px;
+height: 40px;
+border-radius: 50%;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 20px;
+transition: all 0.3s;
+}
+.theme-toggle:hover {
+background: var(--surface-hover);
+transform: rotate(180deg);
+}
+.container {
+max-width: 1200px;
+margin: 120px auto 40px;
+padding: 0 30px;
+}
+.page-header {
+text-align: center;
+margin-bottom: 40px;
+}
+.page-title {
+font-size: 42px;
+font-weight: 800;
+background: linear-gradient(135deg, var(--primary-color), #00a8ff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 15px;
+}
+.page-subtitle {
+font-size: 18px;
+color: var(--text-secondary);
+}
+.create-request {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: 16px;
+padding: 30px;
+margin-bottom: 40px;
+}
+.section-title {
+font-size: 24px;
+font-weight: 700;
+margin-bottom: 20px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.form-row {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 15px;
+margin-bottom: 20px;
+}
+.form-group {
+margin-bottom: 20px;
+}
+.form-label {
+display: block;
+font-weight: 600;
+margin-bottom: 8px;
+color: var(--text-secondary);
+font-size: 14px;
+}
+.form-select, .form-textarea {
+width: 100%;
+padding: 14px;
+border: 1px solid var(--border);
+border-radius: 8px;
+background: var(--background);
+color: var(--text-primary);
+font-size: 15px;
+transition: all 0.3s;
+font-family: inherit;
+}
+.form-select:focus, .form-textarea:focus {
+outline: none;
+border-color: var(--primary-color);
+box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1);
+}
+.form-textarea {
+resize: vertical;
+min-height: 100px;
+}
+.submit-btn {
+width: 100%;
+padding: 16px;
+background: linear-gradient(135deg, var(--primary-color), #00a8ff);
+color: white;
+border: none;
+border-radius: 10px;
+font-size: 18px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.3s;
+box-shadow: 0 4px 15px rgba(65, 105, 225, 0.3);
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+}
+.submit-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(65, 105, 225, 0.4);
+}
+.requests-list {
+display: flex;
+flex-direction: column;
+gap: 20px;
+}
+.request-card {
+background: var(--surface);
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: 25px;
+transition: all 0.3s;
+}
+.request-card:hover {
+transform: translateY(-3px);
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+border-color: var(--primary-color);
+}
+body.dark-mode .request-card:hover {
+box-shadow: 0 8px 25px rgba(65, 105, 225, 0.2);
+}
+.request-header {
+display: flex;
+justify-content: space-between;
+align-items: start;
+margin-bottom: 15px;
+}
+.request-info {
+flex: 1;
+}
+.request-user {
+display: flex;
+align-items: center;
+gap: 8px;
+font-weight: 600;
+margin-bottom: 10px;
+}
+.request-meta {
+display: flex;
+flex-wrap: wrap;
+gap: 15px;
+font-size: 14px;
+color: var(--text-secondary);
+}
+.meta-item {
+display: flex;
+align-items: center;
+gap: 5px;
+}
+.request-status {
+padding: 6px 14px;
+border-radius: 20px;
+font-size: 12px;
+font-weight: 600;
+}
+.status-open {
+background: rgba(40, 167, 69, 0.15);
+color: var(--accent-green);
+}
+.status-closed {
+background: rgba(108, 117, 125, 0.15);
+color: var(--text-secondary);
+}
+.request-description {
+color: var(--text-secondary);
+line-height: 1.6;
+margin-top: 15px;
+padding-top: 15px;
+border-top: 1px solid var(--border);
+}
+.request-footer {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 15px;
+padding-top: 15px;
+border-top: 1px solid var(--border);
+}
+.request-time {
+font-size: 13px;
+color: var(--text-dim);
+}
+.request-responses {
+display: flex;
+align-items: center;
+gap: 6px;
+font-size: 14px;
+color: var(--text-secondary);
+}
+.empty-state {
+text-align: center;
+padding: 80px 20px;
+color: var(--text-secondary);
+}
+.empty-icon {
+font-size: 64px;
+margin-bottom: 20px;
+opacity: 0.3;
+}
+@media (max-width: 768px) {
+.container {
+padding: 0 20px;
+}
+.page-title {
+font-size: 32px;
+}
+.create-request {
+padding: 20px;
+}
+.form-row {
+grid-template-columns: 1fr;
+}
+.request-header {
+flex-direction: column;
+gap: 15px;
+}
+}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="nav-container">
+<a href="/" class="logo">
+<div class="logo-icon">📚</div>
+<span class="logo-text">منصة الطلاب</span>
+</a>
+<div style="display: flex; align-items: center; gap: 15px;">
+<a href="/" class="back-btn">
+<span>⬅️</span>
+<span>العودة</span>
+</a>
+<button class="theme-toggle" id="themeToggle">🌙</button>
+</div>
+</div>
+</header>
+
+<div class="container">
+<div class="page-header">
+<h1 class="page-title">جدار طلبات الامتحانات</h1>
+<p class="page-subtitle">اطلب الامتحانات المفقودة وساعد زملاءك</p>
+</div>
+
+<div class="create-request">
+<h2 class="section-title">
+<span>➕</span>
+<span>طلب جديد</span>
+</h2>
+<div class="form-row">
+<div class="form-group">
+<label class="form-label">الفرع</label>
+<select class="form-select" id="branch">
+<option value="">اختر الفرع</option>
+<option value="علوم">علوم</option>
+<option value="رياضيات">رياضيات</option>
+<option value="آداب">آداب</option>
+<option value="اقتصاد">اقتصاد وتصرف</option>
+<option value="تقنية">تقنية</option>
+<option value="رياضة">رياضة</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label">السنة</label>
+<select class="form-select" id="year">
+<option value="">اختر السنة</option>
+<option value="باكالوريا">باكالوريا</option>
+<option value="الثالثة ثانوي">الثالثة ثانوي</option>
+<option value="الثانية ثانوي">الثانية ثانوي</option>
+<option value="الأولى ثانوي">الأولى ثانوي</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label">المادة</label>
+<select class="form-select" id="subject">
+<option value="">اختر المادة</option>
+<option value="الرياضيات">الرياضيات</option>
+<option value="الفيزياء">الفيزياء</option>
+<option value="علوم الحياة">علوم الحياة والأرض</option>
+<option value="الكيمياء">الكيمياء</option>
+<option value="الفلسفة">الفلسفة</option>
+<option value="العربية">العربية</option>
+<option value="الفرنسية">الفرنسية</option>
+<option value="الإنجليزية">الإنجليزية</option>
+<option value="التاريخ">التاريخ</option>
+<option value="الجغرافيا">الجغرافيا</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label class="form-label">وصف الطلب</label>
+<textarea class="form-textarea" id="description" placeholder="مثال: أبحث عن امتحانات الفيزياء الدورة الرئيسية 2024 وما قبلها..."></textarea>
+</div>
+<button class="submit-btn" onclick="submitRequest()">
+<span>📢</span>
+<span>نشر الطلب</span>
+</button>
+</div>
+
+<div class="requests-list" id="requestsList">
+</div>
+</div>
+
+<script>
+let currentUser = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+checkAuth();
+loadRequests();
+initializeTheme();
+});
+
+function checkAuth() {
+const user = localStorage.getItem('user');
+if (user) {
+currentUser = JSON.parse(user);
+} else {
+window.location.href = '/auth.html';
+}
+}
+
+async function loadRequests() {
+try {
+const response = await fetch('/api/requests');
+const data = await response.json();
+const requests = data.requests;
+
+const container = document.getElementById('requestsList');
+if (requests.length === 0) {
+container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>لا توجد طلبات حتى الآن. كن أول من يطلب!</p></div>';
+return;
+}
+
+container.innerHTML = requests.map(req => `
+<div class="request-card">
+<div class="request-header">
+<div class="request-info">
+<div class="request-user">
+<span>👤</span>
+<span>${req.userName}</span>
+</div>
+<div class="request-meta">
+<span class="meta-item">📖 ${req.subject}</span>
+<span class="meta-item">🎓 ${req.branch}</span>
+<span class="meta-item">📅 ${req.year}</span>
+</div>
+</div>
+<span class="request-status ${req.status === 'open' ? 'status-open' : 'status-closed'}">
+${req.status === 'open' ? '🔓 مفتوح' : '🔒 مغلق'}
+</span>
+</div>
+<div class="request-description">${req.description}</div>
+<div class="request-footer">
+<span class="request-time">${new Date(req.createdAt).toLocaleDateString('ar-TN')}</span>
+<span class="request-responses">
+<span>💬</span>
+<span>${req.responses} رد</span>
+</span>
+</div>
+</div>
+`).join('');
+} catch (error) {
+console.error('Error loading requests:', error);
+}
+}
+
+async function submitRequest() {
+const branch = document.getElementById('branch').value;
+const year = document.getElementById('year').value;
+const subject = document.getElementById('subject').value;
+const description = document.getElementById('description').value.trim();
+
+if (!branch || !year || !subject || !description) {
+alert('يرجى ملء جميع الحقول');
+return;
+}
+
+try {
+const response = await fetch('/api/requests', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+userId: currentUser.id,
+userName: currentUser.name,
+branch,
+year,
+subject,
+description
+})
+});
+
+const data = await response.json();
+if (data.success) {
+alert('تم نشر طلبك بنجاح!');
+document.getElementById('branch').value = '';
+document.getElementById('year').value = '';
+document.getElementById('subject').value = '';
+document.getElementById('description').value = '';
+loadRequests();
+}
+} catch (error) {
+console.error('Error submitting request:', error);
+alert('حدث خطأ في نشر الطلب');
+}
+}
+
+function initializeTheme() {
+const theme = localStorage.getItem('theme') || 'light';
+if (theme === 'dark') {
+document.body.classList.add('dark-mode');
+document.getElementById('themeToggle').textContent = '☀️';
+}
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+document.body.classList.toggle('dark-mode');
+const isDark = document.body.classList.contains('dark-mode');
+localStorage.setItem('theme', isDark ? 'dark' : 'light');
+document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+});
+}
+</script>
+</body>
+</html>

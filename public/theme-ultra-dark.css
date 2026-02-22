@@ -1,0 +1,375 @@
+/* Ultra Dark Theme - الثيم الأسود الطاغي */
+
+body {
+    background: #000000;
+    color: #b388ff;
+}
+
+/* Enhanced background colors - Ultra Dark */
+.neural-background {
+    background: radial-gradient(circle at 15% 85%, rgba(40, 0, 70, 0.5) 0%, transparent 50%),
+                radial-gradient(circle at 85% 15%, rgba(60, 0, 60, 0.6) 0%, transparent 50%),
+                radial-gradient(circle at 45% 60%, rgba(50, 0, 50, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 40%, rgba(20, 60, 20, 0.3) 0%, transparent 50%),
+                linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { filter: brightness(0.6) saturate(1.2) hue-rotate(0deg); }
+    33% { filter: brightness(0.7) saturate(1.4) hue-rotate(10deg); }
+    66% { filter: brightness(0.65) saturate(1.3) hue-rotate(-5deg); }
+}
+
+/* Floating geometric shapes - Ultra Dark */
+.shape {
+    border: 1px solid rgba(179, 136, 255, 0.2);
+}
+
+.shape:nth-child(1) {
+    border-color: rgba(179, 136, 255, 0.25);
+}
+
+.shape:nth-child(2) {
+    border-color: rgba(147, 112, 219, 0.2);
+}
+
+.shape:nth-child(3) {
+    border-color: rgba(179, 136, 255, 0.2);
+}
+
+.shape:nth-child(4) {
+    background: linear-gradient(45deg, rgba(179, 136, 255, 0.08), transparent);
+}
+
+/* Neural network lines - Ultra Dark */
+.neural-line:nth-child(1) {
+    background: linear-gradient(90deg, transparent, rgba(179, 136, 255, 0.3), transparent);
+}
+
+.neural-line:nth-child(2) {
+    background: linear-gradient(90deg, transparent, rgba(147, 112, 219, 0.3), transparent);
+}
+
+.neural-line:nth-child(3) {
+    background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.3), transparent);
+}
+
+/* Glassmorphism styles - Ultra Dark */
+.glass {
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(179, 136, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.glass-strong {
+    background: rgba(30, 30, 30, 0.7);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(179, 136, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Enhanced Header - Ultra Dark */
+header {
+    background: rgba(10, 10, 10, 0.85);
+    border: 1px solid rgba(179, 136, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(179, 136, 255, 0.08);
+}
+
+header.scrolled {
+    background: rgba(15, 15, 15, 0.9);
+    border-color: rgba(179, 136, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(179, 136, 255, 0.1);
+}
+
+/* Logo - Ultra Dark */
+.logo {
+    background: linear-gradient(45deg, #b388ff, #9370db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes logoGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 8px #b388ff);
+    }
+    50% {
+        filter: drop-shadow(0 0 15px #9370db);
+    }
+}
+
+/* Navigation Links - Ultra Dark */
+.nav-links a {
+    color: #b388ff;
+}
+
+.nav-links a:hover {
+    color: #d4b3ff;
+    background: rgba(179, 136, 255, 0.08);
+}
+
+.nav-links a.active {
+    color: #d4b3ff;
+    background: rgba(179, 136, 255, 0.12);
+}
+
+/* CTA Buttons - Ultra Dark */
+.cta-buttons .btn-primary {
+    background: linear-gradient(45deg, #7b1fa2, #9c27b0);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(123, 31, 162, 0.3);
+}
+
+.cta-buttons .btn-primary:hover {
+    background: linear-gradient(45deg, #9c27b0, #ba68c8);
+    box-shadow: 0 6px 30px rgba(156, 39, 176, 0.4);
+}
+
+.cta-buttons .btn-secondary {
+    background: rgba(179, 136, 255, 0.08);
+    color: #b388ff;
+    border: 2px solid rgba(179, 136, 255, 0.3);
+}
+
+.cta-buttons .btn-secondary:hover {
+    background: rgba(179, 136, 255, 0.15);
+    border-color: rgba(179, 136, 255, 0.4);
+}
+
+/* Hero Section - Ultra Dark */
+.hero h1 {
+    background: linear-gradient(45deg, #b388ff, #9370db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    color: #9e9e9e;
+}
+
+/* Feature Cards - Ultra Dark */
+.feature-card {
+    background: rgba(15, 15, 15, 0.7);
+    border: 1px solid rgba(179, 136, 255, 0.1);
+}
+
+.feature-card:hover {
+    background: rgba(20, 20, 20, 0.8);
+    border-color: rgba(179, 136, 255, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.feature-icon {
+    background: linear-gradient(135deg, rgba(123, 31, 162, 0.15), rgba(156, 39, 176, 0.15));
+    color: #b388ff;
+}
+
+.feature-card h3 {
+    color: #d4b3ff;
+}
+
+.feature-card p {
+    color: #9e9e9e;
+}
+
+/* Hexagon Cards - Ultra Dark */
+.hexagon {
+    background: rgba(15, 15, 15, 0.7);
+    border: 1px solid rgba(179, 136, 255, 0.15);
+}
+
+.hexagon:hover {
+    background: rgba(20, 20, 20, 0.8);
+    border-color: rgba(179, 136, 255, 0.25);
+}
+
+.hexagon-icon {
+    color: #b388ff;
+}
+
+.hexagon h3 {
+    color: #d4b3ff;
+}
+
+.hexagon p {
+    color: #9e9e9e;
+}
+
+/* Stats Section - Ultra Dark */
+.stats {
+    background: rgba(10, 10, 10, 0.8);
+}
+
+.stat-card {
+    background: rgba(15, 15, 15, 0.7);
+    border: 1px solid rgba(179, 136, 255, 0.15);
+}
+
+.stat-card h3 {
+    background: linear-gradient(45deg, #b388ff, #9370db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-card p {
+    color: #9e9e9e;
+}
+
+/* Timeline - Ultra Dark */
+.timeline-content {
+    background: rgba(15, 15, 15, 0.7);
+}
+
+.timeline-year {
+    background: linear-gradient(45deg, #7b1fa2, #9c27b0);
+    color: #fff;
+}
+
+.timeline-content h4 {
+    color: #d4b3ff;
+}
+
+.timeline-content p {
+    color: #9e9e9e;
+}
+
+.timeline-dot {
+    background: linear-gradient(45deg, #7b1fa2, #9c27b0);
+    box-shadow: 0 0 0 8px rgba(123, 31, 162, 0.2);
+}
+
+.timeline-line {
+    background: linear-gradient(to bottom, 
+        rgba(179, 136, 255, 0.3) 0%, 
+        rgba(179, 136, 255, 0.2) 50%, 
+        rgba(179, 136, 255, 0.1) 100%);
+}
+
+/* Contact Section - Ultra Dark */
+.contact-info {
+    background: rgba(15, 15, 15, 0.7);
+}
+
+.contact-info h3 {
+    color: #d4b3ff;
+}
+
+.contact-info p {
+    color: #9e9e9e;
+}
+
+.social-links a {
+    background: rgba(179, 136, 255, 0.08);
+}
+
+.social-links a:hover {
+    background: rgba(179, 136, 255, 0.15);
+}
+
+.contact-form {
+    background: rgba(15, 15, 15, 0.7);
+}
+
+.form-group input,
+.form-group textarea {
+    background: rgba(10, 10, 10, 0.8);
+    border: 1px solid rgba(179, 136, 255, 0.2);
+    color: #b388ff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: rgba(179, 136, 255, 0.4);
+    background: rgba(15, 15, 15, 0.9);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #666;
+}
+
+.submit-btn {
+    background: linear-gradient(45deg, #7b1fa2, #9c27b0);
+    color: #fff;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(45deg, #9c27b0, #ba68c8);
+}
+
+/* Footer - Ultra Dark */
+footer {
+    background: rgba(5, 5, 5, 0.9);
+    border-top: 1px solid rgba(179, 136, 255, 0.1);
+}
+
+.footer-links a {
+    color: #b388ff;
+}
+
+.footer-links a:hover {
+    color: #d4b3ff;
+}
+
+.footer-copyright p {
+    color: #666;
+}
+
+/* Mobile Menu - Ultra Dark */
+.mobile-menu-toggle span {
+    background: #b388ff;
+}
+
+.mobile-nav {
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid rgba(179, 136, 255, 0.15);
+}
+
+.mobile-nav a {
+    color: #b388ff;
+    border-bottom: 1px solid rgba(179, 136, 255, 0.1);
+}
+
+.mobile-nav a:hover {
+    background: rgba(179, 136, 255, 0.08);
+    color: #d4b3ff;
+}
+
+/* Section Titles - Ultra Dark */
+.section-title {
+    background: linear-gradient(45deg, #b388ff, #9370db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.section-title::after {
+    background: linear-gradient(90deg, transparent, #b388ff, transparent);
+}
+
+/* Scrollbar - Ultra Dark */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #7b1fa2, #9c27b0);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #9c27b0, #ba68c8);
+}
+
+/* Selection - Ultra Dark */
+::selection {
+    background: rgba(179, 136, 255, 0.3);
+    color: #fff;
+}

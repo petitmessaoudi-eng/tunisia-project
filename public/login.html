@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - منصة الطلاب التونسيين</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* CSS REMAINS EXACTLY THE SAME */
+        
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #e0a3ff;
+    --accent: #ff69b4;
+    --accent2: #9370db;
+    --cyan: #00e5ff;
+    --green: #00ff87;
+    --bg: #000;
+    --glass-bg: rgba(255,255,255,0.05);
+    --glass-border: rgba(255,255,255,0.1);
+    --text: #e0a3ff;
+    --text-muted: rgba(224,163,255,0.6);
+    --card-radius: 22px;
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#e0a3ff, #ff69b4); border-radius: 3px; }
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: #000;
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* BACKGROUND */
+.neural-background {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -2;
+    background:
+        radial-gradient(circle at 15% 85%, rgba(75,0,130,0.7) 0%, transparent 50%),
+        radial-gradient(circle at 85% 15%, rgba(139,37,99,0.8) 0%, transparent 50%),
+        radial-gradient(circle at 45% 60%, rgba(128,0,128,0.6) 0%, transparent 50%),
+        radial-gradient(circle at 70% 40%, rgba(34,139,34,0.4) 0%, transparent 50%),
+        linear-gradient(135deg, #0a0a0a 0%, #2d1b3d 50%, #000000 100%);
+    animation: backgroundPulse 14s ease-in-out infinite;
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { filter: brightness(0.9) saturate(1.4) hue-rotate(0deg); }
+    33% { filter: brightness(1.1) saturate(1.7) hue-rotate(15deg); }
+    66% { filter: brightness(1.0) saturate(1.5) hue-rotate(-10deg); }
+}
+
+.geometric-shapes {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.shape {
+    position: absolute;
+    border: 1px solid rgba(0,255,255,0.3);
+    animation: floatShape 20s linear infinite;
+}
+
+.shape:nth-child(1) { width: 100px; height: 100px; right: 10%; animation-delay: 0s; border-color: rgba(255,105,180,0.3); }
+.shape:nth-child(2) { width: 60px; height: 60px; right: 70%; animation-delay: -5s; border-radius: 50%; border-color: rgba(147,112,219,0.3); }
+.shape:nth-child(3) { width: 80px; height: 80px; right: 30%; animation-delay: -10s; transform: rotate(45deg); border-color: rgba(224,163,255,0.3); }
+.shape:nth-child(4) { width: 120px; height: 120px; right: 50%; animation-delay: -15s; clip-path: polygon(50% 0%, 0% 100%, 100% 100%); background: linear-gradient(45deg, rgba(255,105,180,0.1), transparent); }
+
+@keyframes floatShape {
+    from { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%, 90% { opacity: 1; }
+    to { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+}
+
+/* AUTH CONTAINER */
+.auth-wrapper {
+    width: 100%;
+    max-width: 480px;
+    animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-card {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 28px;
+    padding: 45px 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(224,163,255,0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #e0a3ff, #ff69b4, transparent);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* LOGO */
+.auth-logo {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo-icon {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, rgba(224,163,255,0.2), rgba(255,105,180,0.2));
+    border: 2px solid rgba(224,163,255,0.3);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    filter: drop-shadow(0 0 20px rgba(224,163,255,0.4));
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.logo-text {
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff, #e0a3ff, #ff69b4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+
+.logo-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+/* TABS */
+.auth-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    background: rgba(255,255,255,0.03);
+    padding: 6px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+}
+
+.auth-tab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(224,163,255,0.15), rgba(255,105,180,0.15));
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.auth-tab:hover {
+    color: var(--primary);
+}
+
+.auth-tab.active {
+    background: linear-gradient(135deg, rgba(224,163,255,0.15), rgba(255,105,180,0.15));
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(224,163,255,0.2);
+}
+
+.auth-tab.active::before {
+    opacity: 1;
+}
+
+/* FORM */
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    color: #fff;
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    transition: var(--transition);
+    outline: none;
+}
+
+.form-input::placeholder {
+    color: rgba(255,255,255,0.25);
+}
+
+.form-input:focus {
+    background: rgba(224,163,255,0.08);
+    border-color: rgba(224,163,255,0.4);
+    box-shadow: 0 0 20px rgba(224,163,255,0.15);
+}
+
+.form-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* SUBMIT BUTTON */
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #e0a3ff, #ff69b4);
+    border: none;
+    border-radius: 14px;
+    color: #000;
+    font-family: 'Cairo', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 8px 25px rgba(224,163,255,0.4);
+    margin-top: 8px;
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(224,163,255,0.6);
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.submit-btn-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* DEMO INFO */
+.demo-box {
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(0,255,135,0.08));
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 16px;
+    text-align: center;
+}
+
+.demo-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(0,229,255,0.9);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.demo-creds {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+    background: rgba(0,0,0,0.3);
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+/* FOOTER LINK */
+.auth-footer {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
+}
+
+.auth-footer a:hover {
+    color: var(--accent);
+}
+
+/* BACK TO HOME BUTTON */
+.back-home {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    z-index: 100;
+}
+
+.back-home:hover {
+    background: rgba(224,163,255,0.1);
+    border-color: rgba(224,163,255,0.3);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* LOADING STATE */
+.loading-spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* TOAST */
+.toast {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(20,5,35,0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(224,163,255,0.3);
+    border-radius: 16px;
+    padding: 14px 24px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toast.show {
+    bottom: 30px;
+}
+
+.toast.success {
+    border-color: rgba(0,255,135,0.4);
+}
+
+.toast.error {
+    border-color: rgba(255,68,68,0.4);
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .auth-card {
+        padding: 35px 28px;
+    }
+
+    .logo-text {
+        font-size: 24px;
+    }
+
+    .back-home {
+        top: 14px;
+        right: 14px;
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+}
+    </style>
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<div class="neural-background"></div>
+<div class="geometric-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+
+<!-- BACK TO HOME -->
+<a href="/index.html" class="back-home">
+    <span>←</span>
+    <span>العودة للرئيسية</span>
+</a>
+
+<!-- AUTH CONTAINER -->
+<div class="auth-wrapper">
+    <div class="auth-card">
+        
+        <!-- LOGO -->
+        <div class="auth-logo">
+            <div class="logo-icon">🎓</div>
+            <div class="logo-text">منصة الطلاب التونسيين</div>
+            <div class="logo-subtitle">دخولك لعالم التفوق الدراسي</div>
+        </div>
+
+        <!-- TABS -->
+        <div class="auth-tabs">
+            <button class="auth-tab active" data-tab="login" onclick="switchTab('login')">
+                تسجيل الدخول
+            </button>
+            <button class="auth-tab" data-tab="register" onclick="switchTab('register')">
+                إنشاء حساب
+            </button>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form class="auth-form active" id="loginForm" data-form="login">
+            <div class="form-group">
+                <label class="form-label">📧 البريد الإلكتروني</label>
+                <input 
+                    type="email" 
+                    class="form-input" 
+                    id="loginEmail" 
+                    placeholder="example@email.com"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">🔒 كلمة المرور</label>
+                <input 
+                    type="password" 
+                    class="form-input" 
+                    id="loginPassword" 
+                    placeholder="••••••••"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="submit-btn" id="loginBtn">
+                <span class="submit-btn-text">
+                    <span>دخول</span>
+                    <span>→</span>
+                </span>
+            </button>
+
+            <!-- DEMO INFO -->
+            <div class="demo-box">
+                <div class="demo-title">
+                    <span>🔑</span>
+                    <span>حساب تجريبي للاختبار</span>
+                </div>
+                <div class="demo-creds">admin@platform.com / admin123</div>
+            </div>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form class="auth-form" id="registerForm" data-form="register">
+            <div class="form-group">
+                <label class="form-label">👤 الاسم الكامل</label>
+                <input 
+                    type="text" 
+                    class="form-input" 
+                    id="registerName" 
+                    placeholder="أحمد محمد"
+                    autocomplete="name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">📧 البريد الإلكتروني</label>
+                <input 
+                    type="email" 
+                    class="form-input" 
+                    id="registerEmail" 
+                    placeholder="example@email.com"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">🔒 كلمة المرور</label>
+                <input 
+                    type="password" 
+                    class="form-input" 
+                    id="registerPassword" 
+                    placeholder="••••••••"
+                    autocomplete="new-password"
+                    minlength="6"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="submit-btn" id="registerBtn">
+                <span class="submit-btn-text">
+                    <span>إنشاء حساب</span>
+                    <span>✨</span>
+                </span>
+            </button>
+
+            <div class="auth-footer">
+                لديك حساب بالفعل؟ <a href="#" onclick="switchTab('login'); return false;">تسجيل الدخول</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// STATE & INITIALIZATION
+// ═══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+    // If already logged in (valid token + user), redirect
+    const user  = getUserFromStorage();
+    const token = localStorage.getItem('token');
+    if (user && token) {
+        redirectBasedOnRole(user);
+        return;
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', handleLogin);
+    document.getElementById('registerForm').addEventListener('submit', handleRegister);
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('register') === 'true') switchTab('register');
+});
+
+// ═══════════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════════
+function switchTab(tabName) {
+    document.querySelectorAll('.auth-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.tab === tabName);
+    });
+    document.querySelectorAll('.auth-form').forEach(form => {
+        form.classList.toggle('active', form.dataset.form === tabName);
+    });
+    document.querySelectorAll('.form-input').forEach(input => { input.value = ''; });
+}
+
+// ═══════════════════════════════════════════
+// LOGIN HANDLER
+// ═══════════════════════════════════════════
+async function handleLogin(e) {
+    e.preventDefault();
+
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const btn      = document.getElementById('loginBtn');
+
+    if (!email || !password) {
+        showToast('الرجاء إدخال البريد الإلكتروني وكلمة المرور', 'error');
+        return;
+    }
+
+    setButtonLoading(btn, true, 'جاري تسجيل الدخول...');
+
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success && data.token && data.user) {
+            // ✅ Store JWT token AND user info
+            localStorage.setItem('token', data.token);
+            saveUserToStorage(data.user);
+
+            showToast('مرحباً بك! 🎉', 'success');
+            setTimeout(() => redirectBasedOnRole(data.user), 800);
+        } else {
+            showToast(data.error || 'البريد الإلكتروني أو كلمة المرور غير صحيحة', 'error');
+            setButtonLoading(btn, false, 'دخول');
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        showToast('خطأ في الاتصال بالخادم. حاول مرة أخرى', 'error');
+        setButtonLoading(btn, false, 'دخول');
+    }
+}
+
+// ═══════════════════════════════════════════
+// REGISTER HANDLER
+// ═══════════════════════════════════════════
+async function handleRegister(e) {
+    e.preventDefault();
+
+    const name     = document.getElementById('registerName').value.trim();
+    const email    = document.getElementById('registerEmail').value.trim();
+    const password = document.getElementById('registerPassword').value;
+    const btn      = document.getElementById('registerBtn');
+
+    if (!name || !email || !password) {
+        showToast('الرجاء إكمال جميع الحقول', 'error');
+        return;
+    }
+    if (password.length < 6) {
+        showToast('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error');
+        return;
+    }
+    if (!isValidEmail(email)) {
+        showToast('البريد الإلكتروني غير صحيح', 'error');
+        return;
+    }
+
+    setButtonLoading(btn, true, 'جاري إنشاء الحساب...');
+
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success && data.token && data.user) {
+            // ✅ Store JWT token AND user info
+            localStorage.setItem('token', data.token);
+            saveUserToStorage(data.user);
+
+            showToast('تم إنشاء حسابك بنجاح! 🎉', 'success');
+            setTimeout(() => { window.location.href = '/index.html'; }, 800);
+        } else {
+            showToast(data.error || 'حدث خطأ في التسجيل', 'error');
+            setButtonLoading(btn, false, 'إنشاء حساب');
+        }
+    } catch (error) {
+        console.error('Register error:', error);
+        showToast('خطأ في الاتصال بالخادم. حاول مرة أخرى', 'error');
+        setButtonLoading(btn, false, 'إنشاء حساب');
+    }
+}
+
+// ═══════════════════════════════════════════
+// HELPER FUNCTIONS
+// ═══════════════════════════════════════════
+function saveUserToStorage(user) {
+    try { localStorage.setItem('user', JSON.stringify(user)); } catch(e) {}
+}
+
+function getUserFromStorage() {
+    try {
+        const d = localStorage.getItem('user');
+        return d ? JSON.parse(d) : null;
+    } catch(e) { return null; }
+}
+
+/** Returns the stored JWT token, or null */
+function getToken() {
+    return localStorage.getItem('token') || null;
+}
+
+/** Returns Authorization header object for fetch */
+function authHeader() {
+    const token = getToken();
+    return token ? { 'Authorization': `Bearer ${token}` } : {};
+}
+
+function redirectBasedOnRole(user) {
+    if (user.role === 'admin') {
+        window.location.href = '/admin.html';
+    } else {
+        window.location.href = '/index.html';
+    }
+}
+
+function setButtonLoading(button, isLoading, text) {
+    if (isLoading) {
+        button.disabled = true;
+        button.innerHTML = `
+            <span class="submit-btn-text">
+                <span class="loading-spinner"></span>
+                <span>${text}</span>
+            </span>`;
+    } else {
+        button.disabled = false;
+        const icon = button.id === 'loginBtn' ? '→' : '✨';
+        button.innerHTML = `
+            <span class="submit-btn-text">
+                <span>${text}</span>
+                <span>${icon}</span>
+            </span>`;
+    }
+}
+
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    const icon  = type === 'success' ? '✅' : '❌';
+    toast.textContent = `${icon} ${message}`;
+    toast.className   = `toast ${type} show`;
+    setTimeout(() => toast.classList.remove('show'), 3500);
+}
+
+// ═══════════════════════════════════════════
+// THEME SYSTEM
+// ═══════════════════════════════════════════
+let themeLink = document.createElement('link');
+themeLink.rel = 'stylesheet';
+themeLink.id  = 'theme-stylesheet';
+document.head.appendChild(themeLink);
+
+const themes = {
+    'default':    '',
+    'ultra-dark': 'login-theme-ultra-dark.css',
+    'light':      'login-theme-light.css'
+};
+
+let currentTheme = localStorage.getItem('selectedTheme') || 'default';
+
+function applyTheme(themeName) {
+    const themeFile = themes[themeName];
+    themeLink.href  = themeFile || '';
+    currentTheme    = themeName;
+    localStorage.setItem('selectedTheme', themeName);
+}
+
+applyTheme(currentTheme);
+</script>
+</body>
+</html>
