@@ -743,7 +743,34 @@ app.post('/api/admin/reports/:id/ignore', authenticateToken, isAdmin, async (req
     res.status(500).json({ error: 'خطأ في تجاهل الإبلاغ' });
   }
 });
+// دالة لإنشاء المدير تلقائياً عند تشغيل السيرفر
+async function seedAdmin() {
+  try {
+    const User = mongoose.model('User'); // تأكد أن موديل المستخدم مُعرف مسبقاً
+    const adminExists = await User.findOne({ role: 'admin' });
+    
+    if (!adminExists) {
+      const hashedPassword = await bcrypt.hash('Admin@1234', 12);
+      await User.create({
+        email: 'admin@platform.tn',
+        password: hashedPassword,
+        name: 'المسؤول الرئيسي',
+        role: 'admin'
+      });
+      console.log('✅ تم إنشاء حساب المدير التلقائي بنجاح');
+    }
+  } catch (err) {
+    console.error('❌ فشل إنشاء حساب المدير:', err);
+  }
+}
 
+// تعديل سطر الاتصال ليفعل الدالة فور النجاح
+mongoose.connect(MONGO_URI)
+  .then(() => {
+    console.log('Connected to MongoDB');
+    seedAdmin(); // استدعاء الدالة هنا
+  })
+  .catch(err => console.error('Could not connect to MongoDB', err));
 // ─── Catch-all ────────────────────────────────────────────────
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
